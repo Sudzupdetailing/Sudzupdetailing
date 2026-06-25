@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sudz Up Detailing LLC — Hartford, WI</title>
+  <meta name="description" content="Professional auto detailing in Hartford, Wisconsin. Interior & exterior detail packages starting at $135. Drop-off, pick-up, or valet. Book today." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0A0A0A;
+      --dark:    #111111;
+      --panel:   #181818;
+      --border:  #272727;
+      --chrome:  #B8B8B8;
+      --warm:    #EDEDEB;
+      --amber:   #C0292B;
+      --amber-d: #9E1F21;
+      --cyan:    #C0292B;
+      --text:    #888888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--warm);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm);
+      text-decoration: none;
+    }
+
+    .nav-brand span { color: var(--amber); }
+
+    .nav-logo {
+      height: 42px;
+      width: auto;
+      display: block;
+      /* logo has black bg — mix-blend-mode lets it sit on the dark nav cleanly */
+      filter: brightness(1.05);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--chrome);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--amber); }
+
+    .nav-cta {
+      background: var(--amber);
+      color: var(--black) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 3px;
+    }
+
+    .nav-cta:hover { background: var(--amber-d) !important; color: var(--black) !important; }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--warm);
+      transition: 0.3s;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(6rem, 12vw, 10rem) clamp(1.5rem, 6vw, 5rem) clamp(4rem, 8vw, 6rem);
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .hero-logo-wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: clamp(320px, 55vw, 700px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-logo {
+      width: 100%;
+      height: auto;
+      display: block;
+      opacity: 0.92;
+      filter: brightness(1.08) contrast(1.05);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(192,41,43,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(0,194,212,0.04) 0%, transparent 55%);
+    }
+
+    .hero-eyebrow {
+      position: relative;
+      z-index: 1;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+
+    .hero-headline {
+      position: relative;
+      z-index: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(4.5rem, 14vw, 13rem);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--warm);
+      position: relative;
+      margin-bottom: 0.15em;
+    }
+
+    .hero-headline .accent-line {
+      display: block;
+      color: var(--amber);
+    }
+
+    .hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+      color: var(--text);
+      max-width: 480px;
+      margin-top: 1.8rem;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--amber);
+      color: var(--black);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--amber-d); transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-block;
+      border: 1px solid var(--border);
+      color: var(--chrome);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+    .hero-stats {
+      display: flex;
+      gap: clamp(2rem, 6vw, 4rem);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      position: relative;
+      flex-wrap: wrap;
+      z-index: 1;
+    }
+
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      color: var(--warm);
+    }
+
+    .stat-label {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-top: 0.1rem;
+    }
+
+    /* ── SHARED ── */
+    section { padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 6vw, 5rem); }
+
+    .section-eyebrow {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: var(--warm);
+      letter-spacing: -0.01em;
+    }
+
+    .section-body {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 600px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-text { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .about-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(192,41,43,0.08);
+      border: 1px solid rgba(192,41,43,0.25);
+      color: var(--amber);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 2px;
+      width: fit-content;
+    }
+
+    .about-pillars { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 0.5rem; }
+
+    .pillar { display: flex; gap: 1rem; align-items: flex-start; }
+
+    .pillar-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: rgba(192,41,43,0.08);
+      border: 1px solid rgba(192,41,43,0.2);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--amber);
+    }
+
+    .pillar-text strong {
+      display: block;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--warm);
+      margin-bottom: 0.2rem;
+    }
+
+    .pillar-text span { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
+
+    .about-frame {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .about-frame-label {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+
+    .detail-list { display: flex; flex-direction: column; gap: 0.9rem; }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--chrome);
+    }
+
+    .detail-item::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+    }
+
+    .services-header {
+      max-width: 1100px;
+      margin: 0 auto 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+
+    .pricing-card:hover { border-color: rgba(192,41,43,0.4); transform: translateY(-3px); }
+    .pricing-card.featured { border-color: var(--amber); }
+
+    .card-header {
+      padding: 2rem 2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--amber);
+      color: var(--black);
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .card-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--warm);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-tagline { font-size: 0.82rem; color: var(--text); }
+
+    .card-price { margin-top: 1.2rem; }
+
+    .price-main {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 2.4rem;
+      color: var(--amber);
+      line-height: 1;
+    }
+
+    .price-detail { font-size: 0.78rem; color: var(--text); margin-top: 0.25rem; }
+
+    .card-body { padding: 1.75rem 2rem 2rem; }
+
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 2rem;
+    }
+
+    .service-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.87rem;
+      color: var(--chrome);
+    }
+
+    .service-list li::before {
+      content: '✓';
+      color: var(--cyan);
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .pricing-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text);
+      margin-top: 2rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      font-style: italic;
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+
+    .gallery-header {
+      max-width: 1100px;
+      margin: 0 auto 2.5rem;
+    }
+
+    /* Photos row */
+    .gallery-photos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      max-width: 1100px;
+      margin: 0 auto 4px;
+    }
+
+    .gallery-photo {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 2px;
+      background: var(--panel);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-photo:hover img { transform: scale(1.04); }
+
+    .gallery-photo-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(13,13,13,0.85));
+      padding: 1.5rem 0.85rem 0.65rem;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--chrome);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .gallery-photo:hover .gallery-photo-label { opacity: 1; }
+
+    /* Videos row */
+    .gallery-videos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .gallery-video {
+      aspect-ratio: 9/16;
+      overflow: hidden;
+      border-radius: 2px;
+      background: var(--panel);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-play-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(13,13,13,0.3);
+      transition: background 0.2s;
+    }
+
+    .gallery-video:hover .video-play-hint { background: rgba(13,13,13,0.1); }
+
+    .play-icon {
+      width: 44px; height: 44px;
+      background: rgba(192,41,43,0.9);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .gallery-video:hover .play-icon { transform: scale(1.1); background: var(--amber); }
+
+    .play-icon svg { margin-left: 3px; }
+
+    .gallery-video.playing .video-play-hint { opacity: 0; pointer-events: none; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.95);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img, .lightbox video {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 3px;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.5rem; right: 1.5rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--chrome);
+      font-size: 1.2rem;
+      width: 40px; height: 40px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .lightbox-close:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ── CONTACT ── */
+    #book {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2.5rem;
+    }
+
+    .contact-header { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+
+    .contact-sub {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .contact-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn-contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex: 1;
+      min-width: 200px;
+      padding: 1.1rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform 0.15s, background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .btn-contact:hover { transform: translateY(-2px); }
+
+    .btn-contact-call {
+      background: var(--amber);
+      color: var(--black);
+    }
+
+    .btn-contact-call:hover { background: var(--amber-d); }
+
+    .btn-contact-text {
+      background: transparent;
+      color: var(--warm);
+      border: 1px solid var(--border);
+    }
+
+    .btn-contact-text:hover { border-color: var(--amber); color: var(--amber); }
+
+    
+
+    .contact-detail {
+      font-size: 0.78rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+
+    .contact-detail a {
+      color: var(--chrome);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-detail a:hover { color: var(--amber); }
+
+    .contact-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .contact-pill {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 3rem clamp(1.5rem, 6vw, 5rem);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--warm);
+    }
+
+    .footer-brand span { color: var(--amber); }
+    .footer-meta { font-size: 0.75rem; color: var(--text); margin-top: 0.3rem; }
+
+    .footer-social { display: flex; gap: 0.75rem; }
+
+    .social-link {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--chrome);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .social-link:hover { border-color: var(--amber); color: var(--amber); }
+
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text);
+      padding-top: 2rem;
+      margin-top: 1rem;
+      border-top: 1px solid var(--border);
+      opacity: 0.6;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .gallery-photos { grid-template-columns: repeat(2, 1fr); }
+      .gallery-videos { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: rgba(13,13,13,0.98);
+        padding: 1.5rem clamp(1.5rem, 5vw, 4rem) 2rem;
+        border-bottom: 1px solid var(--border);
+        gap: 1.25rem;
+      }
+      .nav-toggle { display: flex; }
+      .about-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .contact-btns { flex-direction: column; }
+    }
+
+    @media (max-width: 500px) {
+      .gallery-photos { grid-template-columns: 1fr 1fr; }
+      .gallery-videos { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @media (prefers-reduced-motion: no-preference) {
+      .fade-up {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .fade-up.visible { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#hero"><img src="img/logo.png" alt="Sudz Up Detailing LLC" class="nav-logo" /></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#book" class="nav-cta">Book Now</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-logo-wrap">
+    <img src="img/logo.png" alt="Sudz Up Detailing LLC" class="hero-logo" />
+  </div>
+  <p class="hero-eyebrow">Hartford, Wisconsin · Auto Detailing</p>
+  <h1 class="hero-headline">
+    Your Ride.<br>
+    <span class="accent-line">Spotless.</span>
+  </h1>
+  <p class="hero-sub">Professional interior and exterior detailing that restores, protects, and elevates every vehicle we touch. Drop-off, pick-up, or valet — we come to you.</p>
+  <div class="hero-actions">
+    <a href="#book" class="btn-primary">Book an Appointment</a>
+    <a href="#services" class="btn-ghost">View Packages</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">2</div>
+      <div class="stat-label">Detail Packages</div>
+    </div>
+    <div>
+      <div class="stat-num">$135</div>
+      <div class="stat-label">Starting Price</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Satisfaction Focused</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <div>
+        <p class="section-eyebrow">About Us</p>
+        <h2 class="section-title">True Quality<br>Is In The Details</h2>
+      </div>
+      <p class="section-body">At Sudz Up Detailing LLC, we take pride in elevating the standard of vehicle care. Every service is designed to restore, protect, and enhance your vehicle — inside and out — with precision and a commitment to excellence.</p>
+      <div class="about-pillars">
+        <div class="pillar">
+          <div class="pillar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1l3-4h8l3 4h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="17.5" r="2.5"/></svg></div>
+          <div class="pillar-text">
+            <strong>Every Vehicle Treated Right</strong>
+            <span>Cars, trucks, and SUVs — we tailor the detail to what your vehicle actually needs.</span>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="pillar-text">
+            <strong>Local to Hartford, WI</strong>
+            <span>We serve the Hartford area with drop-off, pick-up, and valet service options.</span>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="pillar-text">
+            <strong>No-Obligation Quotes</strong>
+            <span>Tell us your vehicle and we'll give you a straight price — no surprises.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up">
+      <div class="about-frame">
+        <div class="about-frame-label">What We Cover</div>
+        <div class="detail-list">
+          <div class="detail-item">Interior vacuum & deep clean</div>
+          <div class="detail-item">Vinyl, rubber & plastic treatment (VRP)</div>
+          <div class="detail-item">Spot stain removal</div>
+          <div class="detail-item">Door jambs cleaned</div>
+          <div class="detail-item">Windows cleaned (inside & out)</div>
+          <div class="detail-item">Exterior wash & polish (VIP)</div>
+          <div class="detail-item">Wheels cleaned & tires shined (VIP)</div>
+        </div>
+        <div class="about-badge">Drop-Off · Pick-Up · Valet Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header fade-up">
+    <p class="section-eyebrow">Packages & Pricing</p>
+    <h2 class="section-title">Pick Your Package</h2>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card fade-up">
+      <div class="card-header">
+        <div class="card-badge">Quick Refresh</div>
+        <div class="card-name">Sudz Quick Clean</div>
+        <div class="card-tagline">A fast, effective refresh to keep your vehicle looking clean.</div>
+        <div class="card-price">
+          <div class="price-main">$135 <span style="font-size:1rem;color:var(--text);">/ Cars</span></div>
+          <div class="price-detail">$150 for SUVs & Trucks</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="service-list">
+          <li>Interior vacuum</li>
+          <li>Vinyl, rubber & plastic treatment</li>
+          <li>Spot stain removal</li>
+          <li>Door jambs cleaned</li>
+          <li>Windows cleaned</li>
+        </ul>
+        <a href="#book" class="btn-ghost" style="display:block;text-align:center;">Book Quick Clean</a>
+      </div>
+    </div>
+    <div class="pricing-card featured fade-up">
+      <div class="card-header">
+        <div class="card-badge">Full Transformation</div>
+        <div class="card-name">Sudz'd Up VIP Clean</div>
+        <div class="card-tagline">A complete interior and exterior detail for a full transformation.</div>
+        <div class="card-price">
+          <div class="price-main">$200 <span style="font-size:1rem;color:var(--text);">/ Cars</span></div>
+          <div class="price-detail">$250 for SUVs & Trucks</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="service-list">
+          <li>Interior vacuum</li>
+          <li>VRP treatment</li>
+          <li>Spot stain removal</li>
+          <li>Door jambs cleaned</li>
+          <li>Windows cleaned</li>
+          <li>Exterior wash & polish</li>
+          <li>Wheels cleaned</li>
+          <li>Tires shined</li>
+        </ul>
+        <a href="#book" class="btn-primary" style="display:block;text-align:center;">Book VIP Clean</a>
+      </div>
+    </div>
+  </div>
+  <p class="pricing-note">* Prices may vary based on vehicle condition and service requirements. Contact us for a personalized quote.</p>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header fade-up">
+    <p class="section-eyebrow">Our Work</p>
+    <h2 class="section-title">The Proof Is<br>In The Polish</h2>
+  </div>
+
+  <!-- Photos -->
+  <div class="gallery-photos fade-up">
+    <div class="gallery-photo" onclick="openLightbox('img/interior-dash.jpg','photo')">
+      <img src="img/interior-dash.jpg" alt="Detailing work — dashboard interior" loading="lazy" />
+      <div class="gallery-photo-label">Interior Detail</div>
+    </div>
+    <div class="gallery-photo" onclick="openLightbox('img/interior-seats-front.jpg','photo')">
+      <img src="img/interior-seats-front.jpg" alt="Detailing work — front seats" loading="lazy" />
+      <div class="gallery-photo-label">Front Seats</div>
+    </div>
+    <div class="gallery-photo" onclick="openLightbox('img/interior-seats-rear.jpg','photo')">
+      <img src="img/interior-seats-rear.jpg" alt="Detailing work — rear seats" loading="lazy" />
+      <div class="gallery-photo-label">Rear Seats</div>
+    </div>
+    <div class="gallery-photo" onclick="openLightbox('img/interior-rear-angle.jpg','photo')">
+      <img src="img/interior-rear-angle.jpg" alt="Detailing work — rear interior angle" loading="lazy" />
+      <div class="gallery-photo-label">Interior Clean</div>
+    </div>
+  </div>
+
+  <!-- Videos -->
+  <div class="gallery-videos fade-up" style="margin-top:4px;">
+    <div class="gallery-video" id="vid1wrap">
+      <video id="vid1" src="video/detail-01.mp4" playsinline preload="metadata" loop></video>
+      <div class="video-play-hint" onclick="toggleVideo('vid1','vid1wrap')">
+        <div class="play-icon">
+          <svg width="14" height="16" viewBox="0 0 14 16" fill="white"><path d="M0 0l14 8L0 16z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-video" id="vid2wrap">
+      <video id="vid2" src="video/detail-02.mp4" playsinline preload="metadata" loop></video>
+      <div class="video-play-hint" onclick="toggleVideo('vid2','vid2wrap')">
+        <div class="play-icon">
+          <svg width="14" height="16" viewBox="0 0 14 16" fill="white"><path d="M0 0l14 8L0 16z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-video" id="vid3wrap">
+      <video id="vid3" src="video/detail-03.mp4" playsinline preload="metadata" loop></video>
+      <div class="video-play-hint" onclick="toggleVideo('vid3','vid3wrap')">
+        <div class="play-icon">
+          <svg width="14" height="16" viewBox="0 0 14 16" fill="white"><path d="M0 0l14 8L0 16z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="gallery-video" id="vid4wrap">
+      <video id="vid4" src="video/detail-04.mp4" playsinline preload="metadata" loop></video>
+      <div class="video-play-hint" onclick="toggleVideo('vid4','vid4wrap')">
+        <div class="play-icon">
+          <svg width="14" height="16" viewBox="0 0 14 16" fill="white"><path d="M0 0l14 8L0 16z"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section id="book">
+  <div class="contact-inner">
+    <div class="contact-header fade-up">
+      <p class="section-eyebrow">Get In Touch</p>
+      <h2 class="section-title">Ready To Book?</h2>
+      <p class="contact-sub">Call or text us to get a no-obligation quote and schedule your detail. We'll take it from there.</p>
+    </div>
+    <div class="contact-btns fade-up">
+      <a href="tel:4147222219" class="btn-contact btn-contact-call">
+        Call Us — 414-722-2219
+      </a>
+      <a href="sms:4147222219" class="btn-contact btn-contact-text">
+        Text Us — 414-722-2219
+      </a>
+    </div>
+    <p class="contact-detail fade-up">
+      Hartford, WI &nbsp;·&nbsp;
+      <a href="tel:4147222219">414-722-2219</a> &nbsp;·&nbsp;
+      <a href="mailto:SudzUpdetail2025@outlook.com">SudzUpdetail2025@outlook.com</a>
+    </p>
+    <div class="contact-pills fade-up">
+      <div class="contact-pill">Drop-Off</div>
+      <div class="contact-pill">Pick-Up</div>
+      <div class="contact-pill">Valet Service</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <img src="img/logo.png" alt="Sudz Up Detailing LLC" style="height:48px;width:auto;display:block;margin-bottom:0.4rem;" />
+      <div class="footer-meta">Hartford, Wisconsin · 414-722-2219</div>
+    </div>
+    <div class="footer-social">
+      <a href="#" class="social-link" aria-label="Facebook" title="Facebook">f</a>
+      <a href="#" class="social-link" aria-label="Instagram" title="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2025 Sudz Up Detailing LLC · Hartford, WI · All rights reserved.</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="" style="display:none;" />
+</div>
+
+<script>
+  // Mobile nav
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // Scroll animations
+  const faders = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  faders.forEach(el => obs.observe(el));
+
+  // Video toggle
+  function toggleVideo(vidId, wrapId) {
+    const vid = document.getElementById(vidId);
+    const wrap = document.getElementById(wrapId);
+    if (vid.paused) {
+      vid.play();
+      wrap.classList.add('playing');
+    } else {
+      vid.pause();
+      wrap.classList.remove('playing');
+    }
+  }
+
+  // Lightbox
+  function openLightbox(src, type) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    img.src = src;
+    img.style.display = 'block';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (!e || e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lightboxImg').src = '';
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')}); });
+
+
+</script>
+</body>
+</html>
