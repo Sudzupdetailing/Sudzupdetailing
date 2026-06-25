@@ -7,6 +7,10 @@
   <meta name="description" content="Sudz Up Detailing LLC offers professional auto detailing in Hartford, Wisconsin. Interior & exterior packages starting at $135. Call or text 414-722-2219 to book." />
   <meta name="keywords" content="auto detailing Hartford WI, car detailing Hartford Wisconsin, interior detailing Washington County, mobile detailing Hartford, car detail near me" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="canonical" href="https://sudzupdetailing.github.io/Sudzupdetailing/" />
 
   <!-- Open Graph -->
@@ -137,6 +141,7 @@
     ]
   }
   </script>
+  <link rel="preload" href="img/logo.png" as="image" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
@@ -195,9 +200,10 @@
     .nav-brand span { color: var(--amber); }
 
     .nav-logo {
-      height: 44px;
+      height: 48px;
       width: auto;
       display: block;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.8));
     }
 
     .nav-links {
@@ -258,29 +264,12 @@
       background: var(--black);
     }
 
-    .hero-logo-wrap {
-      position: absolute;
-      top: 64px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: clamp(280px, 46vw, 580px);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-logo {
-      width: 100%;
-      height: auto;
-      display: block;
-      opacity: 0.18;
-    }
-
     .hero-bg {
       position: absolute;
       inset: 0;
       background:
         radial-gradient(ellipse 80% 60% at 70% 40%, rgba(192,41,43,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(0,194,212,0.04) 0%, transparent 55%);
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(192,41,43,0.03) 0%, transparent 55%);
     }
 
     .hero-eyebrow {
@@ -981,15 +970,12 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
-  <div class="hero-logo-wrap">
-    <img src="img/logo.png" alt="Sudz Up Detailing LLC" class="hero-logo" />
-  </div>
   <p class="hero-eyebrow">Hartford, Wisconsin · Auto Detailing</p>
   <h1 class="hero-headline">
     Your Ride.<br>
     <span class="accent-line">Spotless.</span>
   </h1>
-  <p class="hero-sub">Professional interior and exterior detailing that restores, protects, and elevates every vehicle we touch. Drop-off, pick-up, or valet — we come to you.</p>
+  <p class="hero-sub">Professional interior and exterior detailing that restores, protects, and elevates every vehicle we touch. Hartford, WI and surrounding areas.</p>
   <div class="hero-actions">
     <a href="#book" class="btn-primary">Book an Appointment</a>
     <a href="#services" class="btn-ghost">View Packages</a>
@@ -1031,7 +1017,7 @@
           <div class="pillar-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="pillar-text">
             <strong>Local to Hartford, WI</strong>
-            <span>We serve the Hartford area with drop-off, pick-up, and valet service options.</span>
+            <span>We serve Hartford and the surrounding Washington County area.</span>
           </div>
         </div>
         <div class="pillar">
@@ -1055,7 +1041,7 @@
           <div class="detail-item">Exterior wash & polish (VIP)</div>
           <div class="detail-item">Wheels cleaned & tires shined (VIP)</div>
         </div>
-        <div class="about-badge">Drop-Off · Pick-Up · Valet Available</div>
+        <div class="about-badge">Hartford, WI &amp; Surrounding Area</div>
       </div>
     </div>
   </div>
