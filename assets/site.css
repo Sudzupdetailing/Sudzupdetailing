@@ -628,7 +628,33 @@
 
     .gallery-video:hover .play-icon { transform: scale(1.1); }
     .play-icon svg { margin-left: 3px; }
-    .gallery-video.playing .video-play-hint { opacity: 0; pointer-events: none; }
+    /* NOTE: this used to be `opacity:0; pointer-events:none` while playing,
+       which removed the only control and left looping video unstoppable.
+       The button now always stays interactive. */
+    .gallery-video.playing .video-play-hint { background: transparent; }
+    .gallery-video.playing .play-icon { opacity: 0; transform: scale(.85); }
+    .gallery-video.playing:hover .play-icon,
+    .gallery-video.playing:focus-within .play-icon { opacity: 1; transform: scale(1); }
+    /* Touch devices have no hover, so keep the control discoverable. */
+    @media (hover: none) {
+      .gallery-video.playing .play-icon { opacity: .6; transform: scale(1); }
+    }
+    .play-icon { opacity: 1; transition: opacity .2s, transform .2s; }
+    .play-icon svg { margin-left: 0; }
+    .play-icon .ic-play { margin-left: 3px; }
+    .play-icon .ic-pause { display: none; }
+    .gallery-video.playing .ic-play { display: none; }
+    .gallery-video.playing .ic-pause { display: block; }
+
+    /* Progress bar */
+    .video-progress {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+      background: rgba(255,255,255,0.16); opacity: 0; transition: opacity .2s;
+      pointer-events: none;
+    }
+    .gallery-video.playing .video-progress { opacity: 1; }
+    .video-progress i { display: block; height: 100%; width: 0;
+      background: var(--gold); transition: width .2s linear; }
 
     /* Lightbox */
     .lightbox {

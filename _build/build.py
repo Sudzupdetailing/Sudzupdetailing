@@ -425,9 +425,13 @@ def build_home():
     video_html = "\n".join(
         f'''    <div class="gallery-video" id="vid{i}wrap">
       <video id="vid{i}" src="/video/detail-{vid}.mp4" poster="/img/poster/detail-{vid}.jpg" width="{w}" height="{h}" playsinline preload="none" loop muted aria-label="{e(short)} — Sudz Up Detailing, Hartford WI"></video>
-      <button type="button" class="video-play-hint" onclick="toggleVideo('vid{i}','vid{i}wrap')" aria-label="Play video: {e(short)}">
-        <span class="play-icon"><svg width="13" height="15" viewBox="0 0 13 15" fill="black" aria-hidden="true"><path d="M0 0l13 7.5L0 15z"/></svg></span>
+      <button type="button" class="video-play-hint" data-video="vid{i}" data-title="{e(short)}" aria-pressed="false" aria-label="Play video: {e(short)}">
+        <span class="play-icon">
+          <svg class="ic-play" width="13" height="15" viewBox="0 0 13 15" fill="black" aria-hidden="true"><path d="M0 0l13 7.5L0 15z"/></svg>
+          <svg class="ic-pause" width="12" height="14" viewBox="0 0 12 14" fill="black" aria-hidden="true"><rect x="0" y="0" width="4" height="14" rx="1"/><rect x="8" y="0" width="4" height="14" rx="1"/></svg>
+        </span>
       </button>
+      <span class="video-progress" aria-hidden="true"><i></i></span>
     </div>''' for i, (vid, _, _, _, w, h, short) in enumerate(vids, 1))
 
     svc_cards = "\n".join(
@@ -1158,20 +1162,63 @@ def build_js():
 })();
 
 var lastFocus = null;
-function toggleVideo(vidId, wrapId) {
-  var vid = document.getElementById(vidId), wrap = document.getElementById(wrapId);
-  if (!vid || !wrap) return;
-  if (vid.paused) {
-    document.querySelectorAll('.gallery-video video').forEach(function (v) {
-      if (v !== vid && !v.paused) { v.pause(); v.closest('.gallery-video').classList.remove('playing'); }
+
+// Video controls. State is driven by the media element's own play/pause
+// events rather than by the click handler, so the UI cannot drift out of
+// sync if playback is stopped by anything other than the button.
+(function () {
+  document.querySelectorAll('.video-play-hint').forEach(function (btn) {
+    var vid = document.getElementById(btn.getAttribute('data-video'));
+    if (!vid) return;
+    var wrap = vid.closest('.gallery-video');
+    var title = btn.getAttribute('data-title') || 'video';
+    var bar = wrap ? wrap.querySelector('.video-progress i') : null;
+
+    function paint(playing) {
+      if (wrap) wrap.classList.toggle('playing', playing);
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      btn.setAttribute('aria-label', (playing ? 'Pause video: ' : 'Play video: ') + title);
+    }
+
+    btn.addEventListener('click', function () {
+      if (vid.paused) {
+        // Only one clip at a time.
+        document.querySelectorAll('.gallery-video video').forEach(function (v) {
+          if (v !== vid && !v.paused) v.pause();
+        });
+        var p = vid.play();
+        if (p && p.catch) p.catch(function () { paint(false); });
+      } else {
+        vid.pause();
+      }
     });
-    vid.play().catch(function () {});
-    wrap.classList.add('playing');
-  } else {
-    vid.pause();
-    wrap.classList.remove('playing');
+
+    vid.addEventListener('play', function () { paint(true); });
+    vid.addEventListener('pause', function () { paint(false); });
+    vid.addEventListener('ended', function () { paint(false); });
+    vid.addEventListener('timeupdate', function () {
+      if (bar && vid.duration) bar.style.width = (vid.currentTime / vid.duration * 100) + '%';
+    });
+  });
+
+  // Escape stops whatever is playing.
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Escape') return;
+    document.querySelectorAll('.gallery-video video').forEach(function (v) {
+      if (!v.paused) v.pause();
+    });
+  });
+
+  // Pause anything scrolled out of view.
+  if ('IntersectionObserver' in window) {
+    var vo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting && !en.target.paused) en.target.pause();
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.gallery-video video').forEach(function (v) { vo.observe(v); });
   }
-}
+})();
 function openLightbox(src, alt) {
   var lb = document.getElementById('lightbox'), im = document.getElementById('lightboxImg');
   if (!lb || !im) return;
