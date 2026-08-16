@@ -32,6 +32,39 @@ LAT, LNG = 43.3219, -88.3762
 TODAY = datetime.date.today().isoformat()
 MEDIA_UPLOAD = "2026-06-25T03:10:29-04:00"
 
+# Google Business Profile. Prefer the canonical maps.google.com/?cid=... or
+# /maps/place/ URL over a share.google shortlink when you have it — sameAs
+# should point at the profile itself rather than a redirector.
+GBP_URL = "https://share.google/0SJfiztvOn00D37ml"
+
+# Verified storefront location, so the street address stays in the schema.
+# HOURS is the single source of truth: it drives the LocalBusiness schema,
+# the contact page and llms.txt. Edit here only, then rebuild.
+# Format: (label, [days], opens, closes) using 24h times.
+HOURS = [("Monday – Sunday",
+          ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "08:00", "18:00")]
+
+
+def hours_schema():
+    return [{"@type": "OpeningHoursSpecification", "dayOfWeek": days,
+             "opens": o, "closes": c} for _, days, o, c in HOURS]
+
+
+def _fmt(t):
+    hh, mm = int(t[:2]), t[3:]
+    ap = "am" if hh < 12 else "pm"
+    hh = hh % 12 or 12
+    return f"{hh}:{mm}{ap}" if mm != "00" else f"{hh}{ap}"
+
+
+def hours_human():
+    return "; ".join(f"{lbl} {_fmt(o)}–{_fmt(c)}" for lbl, _, o, c in HOURS)
+
+
+def hours_llms():
+    return "\n".join(f"- {lbl}: {_fmt(o)} - {_fmt(c)}" for lbl, _, o, c in HOURS)
+
 e = html.escape
 PAGES = []   # (url_path, priority, changefreq, extra_xml)
 
@@ -44,7 +77,7 @@ def org_node():
             "logo": {"@type": "ImageObject", "@id": f"{SITE}/#logo",
                      "url": f"{SITE}/img/opt/logo-512.png", "width": 512, "height": 512,
                      "caption": BIZ},
-            "image": {"@id": f"{SITE}/#logo"}, "sameAs": []}
+            "image": {"@id": f"{SITE}/#logo"}, "sameAs": [GBP_URL]}
 
 
 def business_node():
@@ -59,7 +92,7 @@ def business_node():
         "address": {"@type": "PostalAddress", "streetAddress": ADDR, "addressLocality": CITY,
                     "addressRegion": REGION, "postalCode": ZIP, "addressCountry": "US"},
         "geo": {"@type": "GeoCoordinates", "latitude": LAT, "longitude": LNG},
-        "hasMap": "https://www.google.com/maps/search/?api=1&query=2948+WI-83+Hartford+WI+53027",
+        "hasMap": GBP_URL,
         "areaServed": [{"@type": "City", "name": c["name"],
                         "containedInPlace": {"@type": "AdministrativeArea",
                                              "name": f'{c["county"]}, Wisconsin'}} for c in CITIES],
@@ -68,9 +101,7 @@ def business_node():
                         "geoRadius": "40000"},
         "priceRange": "$135-$250", "currenciesAccepted": "USD",
         "paymentAccepted": "Cash, Credit Card, Debit Card",
-        "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            "opens": "08:00", "closes": "18:00"}],
+        "openingHoursSpecification": hours_schema(),
         "knowsAbout": ["auto detailing", "interior car detailing", "exterior wash and polish",
                        "stain removal", "odor removal", "road salt corrosion", "vehicle cleaning"],
         "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Auto Detailing Services",
@@ -93,7 +124,7 @@ def business_node():
                                  "description": ("Complete interior detail plus exterior wash and polish, wheels "
                                                  "cleaned and tires shined. $200 for cars, $250 for SUVs and "
                                                  "trucks.")}}]},
-        "sameAs": []}
+        "sameAs": [GBP_URL]}
 
 
 def website_node():
@@ -809,7 +840,7 @@ def build_static_pages():
   <a href="tel:+14142861609" class="btn-contact btn-contact-call">Call Us &mdash; {TEL}</a>
   <a href="sms:+14142861609" class="btn-contact btn-contact-text">Text Us &mdash; {TEL}</a>
 </div>
-{glance_html([("Phone / text", TEL), ("Email", EMAIL), ("Address", f"{ADDR}, {CITY} {ZIP}"), ("Hours", "Mon–Sun, 8am–6pm")])}
+{glance_html([("Phone / text", TEL), ("Email", EMAIL), ("Address", f"{ADDR}, {CITY} {ZIP}"), ("Hours", hours_human())])}
 
 <h2>What to tell us</h2>
 <p>A short call gets you a more accurate quote than any form would. The things worth mentioning:</p>
@@ -827,14 +858,14 @@ def build_static_pages():
 </div>
 
 <h2>Where we are</h2>
-<p>{ADDR}, {CITY}, {REGION} {ZIP}. A few minutes from downtown Hartford in either direction. <a href="https://www.google.com/maps/search/?api=1&amp;query=2948+WI-83+Hartford+WI+53027" rel="noopener">Open in Google Maps</a>.</p>
+<p>{ADDR}, {CITY}, {REGION} {ZIP}. A few minutes from downtown Hartford in either direction. <a href="{GBP_URL}" rel="noopener">Find us on Google</a>.</p>
 <p>Call or text before heading over so we can confirm we are on site and ready for your vehicle.</p>
 </div></div>
 {faq_html(contact_faq)}
 {related_html("Areas we serve", [(c["name"] + ", WI", f'/auto-detailing/{c["slug"]}/') for c in CITIES])}
 '''
     page(p, f"Contact {BIZ} | Book Auto Detailing in Hartford, WI",
-         "Book auto detailing in Hartford, WI. Call or text 414-286-1609 for a no-obligation quote. 2948 WI-83, Hartford, WI 53027. Open 8am to 6pm daily.",
+         "Book auto detailing in Hartford, WI. Call or text 414-286-1609 for a no-obligation quote. Shop at 2948 WI-83, Hartford, WI 53027.",
          graph, body, active=p)
     PAGES.append((p, "0.9", "monthly", ""))
 
@@ -889,8 +920,12 @@ def build_llms():
 - Phone / Text: {TEL}
 - Email: {EMAIL}
 - Website: {SITE}/
-- Hours: Monday-Sunday, 8:00 AM - 6:00 PM
+- Google Business Profile: {GBP_URL}
+- Location type: physical shop (not mobile / not service-area only)
 - Vehicle types: cars, trucks, SUVs, vans
+
+## Hours
+{hours_llms()}
 
 ## Packages and pricing
 - Sudz Quick Clean (interior only) - $135 cars / $150 SUVs and trucks.
