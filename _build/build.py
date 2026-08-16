@@ -40,15 +40,25 @@ GBP_URL = "https://share.google/0SJfiztvOn00D37ml"
 # Verified storefront location, so the street address stays in the schema.
 # HOURS is the single source of truth: it drives the LocalBusiness schema,
 # the contact page and llms.txt. Edit here only, then rebuild.
-# Format: (label, [days], opens, closes) using 24h times.
-HOURS = [("Monday – Sunday",
-          ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "08:00", "18:00")]
+# Format: (label, [days], opens, closes). Use None/None for a closed day —
+# schema.org represents closed as opens == closes == "00:00".
+# Verified against the Google Business Profile 2026-08-16.
+HOURS = [("Monday – Friday",
+          ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "08:00", "18:00"),
+         ("Saturday – Sunday",
+          ["Saturday", "Sunday"], None, None)]
 
 
 def hours_schema():
-    return [{"@type": "OpeningHoursSpecification", "dayOfWeek": days,
-             "opens": o, "closes": c} for _, days, o, c in HOURS]
+    out = []
+    for _, days, o, c in HOURS:
+        if o is None:
+            out.append({"@type": "OpeningHoursSpecification", "dayOfWeek": days,
+                        "opens": "00:00", "closes": "00:00"})
+        else:
+            out.append({"@type": "OpeningHoursSpecification", "dayOfWeek": days,
+                        "opens": o, "closes": c})
+    return out
 
 
 def _fmt(t):
@@ -59,11 +69,13 @@ def _fmt(t):
 
 
 def hours_human():
-    return "; ".join(f"{lbl} {_fmt(o)}–{_fmt(c)}" for lbl, _, o, c in HOURS)
+    return "; ".join(f"{lbl} closed" if o is None else f"{lbl} {_fmt(o)}–{_fmt(c)}"
+                     for lbl, _, o, c in HOURS)
 
 
 def hours_llms():
-    return "\n".join(f"- {lbl}: {_fmt(o)} - {_fmt(c)}" for lbl, _, o, c in HOURS)
+    return "\n".join(f"- {lbl}: Closed" if o is None else f"- {lbl}: {_fmt(o)} - {_fmt(c)}"
+                     for lbl, _, o, c in HOURS)
 
 e = html.escape
 PAGES = []   # (url_path, priority, changefreq, extra_xml)
@@ -818,8 +830,8 @@ def build_static_pages():
     p, url = "/contact/", SITE + "/contact/"
     t = [("Home", "/"), ("Contact", p)]
     contact_faq = [
-        ("How do I book?", "Call or text 414-286-1609, or email SudzUpdetail2025@outlook.com. There is no online booking form — we would rather talk to you briefly and give you an accurate quote and time."),
-        ("Do you have a booking form?", "No. A short call or text gets you a more accurate quote than a form, because we can ask about the vehicle's condition."),
+        ("How do I book?", "Call or text 414-286-1609, or email SudzUpdetail2025@outlook.com. A short call lets us ask about the vehicle's condition and give you an accurate quote and time."),
+        ("What are your hours?", "The shop is open Monday to Friday, 8:00 AM to 6:00 PM, and closed Saturday and Sunday. Call or text 414-286-1609 before heading over so we can confirm we are ready for your vehicle."),
         ("What should I tell you when I call?", "Vehicle size, rough condition, and any specific issue — a spill you know about, a smell, whether pets travel in it, whether anyone smokes in it. That determines how much time we set aside."),
         ("Do I need to empty my car first?", "Please do. Removing personal belongings lets us work faster and means we are not making judgement calls about what matters to you."),
     ]
@@ -953,7 +965,7 @@ window tinting are NOT offered by this business.
 
 ## Booking
 Call or text {TEL}, or email {EMAIL}.
-There is no online booking form. Quotes are free and carry no obligation.
+Quotes are free and carry no obligation.
 """)
 
 
