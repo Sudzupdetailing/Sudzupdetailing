@@ -1,13 +1,112 @@
-// Sudz Up Detailing — shared behaviour
+// Sudz Up Detailing - shared behaviour
 (function () {
+  var MOBILE = '(max-width: 980px)';
+  var isMobile = function () { return window.matchMedia(MOBILE).matches; };
+
   var toggle = document.getElementById('navToggle');
-  var links = document.getElementById('navLinks');
-  if (toggle && links) {
-    toggle.addEventListener('click', function () { links.classList.toggle('open'); });
-    links.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { links.classList.remove('open'); });
+  var links  = document.getElementById('navLinks');
+  var menus  = [].slice.call(document.querySelectorAll('.has-menu'));
+
+  function closeMenus(except) {
+    menus.forEach(function (li) {
+      if (li === except) return;
+      li.classList.remove('open');
+      var b = li.querySelector('.nav-top');
+      if (b) b.setAttribute('aria-expanded', 'false');
     });
   }
+
+  function closeNav() {
+    if (!links) return;
+    links.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    closeMenus(null);
+  }
+
+  if (toggle && links) {
+    toggle.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open) closeMenus(null);
+    });
+  }
+
+  // Open state is JS-driven so Escape can always win. CSS hover-opening made
+  // that impossible: the pointer resting on the trigger kept the panel up.
+  var hoverEnabled = true;
+
+  function setMenu(li, open) {
+    li.classList.toggle('open', open);
+    var b = li.querySelector('.nav-top');
+    if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  menus.forEach(function (li) {
+    var btn = li.querySelector('.nav-top');
+    if (!btn) return;
+
+    btn.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      closeMenus(li);
+      if (isMobile()) {
+        // Accordion: tapping the same row again collapses it.
+        setMenu(li, !li.classList.contains('open'));
+      } else {
+        // Desktop: pointerenter has usually opened this already, so a click
+        // must not toggle it shut. Clicking only ever opens; the pointer
+        // leaving (or Escape) closes.
+        setMenu(li, true);
+      }
+    });
+
+    // Desktop pointer behaviour. Guarded so touch taps do not double-fire.
+    li.addEventListener('pointerenter', function (ev) {
+      if (ev.pointerType === 'touch' || isMobile() || !hoverEnabled) return;
+      closeMenus(li);
+      setMenu(li, true);
+    });
+    li.addEventListener('pointerleave', function (ev) {
+      if (ev.pointerType === 'touch' || isMobile()) return;
+      setMenu(li, false);
+      hoverEnabled = true;   // re-arm once the pointer actually leaves
+    });
+  });
+
+  // Navigating away via any nav link should collapse the panel first.
+  if (links) {
+    links.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { closeNav(); });
+    });
+  }
+
+  document.addEventListener('click', function (ev) {
+    if (links && links.contains(ev.target)) return;
+    if (toggle && toggle.contains(ev.target)) return;
+    closeMenus(null);
+    if (isMobile()) closeNav();
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Escape') return;
+    var openLi = document.querySelector('.has-menu.open');
+    closeNav();
+    // Suppress hover-reopen until the pointer leaves, otherwise a pointer
+    // still resting on the trigger would immediately reopen the panel.
+    hoverEnabled = false;
+    if (openLi) {
+      var b = openLi.querySelector('.nav-top');
+      if (b) b.focus();
+    } else if (toggle && isMobile()) {
+      toggle.focus();
+    }
+  });
+
+  // Crossing the breakpoint must not strand an open mobile panel on desktop.
+  var mq = window.matchMedia(MOBILE);
+  var onChange = function () { closeNav(); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
 
   if ('IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function (entries) {

@@ -46,7 +46,7 @@
       "name": "Sudz Up Detailing LLC",
       "url": "https://sudzupdetail.com/",
       "telephone": "+1-414-286-1609",
-      "email": "SudzUpdetail2025@outlook.com",
+      "email": "gio@sudzupdetail.com",
       "logo": {
         "@type": "ImageObject",
         "@id": "https://sudzupdetail.com/#logo",
@@ -59,7 +59,9 @@
         "@id": "https://sudzupdetail.com/#logo"
       },
       "sameAs": [
-        "https://share.google/0SJfiztvOn00D37ml"
+        "https://share.google/0SJfiztvOn00D37ml",
+        "https://www.facebook.com/profile.php?id=61581687561195",
+        "https://www.instagram.com/sudzupdetailllc/"
       ]
     },
     {
@@ -75,7 +77,7 @@
       "description": "Professional interior and exterior auto detailing in Hartford, Wisconsin. Detail packages for cars, trucks and SUVs serving Hartford and the surrounding Washington County area.",
       "url": "https://sudzupdetail.com/",
       "telephone": "+1-414-286-1609",
-      "email": "SudzUpdetail2025@outlook.com",
+      "email": "gio@sudzupdetail.com",
       "image": {
         "@id": "https://sudzupdetail.com/#logo"
       },
@@ -279,7 +281,9 @@
         ]
       },
       "sameAs": [
-        "https://share.google/0SJfiztvOn00D37ml"
+        "https://share.google/0SJfiztvOn00D37ml",
+        "https://www.facebook.com/profile.php?id=61581687561195",
+        "https://www.instagram.com/sudzupdetailllc/"
       ]
     },
     {
@@ -375,14 +379,54 @@
 <nav>
   <a href="/" aria-label="Sudz Up Detailing LLC home"><img src="/img/opt/logo-400.webp" alt="Sudz Up Detailing LLC — auto detailing in Hartford, Wisconsin" class="nav-logo" width="400" height="400" fetchpriority="high" decoding="async" /></a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="/services/">Services</a></li>
-    <li><a href="/auto-detailing/">Service Area</a></li>
+    <li class="has-menu">
+      <button type="button" class="nav-top" aria-expanded="false" aria-controls="navmenu0">Services</button>
+      <div class="nav-menu" id="navmenu0">
+        <a href="/services/" class="menu-all">All services</a>
+        <a href="/services/interior-car-detailing/">Interior Detailing</a>
+        <a href="/services/exterior-wash-and-polish/">Exterior Wash &amp; Polish</a>
+        <a href="/services/full-interior-exterior-detail/">Full Detail (VIP)</a>
+        <a href="/services/stain-and-odor-removal/">Stain &amp; Odor Removal</a>
+        <a href="/services/truck-and-suv-detailing/">Truck &amp; SUV</a>
+      </div>
+    </li>
+    <li class="has-menu">
+      <button type="button" class="nav-top" aria-expanded="false" aria-controls="navmenu1">Service Area</button>
+      <div class="nav-menu cols2" id="navmenu1">
+        <a href="/auto-detailing/" class="menu-all">All areas we serve</a>
+        <a href="/auto-detailing/hartford-wi/">Hartford, WI</a>
+        <a href="/auto-detailing/west-bend-wi/">West Bend, WI</a>
+        <a href="/auto-detailing/slinger-wi/">Slinger, WI</a>
+        <a href="/auto-detailing/germantown-wi/">Germantown, WI</a>
+        <a href="/auto-detailing/richfield-wi/">Richfield, WI</a>
+        <a href="/auto-detailing/jackson-wi/">Jackson, WI</a>
+        <a href="/auto-detailing/kewaskum-wi/">Kewaskum, WI</a>
+        <a href="/auto-detailing/allenton-wi/">Allenton, WI</a>
+        <a href="/auto-detailing/colgate-wi/">Colgate, WI</a>
+        <a href="/auto-detailing/erin-wi/">Erin, WI</a>
+        <a href="/auto-detailing/rubicon-wi/">Rubicon, WI</a>
+        <a href="/auto-detailing/neosho-wi/">Neosho, WI</a>
+      </div>
+    </li>
+    <li class="has-menu">
+      <button type="button" class="nav-top" aria-expanded="false" aria-controls="navmenu2">Guides</button>
+      <div class="nav-menu cols2" id="navmenu2">
+        <a href="/guides/" class="menu-all">All guides</a>
+        <a href="/guides/road-salt-and-your-car-wisconsin/">Road Salt &amp; Brine</a>
+        <a href="/guides/how-often-should-you-detail-your-car/">How Often To Detail</a>
+        <a href="/guides/interior-vs-full-detail-which-do-you-need/">Interior Or Full?</a>
+        <a href="/guides/what-car-detailing-costs-washington-county/">What It Costs</a>
+        <a href="/guides/prepare-your-car-for-wisconsin-winter/">Winter Prep</a>
+        <a href="/guides/remove-salt-stains-from-car-carpet/">Salt Stain Removal</a>
+        <a href="/guides/detailing-before-selling-your-car/">Before You Sell</a>
+        <a href="/guides/pet-hair-and-odor-in-cars/">Pet Hair &amp; Odor</a>
+      </div>
+    </li>
     <li><a href="/pricing/" aria-current="page">Pricing</a></li>
-    <li><a href="/guides/">Guides</a></li>
     <li><a href="/about/">About</a></li>
     <li><a href="/contact/" class="nav-cta">Book Now</a></li>
   </ul>
-  <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -475,11 +519,23 @@
       <img src="/img/opt/logo-400.webp" alt="Sudz Up Detailing LLC" class="footer-logo" width="400" height="400" loading="lazy" decoding="async" />
       <div class="footer-meta">Hartford, Wisconsin &middot; 414-286-1609</div>
     </div>
-    <div class="footer-social">
-      <address class="footer-meta" style="font-style:normal;">
+    <div>
+      <address class="footer-meta" style="font-style:normal;margin-bottom:1rem;">
         <a href="tel:+14142861609">414-286-1609</a><br />
+        <a href="mailto:gio@sudzupdetail.com">gio@sudzupdetail.com</a><br />
         2948 WI-83, Hartford, WI 53027
       </address>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=61581687561195" class="social-link" aria-label="Sudz Up Detailing on Facebook" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/sudzupdetailllc/" class="social-link" aria-label="Sudz Up Detailing on Instagram" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://share.google/0SJfiztvOn00D37ml" class="social-link" aria-label="Sudz Up Detailing on Google" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 11v2.4h5.7c-.2 1.5-1.7 4.3-5.7 4.3-3.4 0-6.2-2.8-6.2-6.3S8.6 5.1 12 5.1c2 0 3.3.8 4 1.5l2.7-2.6C17 2.4 14.7 1.4 12 1.4 6.6 1.4 2.2 5.8 2.2 11.2S6.6 21 12 21c5.6 0 9.4-4 9.4-9.5 0-.6-.1-1.1-.2-1.5H12z"/></svg>
+        </a>
+      </div>
     </div>
   </div>
   <div class="footer-copy">&copy; 2026 Sudz Up Detailing LLC &middot; Hartford, WI &middot; All rights reserved.</div>

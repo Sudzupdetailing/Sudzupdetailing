@@ -8,6 +8,7 @@ or not the reader ever books anything.
 GUIDES = [
 {
  "slug": "road-salt-and-your-car-wisconsin",
+ "nav": "Road Salt & Brine",
  "title": "Road Salt, Brine and Your Car: A Wisconsin Owner's Guide | Sudz Up Detailing",
  "meta": "How Wisconsin road salt and liquid brine damage vehicles, which areas corrode first, and when to wash. Practical guidance from a Hartford, WI detailer.",
  "h1": "Road Salt, Brine and Your Car: A Wisconsin Owner's Guide",
@@ -47,6 +48,7 @@ GUIDES = [
 },
 {
  "slug": "how-often-should-you-detail-your-car",
+ "nav": "How Often To Detail",
  "title": "How Often Should You Detail Your Car in Wisconsin? | Sudz Up Detailing",
  "meta": "A realistic detailing schedule for Wisconsin drivers, based on how you actually use your vehicle. Practical guidance from a Hartford, WI detailer.",
  "h1": "How Often Should You Detail Your Car in Wisconsin?",
@@ -88,6 +90,7 @@ GUIDES = [
 },
 {
  "slug": "interior-vs-full-detail-which-do-you-need",
+ "nav": "Interior Or Full?",
  "title": "Interior or Full Detail: Which Do You Actually Need? | Sudz Up Detailing",
  "meta": "A straight comparison of interior-only versus full interior and exterior detailing, and how to tell which one your vehicle needs. Hartford, WI.",
  "h1": "Interior or Full Detail: Which Do You Actually Need?",
@@ -128,6 +131,7 @@ GUIDES = [
 },
 {
  "slug": "what-car-detailing-costs-washington-county",
+ "nav": "What It Costs",
  "title": "What Car Detailing Costs in Washington County, WI | Sudz Up Detailing",
  "meta": "What auto detailing actually costs around Hartford and Washington County, WI, what drives the price, and how to spot a quote that will change later.",
  "h1": "What Car Detailing Costs in Washington County, WI",
@@ -168,6 +172,7 @@ GUIDES = [
 },
 {
  "slug": "prepare-your-car-for-wisconsin-winter",
+ "nav": "Winter Prep",
  "title": "How to Prepare Your Car for a Wisconsin Winter | Sudz Up Detailing",
  "meta": "A practical pre-winter checklist for Wisconsin drivers covering paint protection, interior prep, glass, seals and salt defence. From a Hartford, WI detailer.",
  "h1": "How to Prepare Your Car for a Wisconsin Winter",
@@ -210,6 +215,7 @@ GUIDES = [
 },
 {
  "slug": "remove-salt-stains-from-car-carpet",
+ "nav": "Salt Stain Removal",
  "title": "How to Remove Salt Stains From Car Carpet and Mats | Sudz Up Detailing",
  "meta": "Why salt stains return after cleaning, what actually removes them, and the common mistakes that make it worse. Practical guidance from a Hartford, WI detailer.",
  "h1": "How to Remove Salt Stains From Car Carpet and Mats",
@@ -248,6 +254,7 @@ GUIDES = [
 },
 {
  "slug": "detailing-before-selling-your-car",
+ "nav": "Before You Sell",
  "title": "Detailing Before You Sell: What Actually Moves the Price | Sudz Up Detailing",
  "meta": "What buyers actually notice, why the interior matters more than the paint, and how to sequence a detail before listing photographs. Hartford, WI.",
  "h1": "Detailing Before You Sell: What Actually Moves the Price",
@@ -288,6 +295,7 @@ GUIDES = [
 },
 {
  "slug": "pet-hair-and-odor-in-cars",
+ "nav": "Pet Hair & Odor",
  "title": "Pet Hair and Odor in Cars: What Works and What Doesn't | Sudz Up Detailing",
  "meta": "Why vacuuming does not remove pet hair, where pet odor actually lives, and what genuinely works. Practical guidance from a Hartford, WI detailer.",
  "h1": "Pet Hair and Odor in Cars: What Works and What Doesn't",

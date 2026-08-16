@@ -23,7 +23,7 @@ SITE  = "https://sudzupdetail.com"
 BIZ   = "Sudz Up Detailing LLC"
 TEL   = "414-286-1609"
 TELE  = "+1-414-286-1609"
-EMAIL = "SudzUpdetail2025@outlook.com"
+EMAIL = "gio@sudzupdetail.com"
 ADDR  = "2948 WI-83"
 CITY  = "Hartford"
 REGION= "WI"
@@ -35,7 +35,14 @@ MEDIA_UPLOAD = "2026-06-25T03:10:29-04:00"
 # Google Business Profile. Prefer the canonical maps.google.com/?cid=... or
 # /maps/place/ URL over a share.google shortlink when you have it — sameAs
 # should point at the profile itself rather than a redirector.
-GBP_URL = "https://share.google/0SJfiztvOn00D37ml"
+GBP_URL   = "https://share.google/0SJfiztvOn00D37ml"
+FACEBOOK  = "https://www.facebook.com/profile.php?id=61581687561195"
+INSTAGRAM = "https://www.instagram.com/sudzupdetailllc/"
+
+# sameAs tells Google these profiles are the same entity as this site.
+# Only add URLs verified by hand — a wrong one actively misleads the
+# knowledge graph.
+SAME_AS = [GBP_URL, FACEBOOK, INSTAGRAM]
 
 # Verified storefront location, so the street address stays in the schema.
 # HOURS is the single source of truth: it drives the LocalBusiness schema,
@@ -89,7 +96,7 @@ def org_node():
             "logo": {"@type": "ImageObject", "@id": f"{SITE}/#logo",
                      "url": f"{SITE}/img/opt/logo-512.png", "width": 512, "height": 512,
                      "caption": BIZ},
-            "image": {"@id": f"{SITE}/#logo"}, "sameAs": [GBP_URL]}
+            "image": {"@id": f"{SITE}/#logo"}, "sameAs": SAME_AS}
 
 
 def business_node():
@@ -136,7 +143,7 @@ def business_node():
                                  "description": ("Complete interior detail plus exterior wash and polish, wheels "
                                                  "cleaned and tires shined. $200 for cars, $250 for SUVs and "
                                                  "trucks.")}}]},
-        "sameAs": [GBP_URL]}
+        "sameAs": SAME_AS}
 
 
 def website_node():
@@ -158,24 +165,52 @@ def faq_node(url, pairs):
 
 # ────────────────────────────────────────────────────────────── html fragments
 
-NAV_LINKS = [("Services", "/services/"), ("Service Area", "/auto-detailing/"),
-             ("Pricing", "/pricing/"), ("Guides", "/guides/"), ("About", "/about/")]
+def nav_model():
+    """Top-level nav: (label, hub, all-link label, children or None)."""
+    return [
+        ("Services", "/services/", "All services",
+         [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES]),
+        ("Service Area", "/auto-detailing/", "All areas we serve",
+         [(c["name"] + ", WI", "/auto-detailing/" + c["slug"] + "/") for c in CITIES]),
+        ("Guides", "/guides/", "All guides",
+         [(g["nav"], "/guides/" + g["slug"] + "/") for g in GUIDES]),
+        ("Pricing", "/pricing/", None, None),
+        ("About", "/about/", None, None),
+    ]
 
 
 def nav(active=""):
-    items = "".join(
-        f'    <li><a href="{p}"{" aria-current=\"page\"" if p == active else ""}>{e(n)}</a></li>\n'
-        for n, p in NAV_LINKS)
-    return f'''<nav>
-  <a href="/" aria-label="{e(BIZ)} home"><img src="/img/opt/logo-400.webp" alt="{e(BIZ)} — auto detailing in Hartford, Wisconsin" class="nav-logo" width="400" height="400" fetchpriority="high" decoding="async" /></a>
-  <ul class="nav-links" id="navLinks">
-{items}    <li><a href="/contact/" class="nav-cta">Book Now</a></li>
-  </ul>
-  <button class="nav-toggle" id="navToggle" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-'''
+    items = []
+    for i, (label, hub, all_label, children) in enumerate(nav_model()):
+        cur = ' aria-current="page"' if hub == active else ""
+        if not children:
+            items.append('    <li><a href="%s"%s>%s</a></li>' % (hub, cur, e(label)))
+            continue
+        mid = "navmenu%d" % i
+        wide = " cols2" if len(children) > 6 else ""
+        links = "".join('\n        <a href="%s">%s</a>' % (href, e(txt))
+                        for txt, href in children)
+        items.append(
+            '    <li class="has-menu">\n'
+            '      <button type="button" class="nav-top" aria-expanded="false"'
+            ' aria-controls="%s"%s>%s</button>\n'
+            '      <div class="nav-menu%s" id="%s">\n'
+            '        <a href="%s" class="menu-all">%s</a>%s\n'
+            '      </div>\n'
+            '    </li>' % (mid, cur, e(label), wide, mid, hub, e(all_label), links))
+    return (
+        '<nav>\n'
+        '  <a href="/" aria-label="%s home"><img src="/img/opt/logo-400.webp"'
+        ' alt="%s — auto detailing in Hartford, Wisconsin" class="nav-logo"'
+        ' width="400" height="400" fetchpriority="high" decoding="async" /></a>\n'
+        '  <ul class="nav-links" id="navLinks">\n%s\n'
+        '    <li><a href="/contact/" class="nav-cta">Book Now</a></li>\n'
+        '  </ul>\n'
+        '  <button class="nav-toggle" id="navToggle" aria-label="Open menu"'
+        ' aria-expanded="false" aria-controls="navLinks">\n'
+        '    <span></span><span></span><span></span>\n'
+        '  </button>\n'
+        '</nav>\n' % (e(BIZ), e(BIZ), chr(10).join(items)))
 
 
 def crumbs_html(trail):
@@ -236,11 +271,23 @@ FOOTER = f'''<footer>
       <img src="/img/opt/logo-400.webp" alt="{e(BIZ)}" class="footer-logo" width="400" height="400" loading="lazy" decoding="async" />
       <div class="footer-meta">Hartford, Wisconsin &middot; {TEL}</div>
     </div>
-    <div class="footer-social">
-      <address class="footer-meta" style="font-style:normal;">
+    <div>
+      <address class="footer-meta" style="font-style:normal;margin-bottom:1rem;">
         <a href="tel:+14142861609">{TEL}</a><br />
+        <a href="mailto:{EMAIL}">{EMAIL}</a><br />
         {ADDR}, {CITY}, {REGION} {ZIP}
       </address>
+      <div class="footer-social">
+        <a href="{FACEBOOK}" class="social-link" aria-label="Sudz Up Detailing on Facebook" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="{INSTAGRAM}" class="social-link" aria-label="Sudz Up Detailing on Instagram" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="{GBP_URL}" class="social-link" aria-label="Sudz Up Detailing on Google" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 11v2.4h5.7c-.2 1.5-1.7 4.3-5.7 4.3-3.4 0-6.2-2.8-6.2-6.3S8.6 5.1 12 5.1c2 0 3.3.8 4 1.5l2.7-2.6C17 2.4 14.7 1.4 12 1.4 6.6 1.4 2.2 5.8 2.2 11.2S6.6 21 12 21c5.6 0 9.4-4 9.4-9.5 0-.6-.1-1.1-.2-1.5H12z"/></svg>
+        </a>
+      </div>
     </div>
   </div>
   <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved.</div>
@@ -362,7 +409,7 @@ def build_home():
         ("Do you detail trucks and SUVs?",
          "Yes. Sudz Up Detailing details cars, trucks and SUVs. Pricing for SUVs and trucks is $150 for the Sudz Quick Clean and $250 for the Sudz Up VIP Clean."),
         ("How do I book an auto detail with Sudz Up Detailing?",
-         "Call or text 414-286-1609, or email SudzUpdetail2025@outlook.com to schedule your appointment and get a no-obligation quote."),
+         "Call or text 414-286-1609, or email gio@sudzupdetail.com to schedule your appointment and get a no-obligation quote."),
     ]
     graph.append(faq_node(url, home_faq))
 
@@ -830,7 +877,7 @@ def build_static_pages():
     p, url = "/contact/", SITE + "/contact/"
     t = [("Home", "/"), ("Contact", p)]
     contact_faq = [
-        ("How do I book?", "Call or text 414-286-1609, or email SudzUpdetail2025@outlook.com. A short call lets us ask about the vehicle's condition and give you an accurate quote and time."),
+        ("How do I book?", "Call or text 414-286-1609, or email gio@sudzupdetail.com. A short call lets us ask about the vehicle's condition and give you an accurate quote and time."),
         ("What are your hours?", "The shop is open Monday to Friday, 8:00 AM to 6:00 PM, and closed Saturday and Sunday. Call or text 414-286-1609 before heading over so we can confirm we are ready for your vehicle."),
         ("What should I tell you when I call?", "Vehicle size, rough condition, and any specific issue — a spill you know about, a smell, whether pets travel in it, whether anyone smokes in it. That determines how much time we set aside."),
         ("Do I need to empty my car first?", "Please do. Removing personal belongings lets us work faster and means we are not making judgement calls about what matters to you."),
@@ -933,6 +980,8 @@ def build_llms():
 - Email: {EMAIL}
 - Website: {SITE}/
 - Google Business Profile: {GBP_URL}
+- Facebook: {FACEBOOK}
+- Instagram: {INSTAGRAM}
 - Location type: physical shop (not mobile / not service-area only)
 - Vehicle types: cars, trucks, SUVs, vans
 
@@ -970,16 +1019,116 @@ Quotes are free and carry no obligation.
 
 
 def build_js():
-    open(os.path.join(ROOT, "assets", "site.js"), "w", encoding="utf-8").write("""// Sudz Up Detailing — shared behaviour
+    open(os.path.join(ROOT, "assets", "site.js"), "w", encoding="utf-8").write(
+        r"""// Sudz Up Detailing - shared behaviour
 (function () {
+  var MOBILE = '(max-width: 980px)';
+  var isMobile = function () { return window.matchMedia(MOBILE).matches; };
+
   var toggle = document.getElementById('navToggle');
-  var links = document.getElementById('navLinks');
-  if (toggle && links) {
-    toggle.addEventListener('click', function () { links.classList.toggle('open'); });
-    links.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { links.classList.remove('open'); });
+  var links  = document.getElementById('navLinks');
+  var menus  = [].slice.call(document.querySelectorAll('.has-menu'));
+
+  function closeMenus(except) {
+    menus.forEach(function (li) {
+      if (li === except) return;
+      li.classList.remove('open');
+      var b = li.querySelector('.nav-top');
+      if (b) b.setAttribute('aria-expanded', 'false');
     });
   }
+
+  function closeNav() {
+    if (!links) return;
+    links.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    closeMenus(null);
+  }
+
+  if (toggle && links) {
+    toggle.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open) closeMenus(null);
+    });
+  }
+
+  // Open state is JS-driven so Escape can always win. CSS hover-opening made
+  // that impossible: the pointer resting on the trigger kept the panel up.
+  var hoverEnabled = true;
+
+  function setMenu(li, open) {
+    li.classList.toggle('open', open);
+    var b = li.querySelector('.nav-top');
+    if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  menus.forEach(function (li) {
+    var btn = li.querySelector('.nav-top');
+    if (!btn) return;
+
+    btn.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      closeMenus(li);
+      if (isMobile()) {
+        // Accordion: tapping the same row again collapses it.
+        setMenu(li, !li.classList.contains('open'));
+      } else {
+        // Desktop: pointerenter has usually opened this already, so a click
+        // must not toggle it shut. Clicking only ever opens; the pointer
+        // leaving (or Escape) closes.
+        setMenu(li, true);
+      }
+    });
+
+    // Desktop pointer behaviour. Guarded so touch taps do not double-fire.
+    li.addEventListener('pointerenter', function (ev) {
+      if (ev.pointerType === 'touch' || isMobile() || !hoverEnabled) return;
+      closeMenus(li);
+      setMenu(li, true);
+    });
+    li.addEventListener('pointerleave', function (ev) {
+      if (ev.pointerType === 'touch' || isMobile()) return;
+      setMenu(li, false);
+      hoverEnabled = true;   // re-arm once the pointer actually leaves
+    });
+  });
+
+  // Navigating away via any nav link should collapse the panel first.
+  if (links) {
+    links.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { closeNav(); });
+    });
+  }
+
+  document.addEventListener('click', function (ev) {
+    if (links && links.contains(ev.target)) return;
+    if (toggle && toggle.contains(ev.target)) return;
+    closeMenus(null);
+    if (isMobile()) closeNav();
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Escape') return;
+    var openLi = document.querySelector('.has-menu.open');
+    closeNav();
+    // Suppress hover-reopen until the pointer leaves, otherwise a pointer
+    // still resting on the trigger would immediately reopen the panel.
+    hoverEnabled = false;
+    if (openLi) {
+      var b = openLi.querySelector('.nav-top');
+      if (b) b.focus();
+    } else if (toggle && isMobile()) {
+      toggle.focus();
+    }
+  });
+
+  // Crossing the breakpoint must not strand an open mobile panel on desktop.
+  var mq = window.matchMedia(MOBILE);
+  var onChange = function () { closeNav(); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
 
   if ('IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function (entries) {
