@@ -1,9 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
-    <loc>https://sudzupdetailing.github.io/Sudzupdetailing/</loc>
-    <lastmod>2025-06-25</lastmod>
+    <loc>https://sudzupdetail.com/</loc>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-dash-1125.jpg</image:loc>
+      <image:title>Dashboard and center console</image:title>
+      <image:caption>Dashboard and center console after an interior auto detail in Hartford, WI</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-seats-front-1125.jpg</image:loc>
+      <image:title>Front seats cleaned and conditioned</image:title>
+      <image:caption>Front seats cleaned and conditioned by Sudz Up Detailing in Hartford, WI</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-seats-rear-1125.jpg</image:loc>
+      <image:title>Rear seats vacuumed and shampooed</image:title>
+      <image:caption>Rear seats vacuumed and shampooed during a Hartford, WI auto detail</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-rear-angle-1126.jpg</image:loc>
+      <image:title>Rear interior cargo area detailed</image:title>
+      <image:caption>Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI</image:caption>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://sudzupdetail.com/img/poster/detail-01.jpg</video:thumbnail_loc>
+      <video:title>Interior Deep Clean in Progress — Hartford, WI</video:title>
+      <video:description>Sudz Up Detailing performing an interior deep clean: vacuuming, vinyl/rubber/plastic treatment and spot stain removal in Hartford, Wisconsin.</video:description>
+      <video:content_loc>https://sudzupdetail.com/video/detail-01.mp4</video:content_loc>
+      <video:duration>20</video:duration>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+      <video:publication_date>2026-06-25T03:10:29-04:00</video:publication_date>
+      <video:requires_subscription>no</video:requires_subscription>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://sudzupdetail.com/img/poster/detail-02.jpg</video:thumbnail_loc>
+      <video:title>Full VIP Detail Walkthrough — Washington County, WI</video:title>
+      <video:description>A walkthrough of the Sudz Up VIP Clean: complete interior detail plus exterior wash, polish, wheel cleaning and tire shine.</video:description>
+      <video:content_loc>https://sudzupdetail.com/video/detail-02.mp4</video:content_loc>
+      <video:duration>38</video:duration>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+      <video:publication_date>2026-06-25T03:10:29-04:00</video:publication_date>
+      <video:requires_subscription>no</video:requires_subscription>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://sudzupdetail.com/img/poster/detail-03.jpg</video:thumbnail_loc>
+      <video:title>Seat and Carpet Stain Removal — Hartford Auto Detailing</video:title>
+      <video:description>Close-up of spot stain removal and carpet extraction during a Sudz Up Detailing interior service.</video:description>
+      <video:content_loc>https://sudzupdetail.com/video/detail-03.mp4</video:content_loc>
+      <video:duration>20</video:duration>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+      <video:publication_date>2026-06-25T03:10:29-04:00</video:publication_date>
+      <video:requires_subscription>no</video:requires_subscription>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://sudzupdetail.com/img/poster/detail-04.jpg</video:thumbnail_loc>
+      <video:title>Exterior Wash and Polish Finish — Sudz Up Detailing</video:title>
+      <video:description>Exterior wash, polish and tire shine finish on a vehicle detailed by Sudz Up Detailing in Hartford, WI.</video:description>
+      <video:content_loc>https://sudzupdetail.com/video/detail-04.mp4</video:content_loc>
+      <video:duration>10</video:duration>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+      <video:publication_date>2026-06-25T03:10:29-04:00</video:publication_date>
+      <video:requires_subscription>no</video:requires_subscription>
+    </video:video>
   </url>
 </urlset>
