@@ -1,7 +1,21 @@
+# Sudz Up Detailing LLC — https://sudzupdetail.com
+# Search and AI crawlers are explicitly welcome.
+
 User-agent: *
 Allow: /
 
-# AI crawlers - explicitly welcome
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
@@ -23,16 +37,12 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-User-agent: Googlebot
+User-agent: Applebot
 Allow: /
 
-User-agent: Googlebot-Image
+User-agent: Applebot-Extended
 Allow: /
 
-User-agent: Googlebot-Video
-Allow: /
-
-User-agent: Bingbot
-Allow: /
+Disallow: /_build/
 
 Sitemap: https://sudzupdetail.com/sitemap.xml
