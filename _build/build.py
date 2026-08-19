@@ -19,11 +19,37 @@ from cities import CITIES
 from services import SERVICES
 from guides import GUIDES
 
+# (slug, width, height, native_width, caption/alt, short label)
+GALLERY_PHOTOS = [
+    ("interior-dash", 1125, 844, 1125, "Dashboard and center console after an interior auto detail in Hartford, WI", "Interior Detail"),
+    ("interior-seats-front", 1125, 844, 1125, "Front seats cleaned and conditioned by Sudz Up Detailing in Hartford, WI", "Front Seats"),
+    ("interior-seats-rear", 1125, 844, 1125, "Rear seats vacuumed and shampooed during a Hartford, WI auto detail", "Rear Seats"),
+    ("interior-rear-angle", 1126, 1500, 1126, "Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI", "Interior Clean"),
+    ("interior-before", 1125, 1500, 1125, "Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI", "Before"),
+]
+
+# (id, name, description, iso8601 duration, width, height, short label)
+GALLERY_VIDEOS = [
+    ("01", "Interior Deep Clean in Progress — Hartford, WI",
+     "Sudz Up Detailing performing an interior deep clean: vacuuming, vinyl/rubber/plastic treatment and spot stain removal on a customer vehicle in Hartford, Wisconsin.",
+     "PT20S", 540, 960, "Interior deep clean in progress"),
+    ("02", "Full VIP Detail Walkthrough — Washington County, WI",
+     "A walkthrough of the Sudz Up VIP Clean: complete interior detail plus exterior wash, polish, wheel cleaning and tire shine.",
+     "PT38S", 540, 960, "Full VIP detail walkthrough"),
+    ("03", "Seat and Carpet Stain Removal — Hartford Auto Detailing",
+     "Close-up of spot stain removal and carpet extraction during a Sudz Up Detailing interior service.",
+     "PT20S", 540, 960, "Seat and carpet stain removal"),
+    ("04", "Exterior Wash and Polish Finish — Sudz Up Detailing",
+     "Exterior wash, polish and tire shine finish on a vehicle detailed by Sudz Up Detailing in Hartford, WI.",
+     "PT10S", 1280, 720, "Exterior wash and polish finish"),
+]
+
 SITE  = "https://sudzupdetail.com"
 BIZ   = "Sudz Up Detailing LLC"
 TEL   = "414-286-1609"
 TELE  = "+1-414-286-1609"
 EMAIL = "gio@sudzupdetail.com"
+GA_ID = "G-Y2P0H9F6FN"
 ADDR  = "2948 WI-83"
 CITY  = "Hartford"
 REGION= "WI"
@@ -170,6 +196,7 @@ def nav_model():
     return [
         ("Services", "/services/", "All services",
          [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES]),
+        ("Gallery", "/gallery/", None, None),
         ("Service Area", "/auto-detailing/", "All areas we serve",
          [(c["name"] + ", WI", "/auto-detailing/" + c["slug"] + "/") for c in CITIES]),
         ("Guides", "/guides/", "All guides",
@@ -221,6 +248,38 @@ def crumbs_html(trail):
                    else f'<li><a href="{p}">{e(n)}</a></li>')
     out.append('</ol></nav></div>')
     return "".join(out)
+
+
+def gallery_photo_html(photos):
+    return "\n".join(
+        f'''    <button type="button" class="gallery-photo" onclick="openLightbox('/img/opt/{s}-{nat}.jpg','{e(cap)}')" aria-label="Enlarge photo: {e(lbl)}">
+      <picture>
+        <source type="image/webp" sizes="(max-width:768px) 50vw, 25vw" srcset="/img/opt/{s}-480.webp 480w, /img/opt/{s}-800.webp 800w, /img/opt/{s}-{nat}.webp {nat}w" />
+        <img src="/img/opt/{s}-800.jpg" sizes="(max-width:768px) 50vw, 25vw" srcset="/img/opt/{s}-480.jpg 480w, /img/opt/{s}-800.jpg 800w, /img/opt/{s}-{nat}.jpg {nat}w" alt="{e(cap)}" width="{w}" height="{h}" loading="lazy" decoding="async" />
+      </picture>
+      <span class="gallery-photo-label">{e(lbl)}</span>
+    </button>''' for s, w, h, nat, cap, lbl in photos)
+
+
+def gallery_video_html(vids, id_prefix="vid"):
+    return "\n".join(
+        f'''    <div class="gallery-video" id="{id_prefix}{i}wrap">
+      <video id="{id_prefix}{i}" src="/video/detail-{vid}.mp4" poster="/img/poster/detail-{vid}.jpg" width="{w}" height="{h}" playsinline preload="none" loop muted aria-label="{e(short)} — Sudz Up Detailing, Hartford WI"></video>
+      <button type="button" class="video-play-hint" data-video="{id_prefix}{i}" data-title="{e(short)}" aria-pressed="false" aria-label="Play video: {e(short)}">
+        <span class="play-icon">
+          <svg class="ic-play" width="13" height="15" viewBox="0 0 13 15" fill="black" aria-hidden="true"><path d="M0 0l13 7.5L0 15z"/></svg>
+          <svg class="ic-pause" width="12" height="14" viewBox="0 0 12 14" fill="black" aria-hidden="true"><rect x="0" y="0" width="4" height="14" rx="1"/><rect x="8" y="0" width="4" height="14" rx="1"/></svg>
+        </span>
+      </button>
+      <span class="video-progress" aria-hidden="true"><i></i></span>
+    </div>''' for i, (vid, _, _, _, w, h, short) in enumerate(vids, 1))
+
+
+def lightbox_html():
+    return '''<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close image">&#x2715;</button>
+  <img id="lightboxImg" src="" alt="" />
+</div>'''
 
 
 def glance_html(pairs):
@@ -304,6 +363,14 @@ def page(path, title, meta, graph, body, active="", extra_head=""):
     doc = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', '{GA_ID}');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{e(title)}</title>
@@ -359,23 +426,10 @@ def page(path, title, meta, graph, body, active="", extra_head=""):
 def build_home():
     path = "/"
     url = SITE + "/"
-    vids = [("01", "Interior Deep Clean in Progress — Hartford, WI",
-             "Sudz Up Detailing performing an interior deep clean: vacuuming, vinyl/rubber/plastic treatment and spot stain removal on a customer vehicle in Hartford, Wisconsin.",
-             "PT20S", 540, 960, "Interior deep clean in progress"),
-            ("02", "Full VIP Detail Walkthrough — Washington County, WI",
-             "A walkthrough of the Sudz Up VIP Clean: complete interior detail plus exterior wash, polish, wheel cleaning and tire shine.",
-             "PT38S", 540, 960, "Full VIP detail walkthrough"),
-            ("03", "Seat and Carpet Stain Removal — Hartford Auto Detailing",
-             "Close-up of spot stain removal and carpet extraction during a Sudz Up Detailing interior service.",
-             "PT20S", 540, 960, "Seat and carpet stain removal"),
-            ("04", "Exterior Wash and Polish Finish — Sudz Up Detailing",
-             "Exterior wash, polish and tire shine finish on a vehicle detailed by Sudz Up Detailing in Hartford, WI.",
-             "PT10S", 1280, 720, "Exterior wash and polish finish")]
-    photos = [("interior-dash", 1125, 844, 1125, "Dashboard and center console after an interior auto detail in Hartford, WI", "Interior Detail"),
-              ("interior-seats-front", 1125, 844, 1125, "Front seats cleaned and conditioned by Sudz Up Detailing in Hartford, WI", "Front Seats"),
-              ("interior-seats-rear", 1125, 844, 1125, "Rear seats vacuumed and shampooed during a Hartford, WI auto detail", "Rear Seats"),
-              ("interior-rear-angle", 1126, 1500, 1126, "Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI", "Interior Clean"),
-              ("interior-before", 1125, 1500, 1125, "Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI", "Before")]
+    vids = GALLERY_VIDEOS
+    # Homepage teaser sticks to finished-result shots; the "Before" shot and
+    # the rest of the set live on the dedicated /gallery/ page.
+    photos = [p for p in GALLERY_PHOTOS if p[5] != "Before"]
 
     graph = [org_node(), business_node(), website_node(),
              {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
@@ -414,26 +468,8 @@ def build_home():
     ]
     graph.append(faq_node(url, home_faq))
 
-    photo_html = "\n".join(
-        f'''    <button type="button" class="gallery-photo" onclick="openLightbox('/img/opt/{s}-{nat}.jpg','{e(cap)}')" aria-label="Enlarge photo: {e(lbl)}">
-      <picture>
-        <source type="image/webp" sizes="(max-width:768px) 50vw, 25vw" srcset="/img/opt/{s}-480.webp 480w, /img/opt/{s}-800.webp 800w, /img/opt/{s}-{nat}.webp {nat}w" />
-        <img src="/img/opt/{s}-800.jpg" sizes="(max-width:768px) 50vw, 25vw" srcset="/img/opt/{s}-480.jpg 480w, /img/opt/{s}-800.jpg 800w, /img/opt/{s}-{nat}.jpg {nat}w" alt="{e(cap)}" width="{w}" height="{h}" loading="lazy" decoding="async" />
-      </picture>
-      <span class="gallery-photo-label">{e(lbl)}</span>
-    </button>''' for s, w, h, nat, cap, lbl in photos)
-
-    video_html = "\n".join(
-        f'''    <div class="gallery-video" id="vid{i}wrap">
-      <video id="vid{i}" src="/video/detail-{vid}.mp4" poster="/img/poster/detail-{vid}.jpg" width="{w}" height="{h}" playsinline preload="none" loop muted aria-label="{e(short)} — Sudz Up Detailing, Hartford WI"></video>
-      <button type="button" class="video-play-hint" data-video="vid{i}" data-title="{e(short)}" aria-pressed="false" aria-label="Play video: {e(short)}">
-        <span class="play-icon">
-          <svg class="ic-play" width="13" height="15" viewBox="0 0 13 15" fill="black" aria-hidden="true"><path d="M0 0l13 7.5L0 15z"/></svg>
-          <svg class="ic-pause" width="12" height="14" viewBox="0 0 12 14" fill="black" aria-hidden="true"><rect x="0" y="0" width="4" height="14" rx="1"/><rect x="8" y="0" width="4" height="14" rx="1"/></svg>
-        </span>
-      </button>
-      <span class="video-progress" aria-hidden="true"><i></i></span>
-    </div>''' for i, (vid, _, _, _, w, h, short) in enumerate(vids, 1))
+    photo_html = gallery_photo_html(photos)
+    video_html = gallery_video_html(vids)
 
     svc_cards = "\n".join(
         f'''  <a href="/services/{s["slug"]}/"><span class="card-eyebrow">{e(s["price"])}</span><h3>{e(s["name"])}</h3><p>{e(s["card"])}</p></a>'''
@@ -487,6 +523,7 @@ def build_home():
   <div class="gallery-videos fade-up">
 {video_html}
   </div>
+  <p class="areas-note fade-up"><a href="/gallery/" style="color:var(--gold);text-decoration:none;">View full gallery &rarr;</a></p>
 </section>
 
 <section id="areas" aria-labelledby="areas-title">
@@ -544,6 +581,61 @@ def home_media_xml(photos, vids):
       <video:publication_date>{MEDIA_UPLOAD}</video:publication_date>
     </video:video>""" for v, name, desc, dur, w, h, short in vids)
     return img + "\n" + vid
+
+
+def build_gallery():
+    path, url = "/gallery/", SITE + "/gallery/"
+    t = [("Home", "/"), ("Gallery", path)]
+    photos, vids = GALLERY_PHOTOS, GALLERY_VIDEOS
+
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": ["CollectionPage", "WebPage"], "@id": f"{url}#webpage", "url": url,
+              "name": f"Photo & Video Gallery | {BIZ}",
+              "isPartOf": {"@id": f"{SITE}/#website"}, "about": {"@id": f"{SITE}/#business"},
+              "inLanguage": "en-US", "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+             crumb_node(url, t)]
+    for vid, name, desc, dur, w, h, _ in vids:
+        graph.append({"@type": "VideoObject", "@id": f"{SITE}/#video-{vid}", "name": name,
+                      "description": desc, "thumbnailUrl": [f"{SITE}/img/poster/detail-{vid}.jpg"],
+                      "uploadDate": MEDIA_UPLOAD, "duration": dur,
+                      "contentUrl": f"{SITE}/video/detail-{vid}.mp4", "embedUrl": f"{url}",
+                      "width": w, "height": h, "isFamilyFriendly": True, "inLanguage": "en-US",
+                      "publisher": {"@id": f"{SITE}/#organization"}, "about": {"@id": f"{SITE}/#business"},
+                      "contentLocation": {"@type": "Place", "name": "Hartford, Wisconsin"}})
+    for slug, w, h, nat, cap, _ in photos:
+        graph.append({"@type": "ImageObject", "@id": f"{SITE}/#img-{slug}",
+                      "contentUrl": f"{SITE}/img/opt/{slug}-{nat}.jpg",
+                      "url": f"{SITE}/img/opt/{slug}-{nat}.jpg", "width": w, "height": h,
+                      "caption": cap, "creator": {"@id": f"{SITE}/#organization"},
+                      "contentLocation": {"@type": "Place", "name": "Hartford, Wisconsin"}})
+
+    photo_html = gallery_photo_html(photos)
+    video_html = gallery_video_html(vids, id_prefix="gvid")
+
+    body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">Our Work</p>
+  <h1 class="section-title">Full Photo<br>&amp; Video Gallery</h1>
+  <p class="page-lede">A closer look at real vehicles we have detailed in Hartford and across Washington County &mdash; before, during and after.</p>
+</div>
+<section id="full-gallery" aria-label="Photo gallery">
+  <div class="gallery-photos fade-up">
+{photo_html}
+  </div>
+</section>
+<section id="full-gallery-videos" aria-label="Video gallery">
+  <div class="gallery-videos fade-up">
+{video_html}
+  </div>
+</section>
+{cta_html("Like What You See?", f"Call or text {TEL} for a no-obligation quote and we will schedule your detail.")}
+{related_html("Our services", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
+{lightbox_html()}
+'''
+    page(path, f"Photo & Video Gallery | {BIZ}",
+         "See real before-and-after auto detailing photos and videos from Sudz Up Detailing in Hartford, WI. Interior details, stain removal and exterior finishes.",
+         graph, body, active=path)
+    PAGES.append((path, "0.8", "monthly", home_media_xml(photos, [])))
 
 
 def build_services():
@@ -1247,6 +1339,7 @@ document.addEventListener('keydown', function (ev) {
 
 def main():
     build_home()
+    build_gallery()
     build_services()
     build_cities()
     build_guides()

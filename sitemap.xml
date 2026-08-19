@@ -23,10 +23,6 @@
       <image:loc>https://sudzupdetail.com/img/opt/interior-rear-angle-1126.jpg</image:loc>
       <image:caption>Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://sudzupdetail.com/img/opt/interior-before-1125.jpg</image:loc>
-      <image:caption>Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI</image:caption>
-    </image:image>
     <video:video>
       <video:thumbnail_loc>https://sudzupdetail.com/img/poster/detail-01.jpg</video:thumbnail_loc>
       <video:title>Interior Deep Clean in Progress — Hartford, WI</video:title>
@@ -67,6 +63,33 @@
       <video:live>no</video:live>
       <video:publication_date>2026-06-25T03:10:29-04:00</video:publication_date>
     </video:video>
+  </url>
+  <url>
+    <loc>https://sudzupdetail.com/gallery/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-dash-1125.jpg</image:loc>
+      <image:caption>Dashboard and center console after an interior auto detail in Hartford, WI</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-seats-front-1125.jpg</image:loc>
+      <image:caption>Front seats cleaned and conditioned by Sudz Up Detailing in Hartford, WI</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-seats-rear-1125.jpg</image:loc>
+      <image:caption>Rear seats vacuumed and shampooed during a Hartford, WI auto detail</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-rear-angle-1126.jpg</image:loc>
+      <image:caption>Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sudzupdetail.com/img/opt/interior-before-1125.jpg</image:loc>
+      <image:caption>Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI</image:caption>
+    </image:image>
+
   </url>
   <url>
     <loc>https://sudzupdetail.com/services/</loc>
