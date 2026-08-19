@@ -374,7 +374,8 @@ def build_home():
     photos = [("interior-dash", 1125, 844, 1125, "Dashboard and center console after an interior auto detail in Hartford, WI", "Interior Detail"),
               ("interior-seats-front", 1125, 844, 1125, "Front seats cleaned and conditioned by Sudz Up Detailing in Hartford, WI", "Front Seats"),
               ("interior-seats-rear", 1125, 844, 1125, "Rear seats vacuumed and shampooed during a Hartford, WI auto detail", "Rear Seats"),
-              ("interior-rear-angle", 1126, 1500, 1126, "Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI", "Interior Clean")]
+              ("interior-rear-angle", 1126, 1500, 1126, "Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI", "Interior Clean"),
+              ("interior-before", 1125, 1500, 1125, "Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI", "Before")]
 
     graph = [org_node(), business_node(), website_node(),
              {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
