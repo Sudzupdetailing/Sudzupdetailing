@@ -74,6 +74,12 @@ TEL   = "414-286-1609"
 TELE  = "+1-414-286-1609"
 EMAIL = "gio@sudzupdetail.com"
 GA_ID = "G-Y2P0H9F6FN"
+
+# Endpoint the contact form POSTs to. The site is static, so this must be an
+# external form service (Formspree, Web3Forms, etc.) or a serverless function.
+# Until this is set the form renders in a disabled state with a notice, so we
+# never show customers a form that silently drops their submission.
+FORM_ENDPOINT = "https://formspree.io/f/xwlezbde"
 ADDR  = "2948 WI-83"
 CITY  = "Hartford"
 REGION= "WI"
@@ -307,6 +313,67 @@ def lightbox_html():
 </div>'''
 
 
+def contact_form_html():
+    """Booking form with TCPA-compliant SMS consent checkboxes.
+
+    Both consent boxes are unchecked by default and are NOT required to
+    submit — consent can never be a condition of service. Transactional
+    and promotional consent are collected separately, because marketing
+    messages need their own express written opt-in.
+    """
+    disabled = "" if FORM_ENDPOINT else " disabled"
+    action = f' action="{FORM_ENDPOINT}" method="POST"' if FORM_ENDPOINT else ""
+    notice = "" if FORM_ENDPOINT else (
+        '\n  <p class="cform-note">This form is not yet connected. '
+        f'Please call or text {TEL} to book.</p>')
+    return f'''<form class="cform" id="bookingForm"{action} novalidate>
+  <div class="cform-row">
+    <label for="cf-name">Your name</label>
+    <input type="text" id="cf-name" name="name" autocomplete="name" required />
+  </div>
+  <div class="cform-row">
+    <label for="cf-phone">Mobile number</label>
+    <input type="tel" id="cf-phone" name="phone" autocomplete="tel" required />
+  </div>
+  <div class="cform-row">
+    <label for="cf-email">Email (optional)</label>
+    <input type="email" id="cf-email" name="email" autocomplete="email" />
+  </div>
+  <div class="cform-row">
+    <label for="cf-vehicle">Vehicle</label>
+    <input type="text" id="cf-vehicle" name="vehicle" placeholder="Year, make, model" />
+  </div>
+  <div class="cform-row">
+    <label for="cf-message">What do you need?</label>
+    <textarea id="cf-message" name="message" placeholder="Condition, any specific stains or smells, and when you would like it done."></textarea>
+  </div>
+
+  <div class="cform-consent">
+    <input type="checkbox" id="cf-sms" name="sms_consent" value="yes" />
+    <label for="cf-sms"><strong>Text me about my booking.</strong> I agree to receive text messages from {e(BIZ)} about my appointment, quote and service updates at the mobile number provided.</label>
+  </div>
+
+  <div class="cform-consent">
+    <input type="checkbox" id="cf-promo" name="promo_consent" value="yes" />
+    <label for="cf-promo"><strong>Send me occasional offers.</strong> I agree to receive promotional and marketing text messages from {e(BIZ)} at the mobile number provided.</label>
+  </div>
+
+  <p class="cform-fineprint">
+    Consent is not a condition of purchase. Message frequency varies.
+    Message and data rates may apply. Reply STOP to opt out or HELP for help.
+    See our <a href="/sms-privacy-policy/">SMS Privacy Policy</a>.
+  </p>
+
+  <div class="hp-field" aria-hidden="true">
+    <label for="cf-website">Leave this field empty</label>
+    <input type="text" id="cf-website" name="_gotcha" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <button type="submit"{disabled}>Request A Quote</button>
+  <p class="cform-status" id="cf-status" role="status" aria-live="polite"></p>{notice}
+</form>'''
+
+
 def glance_html(pairs):
     cells = "".join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k, v in pairs)
     return f'<dl class="glance">{cells}</dl>'
@@ -374,7 +441,7 @@ FOOTER = f'''<footer>
       </div>
     </div>
   </div>
-  <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved.</div>
+  <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved. &middot; <a href="/sms-privacy-policy/">SMS Privacy Policy</a></div>
 </footer>
 <script src="/assets/site.js" defer></script>
 </body>
@@ -1070,6 +1137,14 @@ def build_static_pages():
 </div>
 {glance_html([("Phone / text", TEL), ("Email", EMAIL), ("Address", f"{ADDR}, {CITY} {ZIP}"), ("Hours", hours_human())])}
 
+<h2>Request a quote</h2>
+<p>Prefer to type it out? Fill this in and we will get back to you. For the fastest answer, calling or texting is still quicker.</p>
+</div></div>
+<div class="prose"><div class="prose-col">
+{contact_form_html()}
+</div></div>
+<div class="prose"><div class="prose-col">
+
 <h2>What to tell us</h2>
 <p>A short call gets you a more accurate quote than any form would. The things worth mentioning:</p>
 <ul>
@@ -1096,6 +1171,78 @@ def build_static_pages():
          "Book auto detailing in Hartford, WI. Call or text 414-286-1609 for a no-obligation quote. Shop at 2948 WI-83, Hartford, WI 53027.",
          graph, body, active=p)
     PAGES.append((p, "0.9", "monthly", ""))
+
+    # ── SMS PRIVACY POLICY ─────────────────────────────────────
+    # Required for A2P 10DLC / Twilio campaign registration. Carriers
+    # crawl this page, so it must stay publicly reachable and indexable.
+    p, url = "/sms-privacy-policy/", SITE + "/sms-privacy-policy/"
+    t = [("Home", "/"), ("SMS Privacy Policy", p)]
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
+              "name": f"SMS Privacy Policy | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
+              "about": {"@id": f"{SITE}/#business"}, "inLanguage": "en-US",
+              "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+             crumb_node(url, t)]
+    body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">Legal</p>
+  <h1 class="section-title">SMS Privacy<br>Policy</h1>
+  <p class="page-lede">How {BIZ} handles mobile phone numbers and text messaging. Last updated {TODAY}.</p>
+</div>
+<div class="prose"><div class="prose-col">
+<h2>No mobile information is shared or sold</h2>
+<p><strong>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes.</strong> Information sharing to subcontractors in support services, such as customer service, is permitted. All other use case categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.</p>
+<p>We do not sell, rent or trade mobile phone numbers. Your number is used only to communicate with you about your vehicle and your service with us.</p>
+
+<h2>How we get your consent</h2>
+<p>We collect consent to text you in one of the following ways:</p>
+<ul>
+<li>You text us first at {TEL}, or give us your mobile number verbally and agree to be contacted by text.</li>
+<li>You check the consent box on the booking form on our <a href="/contact/">contact page</a>, indicating you agree to receive text messages. Promotional messages have their own separate box.</li>
+<li>You provide your number and agree to text contact on a paper form or in person at our shop at {ADDR}, {CITY}, {REGION} {ZIP}.</li>
+</ul>
+<p>Consent to receive text messages is never a condition of purchasing any service from us. Consent is not shared with anyone else and is used only for the messages described below.</p>
+
+<h2>What we send</h2>
+<ul>
+<li><strong>Appointment confirmations and reminders</strong> &mdash; confirming your booking, the time and the vehicle.</li>
+<li><strong>Quotes and service updates</strong> &mdash; pricing, questions about the work, and letting you know when your vehicle is ready.</li>
+<li><strong>Occasional promotions</strong> &mdash; seasonal offers or availability, sent only to customers who have given consent for promotional messages.</li>
+</ul>
+
+<h2>Message frequency</h2>
+<p>Message frequency varies and depends on your interaction with us. Most customers receive only a handful of messages around a single booking. Promotional messages are infrequent and are not sent more than a few times per year.</p>
+
+<h2>Cost</h2>
+<p>Message and data rates may apply. These are charged by your mobile carrier, not by us. Contact your carrier for details of your plan.</p>
+
+<h2>How to stop messages</h2>
+<p>You can opt out at any time by replying <strong>STOP</strong> to any message from us. You will receive a single confirmation that you have been unsubscribed, and we will not send you any further texts unless you opt back in. You can also ask us directly by calling {TEL} or emailing <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+<p>To rejoin after opting out, reply <strong>START</strong> or contact us and ask to be added back.</p>
+
+<h2>How to get help</h2>
+<p>Reply <strong>HELP</strong> to any message from us for assistance, or contact us directly:</p>
+<ul>
+<li>Phone or text: <a href="tel:+14142861609">{TEL}</a></li>
+<li>Email: <a href="mailto:{EMAIL}">{EMAIL}</a></li>
+<li>Address: {ADDR}, {CITY}, {REGION} {ZIP}</li>
+</ul>
+
+<h2>Carrier liability</h2>
+<p>Wireless carriers are not liable for delayed or undelivered messages.</p>
+
+<h2>What we store</h2>
+<p>We keep your name, mobile number, vehicle details and service history so we can carry out the work and contact you about it. We keep a record of your consent to be texted and of any opt-out request. You can ask us to delete your information at any time using the contact details above, and we will do so unless we are required to keep it for tax or legal reasons.</p>
+
+<h2>Changes to this policy</h2>
+<p>If we change how we handle text messaging we will update this page and change the date at the top.</p>
+</div></div>
+{cta_html("Questions About This Policy?", f"Call or text {TEL}, or email {EMAIL} and we will get back to you.")}
+'''
+    page(p, f"SMS Privacy Policy | {BIZ}",
+         "How Sudz Up Detailing LLC handles mobile phone numbers and text messaging, including consent, opt-out and message frequency.",
+         graph, body, active=p)
+    PAGES.append((p, "0.3", "yearly", ""))
 
 
 # ────────────────────────────────────────────────────────── crawl-layer files
@@ -1406,6 +1553,40 @@ function closeLightbox(ev) {
 document.addEventListener('keydown', function (ev) {
   if (ev.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
 });
+
+// Booking form: async submit so the customer stays on the page.
+(function () {
+  var form = document.getElementById('bookingForm');
+  if (!form || !form.getAttribute('action')) return;
+  var status = document.getElementById('cf-status');
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var name = form.querySelector('#cf-name');
+    var phone = form.querySelector('#cf-phone');
+    if (!name.value.trim() || !phone.value.trim()) {
+      status.textContent = 'Please add your name and mobile number.';
+      status.style.color = '#e8a020';
+      return;
+    }
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    status.style.color = '';
+    status.textContent = 'Sending...';
+    fetch(form.getAttribute('action'), {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    }).then(function (r) {
+      if (!r.ok) throw new Error('bad status');
+      form.reset();
+      status.style.color = '#e8a020';
+      status.textContent = 'Thanks — we have your request and will be in touch shortly.';
+    }).catch(function () {
+      status.style.color = '#e8a020';
+      status.textContent = 'Something went wrong. Please call or text 414-286-1609 instead.';
+    }).finally(function () { btn.disabled = false; });
+  });
+})();
 """)
 
 

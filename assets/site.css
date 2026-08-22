@@ -807,6 +807,9 @@
       opacity: 0.5;
     }
 
+    .footer-copy a { color: var(--gold); text-decoration: none; }
+    .footer-copy a:hover { text-decoration: underline; }
+
     /* ── ANIMATIONS ── */
     @media (prefers-reduced-motion: no-preference) {
       .fade-up {
@@ -897,6 +900,36 @@
   text-transform: uppercase; color: var(--gold); background: var(--panel); }
 .spec td { color: var(--text); vertical-align: top; }
 .spec td:first-child { color: var(--warm); font-weight: 600; }
+
+/* CONTACT FORM */
+.cform { background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
+  padding: 2rem; margin: 2.5rem 0; }
+.cform-row { margin-bottom: 1.25rem; }
+.cform label { display: block; font-family: 'Barlow', sans-serif; font-weight: 600; font-size: .72rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
+.cform input[type=text], .cform input[type=tel], .cform input[type=email], .cform textarea {
+  width: 100%; background: #111; border: 1px solid var(--border); border-radius: 3px;
+  color: var(--warm); font-family: 'Barlow', sans-serif; font-size: .95rem; padding: .8rem .9rem; }
+.cform input:focus, .cform textarea:focus { outline: none; border-color: var(--gold); }
+.cform textarea { min-height: 120px; resize: vertical; }
+.cform-consent { display: flex; gap: .8rem; align-items: flex-start; margin-bottom: 1.1rem;
+  padding: 1rem; background: #111; border: 1px solid var(--border); border-radius: 3px; }
+.cform-consent input[type=checkbox] { flex: 0 0 auto; width: 18px; height: 18px; margin-top: .15rem;
+  accent-color: var(--gold); cursor: pointer; }
+.cform-consent label { text-transform: none; letter-spacing: 0; font-size: .84rem; font-weight: 400;
+  color: var(--text); line-height: 1.65; margin-bottom: 0; cursor: pointer; }
+.cform-consent label strong { color: var(--warm); font-weight: 600; }
+.cform-consent a { color: var(--gold); }
+.cform-fineprint { font-size: .76rem; color: var(--text); line-height: 1.7; margin-bottom: 1.4rem;
+  opacity: .85; }
+.cform button { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .76rem;
+  letter-spacing: .15em; text-transform: uppercase; background: var(--gold); color: #000;
+  border: none; border-radius: 3px; padding: .95rem 2rem; cursor: pointer; transition: background .2s; }
+.cform button:hover { background: var(--gold-d); }
+.cform button:disabled { opacity: .45; cursor: not-allowed; }
+.cform-note { font-size: .8rem; color: var(--gold); margin-top: 1rem; }
+.cform-status { font-size: .88rem; margin-top: 1rem; }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* TESTIMONIALS */
 .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.25rem;

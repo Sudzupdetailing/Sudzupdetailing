@@ -215,3 +215,37 @@ function closeLightbox(ev) {
 document.addEventListener('keydown', function (ev) {
   if (ev.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
 });
+
+// Booking form: async submit so the customer stays on the page.
+(function () {
+  var form = document.getElementById('bookingForm');
+  if (!form || !form.getAttribute('action')) return;
+  var status = document.getElementById('cf-status');
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var name = form.querySelector('#cf-name');
+    var phone = form.querySelector('#cf-phone');
+    if (!name.value.trim() || !phone.value.trim()) {
+      status.textContent = 'Please add your name and mobile number.';
+      status.style.color = '#e8a020';
+      return;
+    }
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    status.style.color = '';
+    status.textContent = 'Sending...';
+    fetch(form.getAttribute('action'), {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    }).then(function (r) {
+      if (!r.ok) throw new Error('bad status');
+      form.reset();
+      status.style.color = '#e8a020';
+      status.textContent = 'Thanks — we have your request and will be in touch shortly.';
+    }).catch(function () {
+      status.style.color = '#e8a020';
+      status.textContent = 'Something went wrong. Please call or text 414-286-1609 instead.';
+    }).finally(function () { btn.disabled = false; });
+  });
+})();
