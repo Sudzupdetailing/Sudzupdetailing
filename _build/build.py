@@ -28,6 +28,15 @@ GALLERY_PHOTOS = [
     ("interior-before", 1125, 1500, 1125, "Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI", "Before"),
 ]
 
+# (name, quote, short context label)
+TESTIMONIALS = [
+    ("Maggie R.",
+     "Gio detailed the inside of my 16 year old van. Looked and smelled like new. He is a very "
+     "accommodating young man who dealt with rescheduling and pick up issues when i had problems. "
+     "I will definitely recommend and use his services again.",
+     "Interior Detail — Family Van"),
+]
+
 # (id, name, description, iso8601 duration, width, height, short label)
 GALLERY_VIDEOS = [
     ("01", "Interior Deep Clean in Progress — Hartford, WI",
@@ -197,6 +206,7 @@ def nav_model():
         ("Services", "/services/", "All services",
          [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES]),
         ("Gallery", "/gallery/", None, None),
+        ("Testimonials", "/testimonials/", None, None),
         ("Service Area", "/auto-detailing/", "All areas we serve",
          [(c["name"] + ", WI", "/auto-detailing/" + c["slug"] + "/") for c in CITIES]),
         ("Guides", "/guides/", "All guides",
@@ -636,6 +646,51 @@ def build_gallery():
          "See real before-and-after auto detailing photos and videos from Sudz Up Detailing in Hartford, WI. Interior details, stain removal and exterior finishes.",
          graph, body, active=path)
     PAGES.append((path, "0.8", "monthly", home_media_xml(photos, [])))
+
+
+def build_testimonials():
+    path, url = "/testimonials/", SITE + "/testimonials/"
+    t = [("Home", "/"), ("Testimonials", path)]
+
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": ["CollectionPage", "WebPage"], "@id": f"{url}#webpage", "url": url,
+              "name": f"Customer Testimonials | {BIZ}",
+              "isPartOf": {"@id": f"{SITE}/#website"}, "about": {"@id": f"{SITE}/#business"},
+              "inLanguage": "en-US", "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+             crumb_node(url, t)]
+    for i, (name, quote, context) in enumerate(TESTIMONIALS, 1):
+        graph.append({"@type": "Review", "@id": f"{url}#review-{i}",
+                      "itemReviewed": {"@id": f"{SITE}/#business"},
+                      "author": {"@type": "Person", "name": name},
+                      "reviewBody": quote, "inLanguage": "en-US"})
+
+    cards = "\n".join(
+        f'''    <div class="testimonial-card">
+      <p class="testimonial-quote">{e(quote)}</p>
+      <div class="testimonial-footer">
+        <p class="testimonial-name">{e(name)}</p>
+        <p class="testimonial-context">{e(context)}</p>
+      </div>
+    </div>''' for name, quote, context in TESTIMONIALS)
+
+    body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">Customer Reviews</p>
+  <h1 class="section-title">What Our<br>Customers Say</h1>
+  <p class="page-lede">Real feedback from vehicle owners we have worked with in Hartford and across Washington County.</p>
+</div>
+<section aria-label="Customer testimonials">
+  <div class="testimonial-grid fade-up">
+{cards}
+  </div>
+</section>
+{cta_html("Ready For Results Like These?", f"Call or text {TEL} for a no-obligation quote and we will schedule your detail.")}
+{related_html("Our services", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
+'''
+    page(path, f"Customer Testimonials | {BIZ}",
+         "Read real customer testimonials for Sudz Up Detailing, Hartford WI's mobile and shop auto detailing service.",
+         graph, body, active=path)
+    PAGES.append((path, "0.7", "monthly", ""))
 
 
 def build_services():
@@ -1340,6 +1395,7 @@ document.addEventListener('keydown', function (ev) {
 def main():
     build_home()
     build_gallery()
+    build_testimonials()
     build_services()
     build_cities()
     build_guides()

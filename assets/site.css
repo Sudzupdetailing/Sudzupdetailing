@@ -898,6 +898,20 @@
 .spec td { color: var(--text); vertical-align: top; }
 .spec td:first-child { color: var(--warm); font-weight: 600; }
 
+/* TESTIMONIALS */
+.testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.25rem;
+  max-width: 1100px; margin: 2.5rem auto 0; }
+.testimonial-card { background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
+  padding: 1.9rem 2rem; display: flex; flex-direction: column; }
+.testimonial-quote { color: var(--text); font-size: .97rem; line-height: 1.85; margin-bottom: 1.1rem; }
+.testimonial-quote::before { content: '\201C'; color: var(--gold); font-family: Georgia, serif; }
+.testimonial-quote::after { content: '\201D'; color: var(--gold); font-family: Georgia, serif; }
+.testimonial-footer { margin-top: auto; padding-top: .9rem; border-top: 1px solid var(--border); }
+.testimonial-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; text-transform: uppercase;
+  color: var(--warm); font-size: 1.05rem; letter-spacing: .01em; }
+.testimonial-context { font-size: .78rem; color: var(--gold); text-transform: uppercase;
+  letter-spacing: .1em; margin-top: .2rem; }
+
 /* CARD GRID */
 .cardgrid { display: grid; grid-template-columns: repeat(auto-fit,minmax(270px,1fr)); gap: 1px;
   background: var(--border); border: 1px solid var(--border); max-width: 1100px;
