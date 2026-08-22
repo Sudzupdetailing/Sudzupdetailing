@@ -33,6 +33,11 @@ GALLERY_PHOTOS = [
     ("minivan-third-row", 1125, 844, 1125, "Third row seating detailed in a Chrysler minivan, Hartford WI", "Third Row Seats", "after"),
     ("minivan-thirdrow-floor", 1125, 844, 1125, "Third row seats and cargo floor cleaned by Sudz Up Detailing, Hartford WI", "Rear Cabin", "after"),
     ("minivan-cargo-floor", 1125, 844, 1125, "Rear cargo floor vacuumed and detailed, Hartford WI auto detailing", "Cargo Floor", "after"),
+    ("truck-driver-area", 1125, 844, 1125, "Truck driver area and dashboard after a full interior detail in Hartford, WI", "Driver Area", "after"),
+    ("truck-front-interior", 1125, 844, 1125, "Front cab interior with leather seats and console detailed by Sudz Up Detailing, Hartford WI", "Front Cab", "after"),
+    ("truck-driver-door", 1125, 1500, 1125, "Driver door panel cleaned and conditioned during a Hartford, WI truck detail", "Driver Door", "after"),
+    ("truck-passenger-door", 1125, 1500, 1125, "Passenger door panel detailed by Sudz Up Detailing in Hartford, WI", "Passenger Door", "after"),
+    ("truck-rear-seats", 1125, 1500, 1125, "Rear cab seating and floor cleaned during a truck detail in Hartford, WI", "Rear Cab", "after"),
 ]
 
 # (name, quote, short context label)
