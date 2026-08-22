@@ -35,6 +35,12 @@ TESTIMONIALS = [
      "accommodating young man who dealt with rescheduling and pick up issues when i had problems. "
      "I will definitely recommend and use his services again.",
      "Interior Detail — Family Van"),
+    ("Makenna S.",
+     "Went above and beyond!! Came into some problems nobody was expecting, ended up needing a new "
+     "seat. They still got the job done AND helping us find a new seat. Amazing amazing work! So "
+     "knowledgeable and friendly. 100% recommend! Your car will be in good hands. The car came out "
+     "sparkly clean and no more smell.",
+     "Full Interior Detail"),
 ]
 
 # (id, name, description, iso8601 duration, width, height, short label)
