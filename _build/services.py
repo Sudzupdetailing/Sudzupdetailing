@@ -49,6 +49,9 @@ SERVICES = [
  "slug": "exterior-wash-and-polish",
  "name": "Exterior Wash & Polish",
  "nav": "Exterior Wash & Polish",
+ # Page stays live, indexed and reachable via related links, but is kept out
+ # of the services hub grid and the nav dropdown.
+ "hidden": True,
  "price": "Part of VIP",
  "title": "Exterior Car Wash & Polish in Hartford, WI | Sudz Up Detailing",
  "meta": "Exterior hand wash, polish, wheel cleaning and tire shine in Hartford, WI. Included in the Sudz Up VIP Clean from $200. Call or text 414-286-1609.",

@@ -225,7 +225,7 @@ def nav_model():
     """Top-level nav: (label, hub, all-link label, children or None)."""
     return [
         ("Services", "/services/", "All services",
-         [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES]),
+         [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES if not s.get("hidden")]),
         ("Gallery", "/gallery/", None, None),
         ("Testimonials", "/testimonials/", None, None),
         ("Service Area", "/auto-detailing/", "All areas we serve",
@@ -781,9 +781,12 @@ def build_testimonials():
 def build_services():
     hub_url = SITE + "/services/"
     trail = [("Home", "/"), ("Services", "/services/")]
+    # Services flagged hidden keep their own page (still built, still in the
+    # sitemap, still reachable via related links) but get no card here.
+    hub_services = [s for s in SERVICES if not s.get("hidden")]
     cards = "\n".join(
         f'''  <a href="/services/{s["slug"]}/"><span class="card-eyebrow">{e(s["price"])}</span><h3>{e(s["name"])}</h3><p>{e(s["card"])}</p></a>'''
-        for s in SERVICES)
+        for s in hub_services)
     graph = [org_node(), business_node(), website_node(),
              {"@type": "CollectionPage", "@id": f"{hub_url}#webpage", "url": hub_url,
               "name": f"Auto Detailing Services | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
@@ -792,7 +795,7 @@ def build_services():
              crumb_node(hub_url, trail),
              {"@type": "ItemList", "@id": f"{hub_url}#list",
               "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": s["name"],
-                                   "url": f'{SITE}/services/{s["slug"]}/'} for i, s in enumerate(SERVICES)]}]
+                                   "url": f'{SITE}/services/{s["slug"]}/'} for i, s in enumerate(hub_services)]}]
     body = f'''{crumbs_html(trail)}
 <div class="page-head">
   <p class="section-eyebrow">Services</p>
