@@ -441,7 +441,7 @@ FOOTER = f'''<footer>
       </div>
     </div>
   </div>
-  <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved. &middot; <a href="/sms-privacy-policy/">SMS Privacy Policy</a></div>
+  <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved. &middot; <a href="/terms/">Terms &amp; Conditions</a> &middot; <a href="/sms-privacy-policy/">SMS Privacy Policy</a></div>
 </footer>
 <script src="/assets/site.js" defer></script>
 </body>
@@ -1221,6 +1221,90 @@ def build_static_pages():
          "Book auto detailing in Hartford, WI. Request a no-obligation quote for interior and exterior detailing, or call or text 414-286-1609.",
          graph, body, active=p)
     PAGES.append((p, "0.9", "monthly", ""))
+
+    # ── TERMS AND CONDITIONS ───────────────────────────────────
+    p, url = "/terms/", SITE + "/terms/"
+    t = [("Home", "/"), ("Terms & Conditions", p)]
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
+              "name": f"Terms & Conditions | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
+              "about": {"@id": f"{SITE}/#business"}, "inLanguage": "en-US",
+              "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+             crumb_node(url, t)]
+    body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">Legal</p>
+  <h1 class="section-title">Terms &amp;<br>Conditions</h1>
+  <p class="page-lede">The terms under which {BIZ} provides auto detailing services. Last updated {TODAY}.</p>
+</div>
+<div class="prose"><div class="prose-col">
+<h2>Who we are</h2>
+<p>{BIZ} is an auto detailing business located at {ADDR}, {CITY}, {REGION} {ZIP}. You can reach us at <a href="tel:+14142861609">{TEL}</a> or <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+<p>By booking a service with us, or by using this website, you agree to these terms.</p>
+
+<h2>Quotes and pricing</h2>
+<p>Prices shown on this website are starting prices for each package and reflect typical vehicle condition. The quote we give you for your specific vehicle is the figure that applies.</p>
+<p>If, on inspection, your vehicle needs more work than the quoted package covers, we will tell you before we start and give you the revised figure. You are free to decline at that point. We will not change the price at collection without having discussed it with you first.</p>
+
+<h2>Booking and scheduling</h2>
+<p>Bookings can be made by phone, text, email or through the form on our <a href="/booking/">booking page</a>. A booking is confirmed once we have replied to you with a time.</p>
+<p>If you need to cancel or reschedule, contact us as early as you reasonably can so we can offer the slot to someone else.</p>
+
+<h2>What detailing can and cannot do</h2>
+<p>Detailing cleans, restores and protects. It does not repair. The following are outside what any detail can achieve, and we will say so rather than take your money for a result we cannot deliver:</p>
+<ul>
+<li>Cracked or split dashboard tops</li>
+<li>Torn, burned or worn-through fabric and leather</li>
+<li>Sagging or detached headliners</li>
+<li>Stone chips, deep scratches and failed or peeling clear coat</li>
+</ul>
+<p>Long-term cigarette odour can usually be substantially reduced but rarely eliminated entirely. We will give you an honest assessment before starting.</p>
+
+<h2>Your belongings</h2>
+<p>Please remove all personal belongings from your vehicle before your appointment. This lets us work faster and means we are not making judgement calls about what is rubbish and what matters to you.</p>
+<p>We are not responsible for personal items left in a vehicle, including money, electronics, documents, keys and items in glove boxes, consoles or boot spaces. Anything found is set aside and returned to you.</p>
+
+<h2>Vehicle condition and pre-existing damage</h2>
+<p>Vehicles are inspected before work begins. Pre-existing damage, wear, and mechanical or cosmetic faults are not caused by detailing and remain your responsibility.</p>
+<p>Some conditions only become visible once dirt is removed &mdash; existing scratches, worn trim, previous poor-quality repairs, fading and stains that have permanently set into fabric. Revealing these is not the same as causing them.</p>
+<p>If you believe we have caused damage, tell us before you leave, or contact us as soon as you notice it, so we can look at it while the facts are fresh.</p>
+
+<h2>Payment</h2>
+<p>We accept cash, credit card and debit card. Payment is due on completion, when you collect the vehicle, unless we have agreed otherwise with you in advance.</p>
+
+<h2>Drop-off and collection</h2>
+<p>Please call or text {TEL} before heading over so we can confirm we are on site and ready for your vehicle. Our hours are {hours_human()}.</p>
+<p>Vehicles left with us outside of agreed times are left at your own risk.</p>
+
+<h2>Photographs of your vehicle</h2>
+<p>We photograph and film vehicles we work on, and may use those images on this website, on social media and in advertising. Images show vehicle interiors and exteriors. We do not publish number plates, personal documents or identifying personal details.</p>
+<p>If you would prefer we did not photograph your vehicle, tell us when you book and we will not.</p>
+
+<h2>Limitation of liability</h2>
+<p>To the fullest extent permitted by Wisconsin law, our liability in connection with any service is limited to the amount you paid for that service. We are not liable for indirect or consequential losses, including loss of use of the vehicle.</p>
+<p>Nothing in these terms limits any liability that cannot be limited under applicable law.</p>
+
+<h2>This website</h2>
+<p>The content, photographs and text on this website belong to {BIZ}. Information on the site is provided in good faith and is intended as general guidance rather than a guarantee of any particular outcome for a particular vehicle.</p>
+
+<h2>Text messaging</h2>
+<p>How we handle mobile numbers and text messages is set out separately in our <a href="/sms-privacy-policy/">SMS Privacy Policy</a>.</p>
+
+<h2>Changes to these terms</h2>
+<p>We may update these terms. The version published on this page at the time you book is the version that applies, and the date at the top shows when it last changed.</p>
+
+<h2>Governing law</h2>
+<p>These terms are governed by the laws of the State of Wisconsin.</p>
+
+<h2>Questions</h2>
+<p>Contact us at <a href="tel:+14142861609">{TEL}</a> or <a href="mailto:{EMAIL}">{EMAIL}</a>, or visit us at {ADDR}, {CITY}, {REGION} {ZIP}.</p>
+</div></div>
+{cta_html("Questions About These Terms?", f"Call or text {TEL}, or email {EMAIL} and we will get back to you.")}
+'''
+    page(p, f"Terms & Conditions | {BIZ}",
+         "Terms and conditions for auto detailing services from Sudz Up Detailing LLC in Hartford, Wisconsin.",
+         graph, body, active=p)
+    PAGES.append((p, "0.3", "yearly", ""))
 
     # ── SMS PRIVACY POLICY ─────────────────────────────────────────
     # Required for A2P 10DLC / Twilio campaign registration. Carriers
