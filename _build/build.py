@@ -27,7 +27,6 @@ GALLERY_PHOTOS = [
     ("interior-rear-angle", 1126, 1500, 1126, "Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI", "Interior Clean", "after"),
     ("interior-before", 1125, 1500, 1125, "Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI", "Before", "before"),
     ("minivan-dash-front", 1125, 844, 1125, "Chrysler minivan dashboard and steering wheel after a full interior detail in Hartford, WI", "Dash & Console", "after"),
-    ("minivan-dash-view", 1125, 844, 1125, "Wide dashboard view of a detailed Chrysler minivan with clean floor mats, Hartford WI", "Dashboard Detail", "after"),
     ("minivan-front-interior", 1125, 844, 1125, "Front seats and dashboard cleaned during a Sudz Up Detailing interior service in Hartford, WI", "Front Interior", "after"),
     ("minivan-passenger-seat", 1125, 844, 1125, "Front passenger seat and door detailed by Sudz Up Detailing, Hartford WI", "Passenger Seat", "after"),
     ("minivan-driver-door", 1125, 844, 1125, "Driver's door panel and dashboard cleaned during a Hartford, WI auto detail", "Driver Area", "after"),
