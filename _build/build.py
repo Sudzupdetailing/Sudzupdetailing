@@ -53,9 +53,6 @@ TESTIMONIALS = [
 
 # (id, name, description, iso8601 duration, width, height, short label)
 GALLERY_VIDEOS = [
-    ("01", "Interior Deep Clean in Progress — Hartford, WI",
-     "Sudz Up Detailing performing an interior deep clean: vacuuming, vinyl/rubber/plastic treatment and spot stain removal on a customer vehicle in Hartford, Wisconsin.",
-     "PT20S", 540, 960, "Interior deep clean in progress"),
     ("02", "Full VIP Detail Walkthrough — Washington County, WI",
      "A walkthrough of the Sudz Up VIP Clean: complete interior detail plus exterior wash, polish, wheel cleaning and tire shine.",
      "PT38S", 540, 960, "Full VIP detail walkthrough"),
