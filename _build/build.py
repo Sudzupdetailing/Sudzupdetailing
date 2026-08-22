@@ -262,7 +262,7 @@ def nav(active=""):
         ' alt="%s — auto detailing in Hartford, Wisconsin" class="nav-logo"'
         ' width="400" height="400" fetchpriority="high" decoding="async" /></a>\n'
         '  <ul class="nav-links" id="navLinks">\n%s\n'
-        '    <li><a href="/contact/" class="nav-cta">Book Now</a></li>\n'
+        '    <li><a href="/booking/" class="nav-cta">Book Now</a></li>\n'
         '  </ul>\n'
         '  <button class="nav-toggle" id="navToggle" aria-label="Open menu"'
         ' aria-expanded="false" aria-controls="navLinks">\n'
@@ -1138,10 +1138,7 @@ def build_static_pages():
 {glance_html([("Phone / text", TEL), ("Email", EMAIL), ("Address", f"{ADDR}, {CITY} {ZIP}"), ("Hours", hours_human())])}
 
 <h2>Request a quote</h2>
-<p>Prefer to type it out? Fill this in and we will get back to you. For the fastest answer, calling or texting is still quicker.</p>
-</div></div>
-<div class="prose"><div class="prose-col">
-{contact_form_html()}
+<p>Prefer to type it out? Use the <a href="/booking/">booking form</a> and we will get back to you. For the fastest answer, calling or texting is still quicker.</p>
 </div></div>
 <div class="prose"><div class="prose-col">
 
@@ -1172,7 +1169,60 @@ def build_static_pages():
          graph, body, active=p)
     PAGES.append((p, "0.9", "monthly", ""))
 
-    # ── SMS PRIVACY POLICY ─────────────────────────────────────
+    # ── BOOKING ────────────────────────────────────────────────
+    p, url = "/booking/", SITE + "/booking/"
+    t = [("Home", "/"), ("Book", p)]
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
+              "name": f"Book Auto Detailing | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
+              "about": {"@id": f"{SITE}/#business"}, "inLanguage": "en-US",
+              "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+             crumb_node(url, t),
+             {"@type": "ReserveAction", "@id": f"{url}#reserve",
+              "name": "Book an auto detailing appointment",
+              "target": {"@type": "EntryPoint", "urlTemplate": url,
+                         "actionPlatform": ["https://schema.org/DesktopWebPlatform",
+                                            "https://schema.org/MobileWebPlatform"]},
+              "object": {"@id": f"{SITE}/#business"}}]
+    body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">Book Your Detail</p>
+  <h1 class="section-title">Request<br>A Quote</h1>
+  <p class="page-lede">Tell us about your vehicle and we will get back to you with a quote and a time. Prefer to talk? Call or text {TEL} for the fastest answer.</p>
+</div>
+<div class="prose"><div class="prose-col">
+<div class="contact-btns" style="margin-bottom:1.5rem;">
+  <a href="tel:+14142861609" class="btn-contact btn-contact-call">Call Us &mdash; {TEL}</a>
+  <a href="sms:+14142861609" class="btn-contact btn-contact-text">Text Us &mdash; {TEL}</a>
+</div>
+{contact_form_html()}
+</div></div>
+<div class="prose"><div class="prose-col">
+<h2>What happens next</h2>
+<p>We read every request and reply with a quote and the times we have available. If your vehicle needs more work than the standard package covers we will say so up front, before you commit, rather than changing the figure when you collect.</p>
+
+<h2>What to tell us</h2>
+<ul>
+  <li>Vehicle type &mdash; car, SUV, truck or van, and roughly how many seats</li>
+  <li>Rough condition, honestly. It determines how much time we set aside, and there is no judgement in it</li>
+  <li>Any specific problem &mdash; a spill, a smell, a stain you have already tried to treat</li>
+  <li>Whether pets travel in the vehicle, and whether anyone smokes in it</li>
+  <li>If you are selling, when you plan to list, so we can sequence the detail before your photographs</li>
+</ul>
+
+<div class="callout">
+  <span class="callout-label">Before you drop off</span>
+  <p>Please take personal belongings out of the vehicle. It lets us work faster, and it means we are not deciding what is rubbish and what matters to you.</p>
+</div>
+</div></div>
+{related_html("Our services", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
+'''
+    page(p, f"Book Auto Detailing in Hartford, WI | {BIZ}",
+         "Book auto detailing in Hartford, WI. Request a no-obligation quote for interior and exterior detailing, or call or text 414-286-1609.",
+         graph, body, active=p)
+    PAGES.append((p, "0.9", "monthly", ""))
+
+    # ── SMS PRIVACY POLICY ─────────────────────────────────────────
     # Required for A2P 10DLC / Twilio campaign registration. Carriers
     # crawl this page, so it must stay publicly reachable and indexable.
     p, url = "/sms-privacy-policy/", SITE + "/sms-privacy-policy/"
