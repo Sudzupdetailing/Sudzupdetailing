@@ -898,6 +898,19 @@
 .spec td { color: var(--text); vertical-align: top; }
 .spec td:first-child { color: var(--warm); font-weight: 600; }
 
+/* GALLERY TABS */
+.gallery-tabs { display: flex; gap: .6rem; justify-content: center; margin: 0 0 1.75rem; flex-wrap: wrap; }
+.gallery-tab {
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .72rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--chrome); background: transparent;
+  border: 1px solid var(--border); border-radius: 3px; padding: .7rem 1.5rem; cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.gallery-tab:hover { border-color: var(--gold); color: var(--gold); }
+.gallery-tab.active { background: var(--gold); color: #000; border-color: var(--gold); }
+.gallery-photos[data-filter="after"] .gallery-photo[data-category="before"] { display: none; }
+.gallery-photos[data-filter="before"] .gallery-photo[data-category="after"] { display: none; }
+
 /* TESTIMONIALS */
 .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.25rem;
   max-width: 1100px; margin: 2.5rem auto 0; }

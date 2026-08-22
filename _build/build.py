@@ -19,13 +19,21 @@ from cities import CITIES
 from services import SERVICES
 from guides import GUIDES
 
-# (slug, width, height, native_width, caption/alt, short label)
+# (slug, width, height, native_width, caption/alt, short label, category)
 GALLERY_PHOTOS = [
-    ("interior-dash", 1125, 844, 1125, "Dashboard and center console after an interior auto detail in Hartford, WI", "Interior Detail"),
-    ("interior-seats-front", 1125, 844, 1125, "Front seats cleaned and conditioned by Sudz Up Detailing in Hartford, WI", "Front Seats"),
-    ("interior-seats-rear", 1125, 844, 1125, "Rear seats vacuumed and shampooed during a Hartford, WI auto detail", "Rear Seats"),
-    ("interior-rear-angle", 1126, 1500, 1126, "Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI", "Interior Clean"),
-    ("interior-before", 1125, 1500, 1125, "Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI", "Before"),
+    ("interior-dash", 1125, 844, 1125, "Dashboard and center console after an interior auto detail in Hartford, WI", "Interior Detail", "after"),
+    ("interior-seats-front", 1125, 844, 1125, "Front seats cleaned and conditioned by Sudz Up Detailing in Hartford, WI", "Front Seats", "after"),
+    ("interior-seats-rear", 1125, 844, 1125, "Rear seats vacuumed and shampooed during a Hartford, WI auto detail", "Rear Seats", "after"),
+    ("interior-rear-angle", 1126, 1500, 1126, "Rear interior cargo area detailed by Sudz Up Detailing, Hartford WI", "Interior Clean", "after"),
+    ("interior-before", 1125, 1500, 1125, "Dusty dashboard and steering column before an interior auto detail by Sudz Up Detailing, Hartford WI", "Before", "before"),
+    ("minivan-dash-front", 1125, 844, 1125, "Chrysler minivan dashboard and steering wheel after a full interior detail in Hartford, WI", "Dash & Console", "after"),
+    ("minivan-dash-view", 1125, 844, 1125, "Wide dashboard view of a detailed Chrysler minivan with clean floor mats, Hartford WI", "Dashboard Detail", "after"),
+    ("minivan-front-interior", 1125, 844, 1125, "Front seats and dashboard cleaned during a Sudz Up Detailing interior service in Hartford, WI", "Front Interior", "after"),
+    ("minivan-passenger-seat", 1125, 844, 1125, "Front passenger seat and door detailed by Sudz Up Detailing, Hartford WI", "Passenger Seat", "after"),
+    ("minivan-driver-door", 1125, 844, 1125, "Driver's door panel and dashboard cleaned during a Hartford, WI auto detail", "Driver Area", "after"),
+    ("minivan-third-row", 1125, 844, 1125, "Third row seating detailed in a Chrysler minivan, Hartford WI", "Third Row Seats", "after"),
+    ("minivan-thirdrow-floor", 1125, 844, 1125, "Third row seats and cargo floor cleaned by Sudz Up Detailing, Hartford WI", "Rear Cabin", "after"),
+    ("minivan-cargo-floor", 1125, 844, 1125, "Rear cargo floor vacuumed and detailed, Hartford WI auto detailing", "Cargo Floor", "after"),
 ]
 
 # (name, quote, short context label)
@@ -268,13 +276,13 @@ def crumbs_html(trail):
 
 def gallery_photo_html(photos):
     return "\n".join(
-        f'''    <button type="button" class="gallery-photo" onclick="openLightbox('/img/opt/{s}-{nat}.jpg','{e(cap)}')" aria-label="Enlarge photo: {e(lbl)}">
+        f'''    <button type="button" class="gallery-photo" data-category="{cat}" onclick="openLightbox('/img/opt/{s}-{nat}.jpg','{e(cap)}')" aria-label="Enlarge photo: {e(lbl)}">
       <picture>
         <source type="image/webp" sizes="(max-width:768px) 50vw, 25vw" srcset="/img/opt/{s}-480.webp 480w, /img/opt/{s}-800.webp 800w, /img/opt/{s}-{nat}.webp {nat}w" />
         <img src="/img/opt/{s}-800.jpg" sizes="(max-width:768px) 50vw, 25vw" srcset="/img/opt/{s}-480.jpg 480w, /img/opt/{s}-800.jpg 800w, /img/opt/{s}-{nat}.jpg {nat}w" alt="{e(cap)}" width="{w}" height="{h}" loading="lazy" decoding="async" />
       </picture>
       <span class="gallery-photo-label">{e(lbl)}</span>
-    </button>''' for s, w, h, nat, cap, lbl in photos)
+    </button>''' for s, w, h, nat, cap, lbl, cat in photos)
 
 
 def gallery_video_html(vids, id_prefix="vid"):
@@ -443,9 +451,10 @@ def build_home():
     path = "/"
     url = SITE + "/"
     vids = GALLERY_VIDEOS
-    # Homepage teaser sticks to finished-result shots; the "Before" shot and
-    # the rest of the set live on the dedicated /gallery/ page.
-    photos = [p for p in GALLERY_PHOTOS if p[5] != "Before"]
+    # Homepage teaser stays a small curated set; the "Before" shot and the
+    # rest of the after photos live on the dedicated /gallery/ page.
+    home_teaser_slugs = ("interior-dash", "interior-seats-front", "interior-seats-rear", "interior-rear-angle")
+    photos = [p for p in GALLERY_PHOTOS if p[0] in home_teaser_slugs]
 
     graph = [org_node(), business_node(), website_node(),
              {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
@@ -462,7 +471,7 @@ def build_home():
                       "width": w, "height": h, "isFamilyFriendly": True, "inLanguage": "en-US",
                       "publisher": {"@id": f"{SITE}/#organization"}, "about": {"@id": f"{SITE}/#business"},
                       "contentLocation": {"@type": "Place", "name": "Hartford, Wisconsin"}})
-    for slug, w, h, nat, cap, _ in photos:
+    for slug, w, h, nat, cap, _, _cat in photos:
         graph.append({"@type": "ImageObject", "@id": f"{SITE}/#img-{slug}",
                       "contentUrl": f"{SITE}/img/opt/{slug}-{nat}.jpg",
                       "url": f"{SITE}/img/opt/{slug}-{nat}.jpg", "width": w, "height": h,
@@ -585,7 +594,7 @@ def home_media_xml(photos, vids):
     img = "\n".join(f"""    <image:image>
       <image:loc>{SITE}/img/opt/{s}-{nat}.jpg</image:loc>
       <image:caption>{e(cap)}</image:caption>
-    </image:image>""" for s, w, h, nat, cap, lbl in photos)
+    </image:image>""" for s, w, h, nat, cap, lbl, cat in photos)
     vid = "\n".join(f"""    <video:video>
       <video:thumbnail_loc>{SITE}/img/poster/detail-{v}.jpg</video:thumbnail_loc>
       <video:title>{e(name)}</video:title>
@@ -618,7 +627,7 @@ def build_gallery():
                       "width": w, "height": h, "isFamilyFriendly": True, "inLanguage": "en-US",
                       "publisher": {"@id": f"{SITE}/#organization"}, "about": {"@id": f"{SITE}/#business"},
                       "contentLocation": {"@type": "Place", "name": "Hartford, Wisconsin"}})
-    for slug, w, h, nat, cap, _ in photos:
+    for slug, w, h, nat, cap, _, _cat in photos:
         graph.append({"@type": "ImageObject", "@id": f"{SITE}/#img-{slug}",
                       "contentUrl": f"{SITE}/img/opt/{slug}-{nat}.jpg",
                       "url": f"{SITE}/img/opt/{slug}-{nat}.jpg", "width": w, "height": h,
@@ -635,7 +644,11 @@ def build_gallery():
   <p class="page-lede">A closer look at real vehicles we have detailed in Hartford and across Washington County &mdash; before, during and after.</p>
 </div>
 <section id="full-gallery" aria-label="Photo gallery">
-  <div class="gallery-photos fade-up">
+  <div class="gallery-tabs" role="tablist" aria-label="Filter gallery photos">
+    <button type="button" class="gallery-tab active" data-tab="after" role="tab" aria-selected="true">Afters</button>
+    <button type="button" class="gallery-tab" data-tab="before" role="tab" aria-selected="false">Before</button>
+  </div>
+  <div class="gallery-photos fade-up" data-filter="after">
 {photo_html}
   </div>
 </section>
