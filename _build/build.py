@@ -234,6 +234,7 @@ def nav_model():
          [(g["nav"], "/guides/" + g["slug"] + "/") for g in GUIDES]),
         ("Pricing", "/pricing/", None, None),
         ("About", "/about/", None, None),
+        ("Contact", "/contact/", None, None),
     ]
 
 
@@ -580,7 +581,7 @@ def build_home():
     <h1 class="hero-headline">Your Ride.<br><span class="accent">Spotless.</span></h1>
     <p class="hero-sub">Professional interior and exterior detailing that restores, protects and elevates every vehicle we touch. Hartford, WI and the surrounding Washington County area.</p>
     <div class="hero-actions">
-      <a href="/contact/" class="btn-primary">Book an Appointment</a>
+      <a href="/booking/" class="btn-primary">Book an Appointment</a>
       <a href="/pricing/" class="btn-ghost">View Pricing</a>
     </div>
     <div class="hero-stats">
@@ -1332,7 +1333,7 @@ def build_static_pages():
 <p>We collect consent to text you in one of the following ways:</p>
 <ul>
 <li>You text us first at {TEL}, or give us your mobile number verbally and agree to be contacted by text.</li>
-<li>You check the consent box on the booking form on our <a href="/contact/">contact page</a>, indicating you agree to receive text messages. Promotional messages have their own separate box.</li>
+<li>You check the consent box on the booking form on our <a href="/booking/">booking page</a>, indicating you agree to receive text messages. Promotional messages have their own separate box.</li>
 <li>You provide your number and agree to text contact on a paper form or in person at our shop at {ADDR}, {CITY}, {REGION} {ZIP}.</li>
 </ul>
 <p>Consent to receive text messages is never a condition of purchasing any service from us. Consent is not shared with anyone else and is used only for the messages described below.</p>
