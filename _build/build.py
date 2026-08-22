@@ -611,7 +611,8 @@ def home_media_xml(photos, vids):
 def build_gallery():
     path, url = "/gallery/", SITE + "/gallery/"
     t = [("Home", "/"), ("Gallery", path)]
-    photos, vids = GALLERY_PHOTOS, GALLERY_VIDEOS
+    photos = [p for p in GALLERY_PHOTOS if p[6] == "after"]
+    vids = GALLERY_VIDEOS
 
     graph = [org_node(), business_node(), website_node(),
              {"@type": ["CollectionPage", "WebPage"], "@id": f"{url}#webpage", "url": url,
@@ -641,14 +642,10 @@ def build_gallery():
 <div class="page-head">
   <p class="section-eyebrow">Our Work</p>
   <h1 class="section-title">Full Photo<br>&amp; Video Gallery</h1>
-  <p class="page-lede">A closer look at real vehicles we have detailed in Hartford and across Washington County &mdash; before, during and after.</p>
+  <p class="page-lede">A closer look at real vehicles we have detailed in Hartford and across Washington County.</p>
 </div>
 <section id="full-gallery" aria-label="Photo gallery">
-  <div class="gallery-tabs" role="tablist" aria-label="Filter gallery photos">
-    <button type="button" class="gallery-tab active" data-tab="after" role="tab" aria-selected="true">Afters</button>
-    <button type="button" class="gallery-tab" data-tab="before" role="tab" aria-selected="false">Before</button>
-  </div>
-  <div class="gallery-photos fade-up" data-filter="after">
+  <div class="gallery-photos fade-up">
 {photo_html}
   </div>
 </section>
