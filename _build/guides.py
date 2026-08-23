@@ -154,7 +154,7 @@ GUIDES = [
      "The moving quote. A low number on the phone, then a revision once the vehicle is on site and you are committed. If a detailer will not give you a firm figure or an explicit condition-based range before you arrive, that is worth noticing.",
      "The interior 'detail' that is a vacuum and a wipe. Genuinely thorough interior work means moving seats, lifting mats and load floors, clearing seams with compressed air, and doing jambs and glass. If a shop is turning cars around in thirty minutes, they are not doing that.",
      "Add-ons for things that should be included. Door jambs and interior glass are not extras. They are what distinguishes a detail from a car wash.",
-     "The upsell to services you do not need. Ceramic coating and paint correction are legitimate services, but they are not what most people asking for a detail actually want. We do not offer them, which conveniently removes the temptation."]),
+     "The upsell to services you do not need. Ceramic coating is a legitimate service and we offer it, but it is not what most people asking for a detail actually want. If you came in for an interior clean, you should not leave having been talked into paint work you were not looking for."]),
    ("Where detailing genuinely pays for itself",
     ["Resale is the clearest case. On a private sale, a full detail before photographs routinely returns several times its cost. Buyers read a clean interior as evidence the vehicle was maintained.",
      "Winter salt removal is the second. Corrosion in rockers and arches is expensive bodywork later. Removing salt is cheap prevention.",

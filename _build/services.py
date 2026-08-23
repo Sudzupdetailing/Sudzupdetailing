@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Service page content. Written to reflect only what Sudz Up Detailing actually
-offers — no ceramic coating, paint correction, PPF or window tint, because
-generating demand for services the business cannot fulfil is worse than useless.
+offers. Services the business cannot fulfil are not listed, because generating
+demand for them is worse than useless.
 """
 
 SERVICES = [
@@ -198,5 +198,43 @@ SERVICES = [
    ("What if my vehicle is much dirtier than I described?", "We will call you with a revised figure before starting rather than surprising you at collection."),
  ],
  "related": ["interior-car-detailing", "full-interior-exterior-detail", "stain-and-odor-removal"],
+},
+{
+ "slug": "ceramic-coating",
+ "name": "Ceramic Coating",
+ "nav": "Ceramic Coating",
+ "price": "From $599",
+ "title": "Ceramic Coating in Hartford, WI | Sudz Up Detailing",
+ "meta": "Ceramic coating in Hartford, WI. Paint decontamination, prep and coating application from $599. Serving Washington County. Call or text 414-286-1609.",
+ "h1": "Ceramic Coating",
+ "lede": "A ceramic coating is a semi-permanent layer bonded to your paint. It makes the car easier to wash, holds gloss for far longer than wax, and stands up to Wisconsin road salt in a way nothing you apply by hand every few months will.",
+ "card": "Semi-permanent paint protection \u2014 decontamination, prep and coating application.",
+ "glance": [("Starting price", "$599"), ("Prep", "Assessed per vehicle"), ("Typical time", "Multi-day"), ("Best for", "Salt, gloss, easier washing")],
+ "body": [
+   ("What a ceramic coating actually does",
+    ["A coating bonds to the clear coat and forms a hard, slick layer on top of it. Water beads and runs off instead of sitting, dirt has less to grip, and washing gets substantially faster because most of what lands on the car does not bond to it.",
+     "The gloss is the part people notice first, but the durability is the part that matters here. Wax gives you a few months in a Wisconsin winter. A coating holds through the salt season and keeps holding.",
+     "What it will not do is make the paint invincible. It resists chemical etching and makes washing gentler on the finish, but it is not armour against stone chips, and it does not stop scratches from an automatic car wash brush. Anyone telling you otherwise is selling you something."]),
+   ("Preparation is most of the job",
+    ["The coating itself takes a fraction of the time. Everything before it is where the work is, and it is the part that determines whether the result is worth paying for.",
+     "Paint gets washed, then chemically decontaminated to strip iron fallout and road film, then clayed to pull embedded contamination out of the clear coat. A coating applied over contamination locks that contamination in, permanently, under a layer you cannot easily remove.",
+     "How much correction the paint needs on top of that depends entirely on the vehicle. Some cars need very little. Others carry years of swirl marks that will show through a coating and be sealed under it. We assess your paint and tell you what it needs before quoting, rather than applying a fixed process to every car regardless of condition."]),
+   ("Wisconsin salt, specifically",
+    ["Road salt is the reason most people in Washington County end up asking about coatings. It is corrosive, it sits in every lower panel and wheel arch through the whole winter, and it accelerates the failure of clear coat that is already sun-tired.",
+     "A coating gives salt less to hold onto and makes a winter wash far more effective, because the grime releases instead of needing to be scrubbed. That matters: scrubbing salt off paint by hand is itself a common source of swirl marks.",
+     "The best time to have a coating applied is before the salt starts, not after a winter of it has already done its work."]),
+   ("Timing and what to expect",
+    ["This is not a same-day service. Preparation and curing take time, and rushing either step produces a worse result than not coating at all. Plan on leaving the vehicle with us for more than a day.",
+     "Coatings need to cure before the car sees rain or a wash. We will tell you exactly how long for the product going on your vehicle and what to avoid in that window.",
+     "Aftercare is straightforward but it is not nothing. Coated cars still need washing, just far less effort per wash. We will walk you through it when you collect."]),
+ ],
+ "faq": [
+   ("How much does ceramic coating cost?", "Pricing starts at $599 and depends on vehicle size and how much preparation the paint needs. We assess the paint and give you a firm figure before any work starts."),
+   ("How long does a ceramic coating last?", "It depends on the product and on how the vehicle is washed and stored. We will tell you the expected life of the specific coating we recommend for your vehicle rather than quoting a headline number that may not apply."),
+   ("Does my paint need correcting first?", "That depends on its condition. Some vehicles need very little, others carry years of swirls that would be sealed under the coating. We assess it and tell you honestly what it needs before quoting."),
+   ("Can I run it through an automatic car wash afterwards?", "You can, but we would rather you did not. Brush washes are a leading cause of swirl marks, and a coating does not prevent that. Touchless or a proper hand wash gets far more out of the coating you paid for."),
+   ("Is it worth it if my car is older?", "Often yes, particularly for salt protection, but it depends on the state of the clear coat. If the clear coat is already failing, a coating will not rescue it and we will say so rather than take the money."),
+ ],
+ "related": ["full-interior-exterior-detail", "exterior-wash-and-polish", "interior-car-detailing"],
 },
 ]

@@ -1009,7 +1009,7 @@ def build_static_pages():
         ("Is the price on the website the price I pay?", "For a vehicle in normal condition, yes. Where condition means more work, we tell you before starting rather than adjusting the figure at collection."),
         ("Why do SUVs and trucks cost more?", "More interior volume, extra footwells and rows, a larger cargo area, more glass and jambs, and more panel area outside. It reflects genuine additional time."),
         ("Do you charge extra for door jambs or interior glass?", "No. Both are included in every package. They are part of what makes a detail different from a car wash."),
-        ("Do you offer ceramic coating or paint correction?", "No. We do interior detailing and exterior wash and polish, and we would rather do those properly than list services we are not set up to deliver."),
+        ("Do you offer ceramic coating?", "Yes. Ceramic coating starts at $599 and includes decontamination and preparation assessed per vehicle. We do not offer paint protection film or window tinting."),
     ]
     graph = [org_node(), business_node(), website_node(),
              {"@type": "WebPage", "@id": f"{url}#webpage", "url": url, "name": f"Pricing | {BIZ}",
@@ -1065,7 +1065,7 @@ def build_static_pages():
 </div>
 
 <h2>What we do not offer</h2>
-<p>We do not do ceramic coating, paint protection film, multi-stage paint correction or window tinting. Those are legitimate services and there are shops in the area that do them well. We would rather do interior detailing and exterior wash and polish properly than pad a price list with things we are not set up to deliver.</p>
+<p>We do not do paint protection film or window tinting. Those are legitimate services and there are shops in the area that do them well. We would rather do interior detailing, exterior wash and polish and ceramic coating properly than pad a price list with things we are not set up to deliver.</p>
 </div></div>
 {faq_html(pricing_faq)}
 {cta_html("Get a Straight Quote", f"Call or text {TEL}. Describe the vehicle and you will get a real number, not a starting point.")}
@@ -1459,8 +1459,7 @@ Prices may vary based on vehicle condition. Quotes are given before work
 starts, not at collection.
 
 ## Not offered
-Ceramic coating, paint protection film, multi-stage paint correction and
-window tinting are NOT offered by this business.
+Paint protection film and window tinting are NOT offered by this business.
 
 ## Services
 {svc}
