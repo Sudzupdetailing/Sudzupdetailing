@@ -6,7 +6,7 @@ excluded in robots.txt.
 Covers how SMS consent is collected, recorded and honoured across the website,
 Formspree and StrataCRM, and what to do when any of it changes.
 
-Last updated: 2026-08-25
+Last updated: 2026-08-26
 
 ---
 
@@ -14,7 +14,7 @@ Last updated: 2026-08-25
 
 | System | Role | Holds consent? |
 |---|---|---|
-| **sudzupdetail.com** (Vercel, this repo) | Public opt-in page, policies | Displays the terms; captures the tick |
+| **sudzupdetail.com** (Vercel, this repo) | Public opt-in page, `/sms-terms/`, `/sms-privacy-policy/`, `/terms/` | Displays the terms; captures the tick |
 | **Formspree** | Delivers site form submissions to email | Holds the raw submission record |
 | **StrataCRM** | Client records, booking, sends the texts via Twilio | **Must** hold consent for texting to be legitimate |
 
@@ -106,6 +106,7 @@ the site has to change with it, or the policy becomes inaccurate.
 
 **Changing what kinds of texts you send** → update:
 - `_build/build.py`, SMS policy section, "What we send"
+- `_build/build.py`, SMS terms section 1, "Program description"
 - The checkbox labels in `booking_cta_html()`
 
 **Changing booking platform away from StrataCRM** → update:
@@ -130,8 +131,13 @@ After any of these, run `python3 _build/build.py`, review, commit, push.
 URLs to supply:
 
 - **Opt-in / consent flow:** `https://sudzupdetail.com/booking/`
-- **Privacy policy:** `https://sudzupdetail.com/sms-privacy-policy/`
-- **Terms & conditions:** `https://sudzupdetail.com/terms/`
+- **SMS program terms:** `https://sudzupdetail.com/sms-terms/`
+- **SMS privacy policy:** `https://sudzupdetail.com/sms-privacy-policy/`
+- **General terms & conditions:** `https://sudzupdetail.com/terms/`
+
+Most submission forms ask for a messaging-program terms URL separately from the
+privacy policy. Give them `/sms-terms/` for that field, not `/terms/` — the
+general terms cover detailing services and do not carry the messaging clauses.
 
 Before submitting, confirm all of the following are true on the live site:
 
@@ -141,7 +147,8 @@ Before submitting, confirm all of the following are true on the live site:
 - [ ] Both checkboxes render **unchecked**
 - [ ] Neither checkbox is required to submit
 - [ ] Frequency, rates, STOP and HELP disclosure is visible
-- [ ] Both policy links work from `/booking/` and from the footer
+- [ ] All three legal links work from `/booking/` and from the footer
+- [ ] `/sms-terms/` states rates, STOP, HELP and carrier non-liability
 - [ ] Sample message templates match what the policy says you send
 
 If rejected again, the rejection code and reason text say which specific element

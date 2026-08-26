@@ -336,6 +336,7 @@ def booking_cta_html():
   <p class="consent-callout-title">We do not sell or share your number</p>
   <p>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. We do not sell, rent or trade mobile phone numbers.</p>
   <p class="consent-callout-links">
+    <a href="/sms-terms/">SMS Terms</a>
     <a href="/sms-privacy-policy/">SMS Privacy Policy</a>
     <a href="/terms/">Terms &amp; Conditions</a>
   </p>
@@ -376,7 +377,8 @@ def booking_cta_html():
   <p class="cform-fineprint">
     Message frequency varies. Message and data rates may apply. Reply STOP to opt out
     or HELP for help. Your number will not be sold or shared with third parties for
-    marketing. See our <a href="/sms-privacy-policy/">SMS Privacy Policy</a> and
+    marketing. See our <a href="/sms-terms/">SMS Terms</a>,
+    <a href="/sms-privacy-policy/">SMS Privacy Policy</a> and
     <a href="/terms/">Terms &amp; Conditions</a>.
   </p>
 
@@ -467,7 +469,7 @@ FOOTER = f'''<footer>
       </div>
     </div>
   </div>
-  <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved. &middot; <a href="/terms/">Terms &amp; Conditions</a> &middot; <a href="/sms-privacy-policy/">SMS Privacy Policy</a></div>
+  <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved. &middot; <a href="/terms/">Terms &amp; Conditions</a> &middot; <a href="/sms-terms/">SMS Terms</a> &middot; <a href="/sms-privacy-policy/">SMS Privacy Policy</a></div>
 </footer>
 <script src="/assets/site.js" defer></script>
 </body>
@@ -1317,7 +1319,7 @@ def build_static_pages():
 <p>The content, photographs and text on this website belong to {BIZ}. Information on the site is provided in good faith and is intended as general guidance rather than a guarantee of any particular outcome for a particular vehicle.</p>
 
 <h2>Text messaging</h2>
-<p>How we handle mobile numbers and text messages is set out separately in our <a href="/sms-privacy-policy/">SMS Privacy Policy</a>.</p>
+<p>Our text messaging programme has its own terms, set out in our <a href="/sms-terms/">SMS Terms &amp; Conditions</a>. How we handle mobile numbers is covered in our <a href="/sms-privacy-policy/">SMS Privacy Policy</a>.</p>
 
 <h2>Changes to these terms</h2>
 <p>We may update these terms. The version published on this page at the time you book is the version that applies, and the date at the top shows when it last changed.</p>
@@ -1332,6 +1334,85 @@ def build_static_pages():
 '''
     page(p, f"Terms & Conditions | {BIZ}",
          "Terms and conditions for auto detailing services from Sudz Up Detailing LLC in Hartford, Wisconsin.",
+         graph, body, active=p)
+    PAGES.append((p, "0.3", "yearly", ""))
+
+    # ── SMS TERMS & CONDITIONS (A2P) ───────────────────────────
+    # Dedicated messaging-program terms. Carriers and A2P 10DLC review
+    # generally want this as a distinct URL from the privacy policy.
+    p, url = "/sms-terms/", SITE + "/sms-terms/"
+    t = [("Home", "/"), ("SMS Terms & Conditions", p)]
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
+              "name": f"SMS Terms & Conditions | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
+              "about": {"@id": f"{SITE}/#business"}, "inLanguage": "en-US",
+              "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+             crumb_node(url, t)]
+    body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">Legal</p>
+  <h1 class="section-title">SMS Terms &amp;<br>Conditions</h1>
+  <p class="page-lede">Terms for the {BIZ} text messaging program. Last updated {TODAY}.</p>
+</div>
+<div class="prose"><div class="prose-col">
+<h2>1. Program description</h2>
+<p>{BIZ} operates a text messaging program for customers and prospective customers in Hartford, Wisconsin and the surrounding area. By opting in, you agree to receive text messages from us at the mobile number you provided.</p>
+<p>Messages relate to auto detailing services and fall into these categories:</p>
+<ul>
+<li><strong>Appointment messages</strong> &mdash; booking confirmations, reminders, and changes to a scheduled time.</li>
+<li><strong>Service messages</strong> &mdash; quotes, questions about your vehicle, and notification that your vehicle is ready.</li>
+<li><strong>Promotional messages</strong> &mdash; seasonal offers and availability. These are sent only to customers who have separately agreed to receive them.</li>
+</ul>
+
+<h2>2. How to opt in</h2>
+<p>You can join the program by:</p>
+<ul>
+<li>Ticking the text message consent box on our <a href="/booking/">booking page</a>. The box is unticked by default.</li>
+<li>Ticking the consent box when booking through our online booking system.</li>
+<li>Giving us your mobile number in person, by phone or on a paper form and agreeing to be contacted by text.</li>
+<li>Texting us first at {TEL}. This allows us to reply to that conversation. It does not by itself enrol you in promotional messages.</li>
+</ul>
+<p><strong>Consent to receive text messages is not a condition of purchasing any goods or services from us.</strong></p>
+
+<h2>3. Message frequency</h2>
+<p>Message frequency varies and depends on your interaction with us. Most customers receive only a small number of messages around a single booking. Promotional messages, where you have agreed to them, are infrequent.</p>
+
+<h2>4. Cost</h2>
+<p><strong>Message and data rates may apply.</strong> These are charged by your mobile carrier under your own plan, not by us. Check with your carrier if you are unsure of your rates.</p>
+
+<h2>5. How to opt out &mdash; reply STOP</h2>
+<p>You can cancel at any time by replying <strong>STOP</strong> to any message from us. You will receive a single confirmation that you have been unsubscribed, after which we will send you no further messages.</p>
+<p>You may also opt out by calling {TEL} or emailing <a href="mailto:{EMAIL}">{EMAIL}</a> and asking to be removed. To rejoin, reply <strong>START</strong> or contact us and ask to be added back.</p>
+
+<h2>6. How to get help &mdash; reply HELP</h2>
+<p>Reply <strong>HELP</strong> to any message from us for assistance. You can also reach us directly:</p>
+<ul>
+<li>Phone or text: <a href="tel:+14142861609">{TEL}</a></li>
+<li>Email: <a href="mailto:{EMAIL}">{EMAIL}</a></li>
+<li>Address: {ADDR}, {CITY}, {REGION} {ZIP}</li>
+</ul>
+
+<h2>7. Carriers and delivery</h2>
+<p>Delivery of messages is subject to effective transmission by your mobile carrier and is outside our control. <strong>Wireless carriers are not liable for delayed or undelivered messages.</strong> We cannot guarantee that every message will be delivered, and we are not liable for messages that are delayed or fail to arrive.</p>
+
+<h2>8. Eligibility</h2>
+<p>You must be at least 18 years old and the account holder of, or authorised to use, the mobile number you provide. If your mobile number changes or is reassigned, please tell us so we do not message someone who has not consented.</p>
+
+<h2>9. Privacy and your number</h2>
+<p><strong>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes.</strong> Information sharing to subcontractors in support services, such as customer service, is permitted. All other use case categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.</p>
+<p>We do not sell, rent or trade mobile phone numbers. Full detail is in our <a href="/sms-privacy-policy/">SMS Privacy Policy</a>.</p>
+
+<h2>10. Changes to these terms</h2>
+<p>We may update these terms. The version published on this page applies from the date shown at the top. Continuing to receive messages after a change means you accept the updated terms.</p>
+
+<h2>11. Other terms</h2>
+<p>These SMS terms sit alongside our general <a href="/terms/">Terms &amp; Conditions</a>, which cover our detailing services. Where the two differ on text messaging specifically, this page applies.</p>
+<p>These terms are governed by the laws of the State of Wisconsin.</p>
+</div></div>
+{cta_html("Questions About Our Text Program?", f"Call or text {TEL}, or email {EMAIL} and we will get back to you.")}
+'''
+    page(p, f"SMS Terms & Conditions | {BIZ}",
+         "Text messaging program terms for Sudz Up Detailing LLC: message types, frequency, rates, STOP and HELP instructions, and carrier liability.",
          graph, body, active=p)
     PAGES.append((p, "0.3", "yearly", ""))
 
@@ -1396,6 +1477,9 @@ def build_static_pages():
 
 <h2>What we store</h2>
 <p>We keep your name, mobile number, vehicle details and service history so we can carry out the work and contact you about it. We keep a record of your consent to be texted and of any opt-out request. You can ask us to delete your information at any time using the contact details above, and we will do so unless we are required to keep it for tax or legal reasons.</p>
+
+<h2>Program terms</h2>
+<p>The terms of the text messaging programme itself &mdash; message types, frequency, opt-out and carrier liability &mdash; are set out in our <a href="/sms-terms/">SMS Terms &amp; Conditions</a>.</p>
 
 <h2>Changes to this policy</h2>
 <p>If we change how we handle text messaging we will update this page and change the date at the top.</p>
