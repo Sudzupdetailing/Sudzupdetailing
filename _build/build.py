@@ -1438,7 +1438,7 @@ def build_robots():
     open(os.path.join(ROOT, "robots.txt"), "w", encoding="utf-8").write(
         f"# {BIZ} — https://sudzupdetail.com\n"
         f"# Search and AI crawlers are explicitly welcome.\n\n{blocks}\n\n"
-        f"Disallow: /_build/\n\nSitemap: {SITE}/sitemap.xml\n")
+        f"Disallow: /_build/\nDisallow: /_docs/\n\nSitemap: {SITE}/sitemap.xml\n")
 
 
 def build_llms():

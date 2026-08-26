@@ -44,5 +44,6 @@ User-agent: Applebot-Extended
 Allow: /
 
 Disallow: /_build/
+Disallow: /_docs/
 
 Sitemap: https://sudzupdetail.com/sitemap.xml
