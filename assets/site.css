@@ -908,9 +908,19 @@
 .spec td { color: var(--text); vertical-align: top; }
 .spec td:first-child { color: var(--warm); font-weight: 600; }
 
+/* CONSENT CALLOUT */
+.consent-callout { background: #111; border: 1px solid var(--gold); border-radius: 4px;
+  padding: 1.5rem 1.6rem; margin: 2.5rem 0 1.5rem; }
+.consent-callout-title { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .78rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 0 0 .7rem; }
+.consent-callout p { font-size: .86rem; color: var(--text); line-height: 1.75; margin: 0 0 .7rem; }
+.consent-callout-links { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem !important; }
+.prose .consent-callout-links a { color: var(--gold); font-weight: 600; font-size: .82rem;
+  text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid rgba(232,160,32,.4); }
+
 /* CONTACT FORM */
 .cform { background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
-  padding: 2rem; margin: 2.5rem 0; }
+  padding: 2rem; margin: 0 0 2rem; }
 .cform-row { margin-bottom: 1.25rem; }
 .cform label { display: block; font-family: 'Barlow', sans-serif; font-weight: 600; font-size: .72rem;
   letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
@@ -926,17 +936,37 @@
 .cform-consent label { text-transform: none; letter-spacing: 0; font-size: .84rem; font-weight: 400;
   color: var(--text); line-height: 1.65; margin-bottom: 0; cursor: pointer; }
 .cform-consent label strong { color: var(--warm); font-weight: 600; }
-.cform-consent a { color: var(--gold); }
 .cform-fineprint { font-size: .76rem; color: var(--text); line-height: 1.7; margin-bottom: 1.4rem;
-  opacity: .85; }
+  opacity: .9; }
+.prose .cform-fineprint a { color: var(--gold); }
 .cform button { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .76rem;
   letter-spacing: .15em; text-transform: uppercase; background: var(--gold); color: #000;
   border: none; border-radius: 3px; padding: .95rem 2rem; cursor: pointer; transition: background .2s; }
 .cform button:hover { background: var(--gold-d); }
-.cform button:disabled { opacity: .45; cursor: not-allowed; }
-.cform-note { font-size: .8rem; color: var(--gold); margin-top: 1rem; }
 .cform-status { font-size: .88rem; margin-top: 1rem; }
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* BOOKING CTA */
+.book-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
+  padding: 2rem; margin: 0 0 1.5rem; text-align: center; }
+.book-panel-eyebrow { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .7rem;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+.book-panel-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+  text-transform: uppercase; color: var(--warm); font-size: 2rem; line-height: 1; margin: 0 0 .9rem; }
+.book-panel-body { color: var(--text); font-size: .95rem; line-height: 1.75; max-width: 46ch;
+  margin: 0 auto 1.6rem; }
+.prose a.book-panel-btn { display: inline-block; background: var(--gold); color: #000;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .8rem; letter-spacing: .15em;
+  text-transform: uppercase; padding: 1.05rem 2.5rem; border-radius: 3px; border-bottom: none;
+  text-decoration: none; transition: background .2s; }
+.prose a.book-panel-btn:hover { background: var(--gold-d); border-bottom: none; }
+.book-panel-alt { font-size: .85rem; color: var(--text); margin-top: 1.3rem; }
+
+.cform-consent-note { background: #111; border: 1px solid var(--border); border-radius: 3px;
+  padding: 1.25rem 1.4rem; margin-bottom: 2rem; }
+.cform-consent-note p { font-size: .82rem; color: var(--text); line-height: 1.7; margin: 0 0 .7rem; }
+.cform-consent-note p:last-child { margin-bottom: 0; }
+.cform-consent-note strong { color: var(--warm); }
 
 /* TESTIMONIALS */
 .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 1.25rem;

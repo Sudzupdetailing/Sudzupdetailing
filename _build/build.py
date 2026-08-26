@@ -85,6 +85,11 @@ GA_ID = "G-Y2P0H9F6FN"
 # Until this is set the form renders in a disabled state with a notice, so we
 # never show customers a form that silently drops their submission.
 FORM_ENDPOINT = "https://formspree.io/f/xwlezbde"
+
+# StrataCRM hosted booking page. Bookings and SMS consent are captured here so
+# the opt-in record lives in the same system that sends the texts — which is
+# what A2P 10DLC review expects.
+BOOKING_URL = "https://stratacrm.app/book/ec7d33a1-e710-4a5f-bb78-be3114368c42"
 ADDR  = "2948 WI-83"
 CITY  = "Hartford"
 REGION= "WI"
@@ -319,20 +324,24 @@ def lightbox_html():
 </div>'''
 
 
-def contact_form_html():
-    """Booking form with TCPA-compliant SMS consent checkboxes.
+def booking_cta_html():
+    """Booking form with an explicit, verifiable SMS opt-in.
 
-    Both consent boxes are unchecked by default and are NOT required to
-    submit — consent can never be a condition of service. Transactional
-    and promotional consent are collected separately, because marketing
-    messages need their own express written opt-in.
+    A2P 10DLC review needs a consent flow it can follow end to end from a
+    public URL. So the checkbox lives here, on our own domain, unchecked by
+    default, with the no-sale statement and direct links to both policies
+    visible next to it — not behind a third-party widget.
     """
-    disabled = "" if FORM_ENDPOINT else " disabled"
-    action = f' action="{FORM_ENDPOINT}" method="POST"' if FORM_ENDPOINT else ""
-    notice = "" if FORM_ENDPOINT else (
-        '\n  <p class="cform-note">This form is not yet connected. '
-        f'Please call or text {TEL} to book.</p>')
-    return f'''<form class="cform" id="bookingForm"{action} novalidate>
+    return f'''<div class="consent-callout">
+  <p class="consent-callout-title">We do not sell or share your number</p>
+  <p>No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. We do not sell, rent or trade mobile phone numbers.</p>
+  <p class="consent-callout-links">
+    <a href="/sms-privacy-policy/">SMS Privacy Policy</a>
+    <a href="/terms/">Terms &amp; Conditions</a>
+  </p>
+</div>
+
+<form class="cform" id="bookingForm" action="{FORM_ENDPOINT}" method="POST" novalidate>
   <div class="cform-row">
     <label for="cf-name">Your name</label>
     <input type="text" id="cf-name" name="name" autocomplete="name" required />
@@ -356,7 +365,7 @@ def contact_form_html():
 
   <div class="cform-consent">
     <input type="checkbox" id="cf-sms" name="sms_consent" value="yes" />
-    <label for="cf-sms"><strong>Text me about my booking.</strong> I agree to receive text messages from {e(BIZ)} about my appointment, quote and service updates at the mobile number provided.</label>
+    <label for="cf-sms"><strong>Text me about my booking.</strong> I agree to receive text messages from {e(BIZ)} about my appointment, quote and service updates at the mobile number provided. Consent is not a condition of purchase.</label>
   </div>
 
   <div class="cform-consent">
@@ -365,9 +374,10 @@ def contact_form_html():
   </div>
 
   <p class="cform-fineprint">
-    Consent is not a condition of purchase. Message frequency varies.
-    Message and data rates may apply. Reply STOP to opt out or HELP for help.
-    See our <a href="/sms-privacy-policy/">SMS Privacy Policy</a>.
+    Message frequency varies. Message and data rates may apply. Reply STOP to opt out
+    or HELP for help. Your number will not be sold or shared with third parties for
+    marketing. See our <a href="/sms-privacy-policy/">SMS Privacy Policy</a> and
+    <a href="/terms/">Terms &amp; Conditions</a>.
   </p>
 
   <div class="hp-field" aria-hidden="true">
@@ -375,9 +385,19 @@ def contact_form_html():
     <input type="text" id="cf-website" name="_gotcha" tabindex="-1" autocomplete="off" />
   </div>
 
-  <button type="submit"{disabled}>Request A Quote</button>
-  <p class="cform-status" id="cf-status" role="status" aria-live="polite"></p>{notice}
-</form>'''
+  <button type="submit">Request A Quote</button>
+  <p class="cform-status" id="cf-status" role="status" aria-live="polite"></p>
+</form>
+
+<div class="book-panel">
+  <p class="book-panel-eyebrow">Or Book A Slot Directly</p>
+  <p class="book-panel-body">Prefer to pick a time yourself? Choose a service and slot on our online booking page.</p>
+  <a href="{BOOKING_URL}" class="book-panel-btn" rel="noopener">Open Booking Page</a>
+  <p class="book-panel-alt">Or <a href="tel:+14142861609">call {TEL}</a> / <a href="sms:+14142861609">send a text</a>.</p>
+</div>
+
+
+'''
 
 
 def glance_html(pairs):
@@ -1204,7 +1224,7 @@ def build_static_pages():
   <a href="tel:+14142861609" class="btn-contact btn-contact-call">Call Us &mdash; {TEL}</a>
   <a href="sms:+14142861609" class="btn-contact btn-contact-text">Text Us &mdash; {TEL}</a>
 </div>
-{contact_form_html()}
+{booking_cta_html()}
 </div></div>
 <div class="prose"><div class="prose-col">
 <h2>What happens next</h2>
@@ -1341,7 +1361,7 @@ def build_static_pages():
 <p>We collect consent to text you in one of the following ways:</p>
 <ul>
 <li>You text us first at {TEL}, or give us your mobile number verbally and agree to be contacted by text.</li>
-<li>You check the consent box on the booking form on our <a href="/booking/">booking page</a>, indicating you agree to receive text messages. Promotional messages have their own separate box.</li>
+<li>You tick the text-message consent box when booking online through our <a href="/booking/">booking page</a>. The box is optional and is never a condition of booking. Promotional messages are agreed to separately.</li>
 <li>You provide your number and agree to text contact on a paper form or in person at our shop at {ADDR}, {CITY}, {REGION} {ZIP}.</li>
 </ul>
 <p>Consent to receive text messages is never a condition of purchasing any service from us. Consent is not shared with anyone else and is used only for the messages described below.</p>
@@ -1722,7 +1742,7 @@ document.addEventListener('keydown', function (ev) {
       if (!r.ok) throw new Error('bad status');
       form.reset();
       status.style.color = '#e8a020';
-      status.textContent = 'Thanks — we have your request and will be in touch shortly.';
+      status.textContent = 'Thanks, we have your request and will be in touch shortly.';
     }).catch(function () {
       status.style.color = '#e8a020';
       status.textContent = 'Something went wrong. Please call or text 414-286-1609 instead.';

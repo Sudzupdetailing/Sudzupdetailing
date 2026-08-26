@@ -242,7 +242,7 @@ document.addEventListener('keydown', function (ev) {
       if (!r.ok) throw new Error('bad status');
       form.reset();
       status.style.color = '#e8a020';
-      status.textContent = 'Thanks — we have your request and will be in touch shortly.';
+      status.textContent = 'Thanks, we have your request and will be in touch shortly.';
     }).catch(function () {
       status.style.color = '#e8a020';
       status.textContent = 'Something went wrong. Please call or text 414-286-1609 instead.';
