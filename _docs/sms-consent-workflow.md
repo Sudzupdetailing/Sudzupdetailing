@@ -126,7 +126,76 @@ After any of these, run `python3 _build/build.py`, review, commit, push.
 
 ---
 
-## 7. A2P 10DLC campaign submission
+## 7. Message templates for campaign submission
+
+Submit these as-is. Reviewers want the message a customer actually receives, so
+use real values rather than `{{placeholders}}`.
+
+### Opt-in confirmation (the double opt-in receipt)
+
+This is what the submission form means by "opt-in message" — the confirmation
+sent immediately after someone consents, not the text on the checkbox.
+
+> Sudz Up Detailing: You're subscribed to appointment and service updates. Msg
+> frequency varies. Msg & data rates may apply. Reply HELP for help, STOP to
+> cancel. sudzupdetail.com/sms-terms/
+
+It must contain all six of these, and it does:
+
+| Required element | Where |
+|---|---|
+| Business / program name | "Sudz Up Detailing" |
+| Confirmation of opt-in | "You're subscribed to appointment and service updates" |
+| Message frequency | "Msg frequency varies" |
+| Rates disclosure | "Msg & data rates may apply" |
+| HELP instruction | "Reply HELP for help" |
+| STOP instruction | "STOP to cancel" |
+
+186 characters — two segments. Dropping the URL brings it to one segment; the
+link is not required but strengthens the submission.
+
+> **Open item:** confirm StrataCRM actually sends an opt-in confirmation, and
+> that its wording matches the above. Look under the texting/automation
+> settings. If it cannot send one automatically, do **not** submit this text as
+> your opt-in message — describe the real flow instead. A described flow the
+> system does not perform is a rejection risk on audit.
+
+### Sample messages by type
+
+**Booking confirmation**
+> Sudz Up Detailing: You're booked for a Full VIP Detail on Tue Sep 8 at 9:00 AM,
+> 2948 WI-83, Hartford. Reply STOP to opt out, HELP for help.
+
+**Appointment reminder**
+> Sudz Up Detailing: Reminder — your detail is tomorrow at 9:00 AM. Please remove
+> personal items from the vehicle before drop-off. Reply STOP to opt out.
+
+**Quote**
+> Sudz Up Detailing: Looked over your 2012 Town & Country. Interior detail is
+> $150. Reply YES to book or call 414-286-1609. Reply STOP to opt out.
+
+**Vehicle ready**
+> Sudz Up Detailing: Your vehicle is finished and ready for pickup. We're here
+> until 6:00 PM today. Reply STOP to opt out, HELP for help.
+
+**Promotional** — only to customers who ticked the promotional box
+> Sudz Up Detailing: Salt season's coming. Ceramic coating from $599 through
+> October. Call or text 414-286-1609 to book. Reply STOP to opt out.
+
+### Rules these follow
+
+- Every message names the business. Carriers require identifiable branding.
+- Every message carries STOP. Not strictly required on transactional messages,
+  but reviewers reject inconsistency more often than they object to extra
+  opt-out language.
+- All samples are under 160 characters, so each sends as a single segment.
+- Samples must match the declared use case and the message types listed in
+  `/sms-terms/` section 1. Submitting a sample for something the policy does not
+  list is a common rejection cause.
+
+---
+
+## 8. A2P 10DLC campaign submission
 
 URLs to supply:
 
@@ -149,14 +218,15 @@ Before submitting, confirm all of the following are true on the live site:
 - [ ] Frequency, rates, STOP and HELP disclosure is visible
 - [ ] All three legal links work from `/booking/` and from the footer
 - [ ] `/sms-terms/` states rates, STOP, HELP and carrier non-liability
-- [ ] Sample message templates match what the policy says you send
+- [ ] Sample message templates (section 7) match what `/sms-terms/` declares
+- [ ] Opt-in confirmation message is one StrataCRM can actually send
 
 If rejected again, the rejection code and reason text say which specific element
 failed. Fix that element rather than resubmitting the same thing.
 
 ---
 
-## 8. Records to keep
+## 9. Records to keep
 
 - Formspree submission emails — what each person agreed to and when
 - StrataCRM client records — current consent state
@@ -167,7 +237,7 @@ period after. They are the only evidence you have if a complaint is raised.
 
 ---
 
-## 9. Caveat
+## 10. Caveat
 
 This document describes an operational process, not legal advice. The TCPA and
 carrier requirements around A2P messaging are enforced with real financial
