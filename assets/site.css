@@ -21,12 +21,12 @@
       --dark:    #0F0F0F;
       --panel:   #161616;
       --border:  #252525;
-      --chrome:  #B8B8B8;
+      --chrome:  #C4C4C4;
       --warm:    #F0EDE8;
       --gold:    #E8A020;
       --gold-d:  #C47F0A;
       --cyan:    #00AECC;
-      --text:    #808080;
+      --text:    #A6A6A6;  /* 7.4:1 on --black; was #808080 at 4.0:1 */
     }
 
     html { scroll-behavior: smooth; }
@@ -899,7 +899,8 @@
 .prose strong { color: var(--chrome); font-weight: 600; }
 .prose ul, .prose ol { margin: 0 0 1.4rem 1.15rem; color: var(--text); line-height: 1.85; font-size: .97rem; }
 .prose li { margin-bottom: .55rem; padding-left: .35rem; }
-.prose a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(232,160,32,.3); }
+.prose a { color: var(--gold); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: rgba(232,160,32,.6); }
+.prose a:hover, .prose a:focus-visible { text-decoration-color: var(--gold); }
 .prose a:hover { border-bottom-color: var(--gold); }
 /* Buttons inside prose must not inherit prose link styling — .prose a is both
    later and more specific than .btn-contact-*, which turned the gold Call
@@ -1158,3 +1159,9 @@
 
 /* Below-fold sections: skip layout/paint until near viewport. */
 .faq, section.related, footer { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+
+/* Accessibility pass: touch targets and visible focus. */
+.crumbs a, .related a, footer a, .nav-links a, .nav-dropdown a, .faq-q { display: inline-block; min-height: 44px; line-height: 44px; padding: 0 .5rem; margin: 0 .1rem; }
+.related li + li, footer li + li { margin-top: .25rem; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.testimonial-context, .card-eyebrow, .section-eyebrow, .callout-label, .glance dt, .page-lede { color: var(--chrome); }

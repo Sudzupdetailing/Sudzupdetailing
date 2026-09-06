@@ -641,7 +641,9 @@ def page(path, title, meta, graph, body, active="", extra_head=""):
 </head>
 <body>
 {nav(active)}
+<main id="main">
 {body}
+</main>
 {FOOTER}'''
     outdir = ROOT if path == "/" else os.path.join(ROOT, path.strip("/"))
     os.makedirs(outdir, exist_ok=True)
@@ -1842,59 +1844,64 @@ def build_robots():
 
 
 def build_llms():
-    svc = "\n".join(f'- {s["name"]} ({s["price"]}) — {SITE}/services/{s["slug"]}/\n  {s["card"]}'
-                    for s in SERVICES)
-    loc = "\n".join(f'- {c["name"]}, WI ({c["county"]}, {c["drive"]}) — {SITE}/auto-detailing/{c["slug"]}/'
-                    for c in CITIES)
-    gds = "\n".join(f'- {g["h1"]} — {SITE}/guides/{g["slug"]}/\n  {g["card"]}' for g in GUIDES)
-    open(os.path.join(ROOT, "llms.txt"), "w", encoding="utf-8").write(f"""# {BIZ}
+    """llms.txt per the llmstxt.org spec: H1, blockquote summary, optional
+    detail paragraphs, then H2 sections that are markdown link lists of the
+    form '- [name](url): notes'. An 'Optional' section holds secondary URLs."""
+    hours = "; ".join(f"{d}: {h}" for d, h in HOURS)
+    def L(name, path, note): return f"- [{name}]({SITE}{path}): {note}"
+    svc = [L(s["name"], f"/services/{s['slug']}/", f"{s['price']}. {s['card']}") for s in SERVICES if not s.get("hidden")]
+    veh = [L(x["name"], f"/vehicles/{x['slug']}/", x["card"] if "card" in x else x["lede"]) for x in VEHICLES]
+    sit = [L(x["name"], f"/situations/{x['slug']}/", x["lede"]) for x in SITUATIONS]
+    mk  = [L(x["name"], f"/makes/{x['slug']}/", x["lede"]) for x in MAKES]
+    com = [L(x["name"], f"/commercial/{x['slug']}/", x["lede"]) for x in COMMERCIAL if not x.get("disabled")]
+    cit = [L(f"{c['name']}, WI", f"/auto-detailing/{c['slug']}/", f"{c['drive']} from the shop. {c['lede']}") for c in CITIES]
+    gd  = [L(g["h1"], f"/guides/{g['slug']}/", g["card"]) for g in GUIDES]
+    cmap = {c["slug"]: c for c in CITIES}; smap = {s["slug"]: s for s in SERVICES}
+    combos = [L(f"{smap[x['service']]['name']} in {cmap[x['city']]['name']}, WI", f"/services/{x['service']}/{x['city']}/", x["lede"])
+              for x in SERVICE_CITIES if not smap[x["service"]].get("disabled")]
+    body = f"""# {BIZ}
 
-> Professional interior and exterior auto detailing in Hartford, Wisconsin,
-> one shop at 2948 WI-83 in Hartford; customers drive in from across southeast Wisconsin.
+> One auto detailing shop at {ADDR}. Customers drive in from across Washington, Waukesha, Ozaukee, Dodge, Fond du Lac and Milwaukee counties. One vehicle at a time; interior, exterior and full details, odor removal, paint correction, ceramic coating, interior protection, engine bays and headlight restoration.
 
-## Business
-- Name: {BIZ}
-- Address: {ADDR}, {CITY}, {REGION} {ZIP}, United States
-- Phone / Text: {TEL}
-- Email: {EMAIL}
-- Website: {SITE}/
-- Google Business Profile: {GBP_URL}
-- Facebook: {FACEBOOK}
-- Instagram: {INSTAGRAM}
-- Location type: physical shop (not mobile / not service-area only)
-- Vehicle types: cars, trucks, SUVs, vans
+Shop-based, not mobile: every vehicle is brought to the shop in Hartford, Wisconsin. Phone and text {TEL}. Email gio@sudzupdetail.com. Hours: {hours}. Owner: Gio. Pricing: Sudz Quick Clean interior $135 cars / $150 SUVs and trucks; Sudz Up VIP Clean full interior and exterior $200 / $250; engine bay $50 add-on; headlight restoration from $135; odor removal, paint correction, ceramic coating and interior protection assessed and quoted per vehicle. Quotes are given before work starts, never at collection.
 
-## Hours
-{hours_llms()}
+## Core pages
 
-## Packages and pricing
-- Sudz Quick Clean (interior only) - $135 cars / $150 SUVs and trucks.
-  Interior vacuum, vinyl/rubber/plastic (VRP) treatment, spot stain removal,
-  door jambs cleaned, windows cleaned inside and out.
-- Sudz Up VIP Clean (interior + exterior) - $200 cars / $250 SUVs and trucks.
-  Everything in the Quick Clean plus exterior hand wash, polish, wheels
-  cleaned and tires shined.
-
-Prices may vary based on vehicle condition. Quotes are given before work
-starts, not at collection.
-
-## Not offered
-Paint protection film and window tinting are NOT offered by this business.
+{L("Home", "/", "What the shop does and why customers drive past closer options.")}
+{L("Pricing", "/pricing/", "Every package and add-on with the actual numbers.")}
+{L("Reviews", "/reviews/", "Six real Google and Facebook reviews, quoted as written.")}
+{L("Contact", "/contact/", "Address, hours, phone, text and email.")}
+{L("Book", "/booking/", "Online booking.")}
+{L("About", "/about/", "Who runs the shop and how it works.")}
 
 ## Services
-{svc}
 
-## Service area
-{loc}
+{chr(10).join(svc)}
 
-## Owner guides
-{gds}
+## By vehicle, situation and make
 
-## Booking
-Call or text {TEL}, or email {EMAIL}.
-Quotes are free and carry no obligation.
-""")
+{chr(10).join(veh + sit + mk)}
 
+## Commercial and trade
+
+{chr(10).join(com)}
+
+## Guides
+
+{chr(10).join(gd)}
+
+## Where customers drive in from
+
+{chr(10).join(cit)}
+
+## Optional
+
+{chr(10).join(combos)}
+{L("Sitemap", "/sitemap.xml", "All URLs.")}
+{L("SMS terms", "/sms-terms/", "Text messaging programme terms.")}
+{L("SMS privacy", "/sms-privacy-policy/", "Text messaging privacy policy.")}
+"""
+    open(os.path.join(ROOT, "llms.txt"), "w", encoding="utf-8").write(body)
 
 def build_js():
     open(os.path.join(ROOT, "assets", "site.js"), "w", encoding="utf-8").write(
