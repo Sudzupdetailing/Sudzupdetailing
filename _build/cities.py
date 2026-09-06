@@ -119,7 +119,7 @@ CITIES = [
      "Organic material on a road gets thrown onto lower panels and into wheel arches, and unlike ordinary road dirt it is chemically active \u2014 mildly alkaline and corrosive to unprotected metal and trim over time. It also dries hard in warm weather and does not simply rinse off. It needs to be softened and removed as part of decontamination rather than washed.",
      "In spring and autumn this is at its heaviest, and those are the months to plan exterior work around rather than the middle of summer."]),
    ("Highway 67 and winter",
-    ["Highway 67 runs through the village and carries a lot of Ashippun's commuting toward Oconomowoc and I-94, so local vehicles take state-highway brine exposure on top of the rural road conditions above.",
+    ["Highway 67 runs through the village and carries a lot of Ashippun's commuting toward Oconomowoc and I-94, so local vehicles carry state-highway brine on their upper panels in addition to whatever the farm roads throw into the arches.",
      "The combination is worth understanding: brine film on the upper panels from the highway, and organic road material packed into arches from the farm roads. They are two different contaminants and they come off in two different stages of the same job."]),
    ("Inside the cabin",
     ["Boots are the cabin problem. A vehicle that visits farm properties, even occasionally, tracks organic material into the footwell and it works down into the carpet backing where it stays damp and continues to break down.",

@@ -966,10 +966,7 @@ def build_cities():
 <div class="prose"><div class="prose-col">
 {glance_html(c["glance"])}
 {prose_html(c["body"])}
-<div class="callout">
-  <span class="callout-label">Pricing</span>
-  <p>Sudz Quick Clean (interior) &mdash; $135 cars, $150 SUVs and trucks. Sudz Up VIP Clean (interior and exterior) &mdash; $200 cars, $250 SUVs and trucks. Prices may vary with vehicle condition, and we quote before starting rather than at collection.</p>
-</div>
+<p class="callout-inline">Interior from $135, full interior and exterior from $200 &mdash; <a href="/pricing/">full pricing here</a>. We quote before starting, not at collection.</p>
 </div></div>
 {faq_html(c["faq"])}
 {cta_html(f'Book a Detail in {c["name"]}', f"Call or text {TEL} for a no-obligation quote. We will give you a straight price and a realistic turnaround.")}
