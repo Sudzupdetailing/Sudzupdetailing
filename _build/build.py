@@ -966,8 +966,8 @@ def build_cities():
 <div class="prose"><div class="prose-col">
 {glance_html(c["glance"])}
 {prose_html(c["body"])}
-<p class="callout-inline">Interior from $135, full interior and exterior from $200 &mdash; <a href="/pricing/">full pricing here</a>. We quote before starting, not at collection.</p>
 </div></div>
+<p class="callout-inline">Interior from $135, full interior and exterior from $200 &mdash; <a href="/pricing/">full pricing here</a>. We quote before starting, not at collection.</p>
 {faq_html(c["faq"])}
 {cta_html(f'Book a Detail in {c["name"]}', f"Call or text {TEL} for a no-obligation quote. We will give you a straight price and a realistic turnaround.")}
 {related_html("Services we offer", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
