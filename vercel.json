@@ -22,6 +22,11 @@
       "source": "/services/stain-and-odor-removal",
       "destination": "/services/odor-removal/",
       "permanent": true
+    },
+    {
+      "source": "/testimonials",
+      "destination": "/reviews/",
+      "permanent": true
     }
   ],
   "headers": [

@@ -51,17 +51,32 @@ GALLERY_PHOTOS = [
 
 # (name, quote, short context label)
 TESTIMONIALS = [
+    # (display name, quote, context, source)
+    ("Dustin F.",
+     "Gio is a very solid guy and did a fantastic job, I don't think my car has ever been this clean before. "
+     "I highly recommend him to anybody wanting a truly clean car.",
+     "Full Detail", "Google"),
+    ("Rich H.",
+     "I came in with a vehicle that was very dirty, and smelled not the greatest. Sudz Up was able to do a full "
+     "detail job with deodorizing, and it smells better than when I purchased the vehicle. 100% would recommend "
+     "to my family and friends.",
+     "Full Detail with Odor Removal", "Google"),
     ("Maggie R.",
-     "Gio detailed the inside of my 16 year old van. Looked and smelled like new. He is a very "
-     "accommodating young man who dealt with rescheduling and pick up issues when i had problems. "
-     "I will definitely recommend and use his services again.",
-     "Interior Detail — Family Van"),
+     "Gio detailed the inside of my 16 year old van. Looked and smelled like new. He is a very accommodating "
+     "young man who dealt with rescheduling and pick up issues when I had problems. I will definitely recommend "
+     "and use his services again.",
+     "Interior Detail \u2014 Family Van", "Google"),
     ("Makenna S.",
-     "Went above and beyond!! Came into some problems nobody was expecting, ended up needing a new "
-     "seat. They still got the job done AND helping us find a new seat. Amazing amazing work! So "
-     "knowledgeable and friendly. 100% recommend! Your car will be in good hands. The car came out "
-     "sparkly clean and no more smell.",
-     "Full Interior Detail"),
+     "Went above and beyond!! Came into some problems nobody was expecting, ended up needing a new seat. They "
+     "still got the job done AND helping us find a new seat. Amazing amazing work! So knowledgeable and friendly. "
+     "100% recommend! Your car will be in good hands. The car came out sparkly clean and no more smell.",
+     "Full Interior Detail", "Google"),
+    ("Darryl D.",
+     "Great quality and very affordable!",
+     "Detail", "Google"),
+    ("Facebook customer",
+     "Work done very well and at a respectable time, would definitely recommend if you want your car looking nice.",
+     "Detail", "Facebook"),
 ]
 
 # (id, name, description, iso8601 duration, width, height, short label)
@@ -856,46 +871,47 @@ def build_gallery():
 
 
 def build_testimonials():
-    path, url = "/testimonials/", SITE + "/testimonials/"
-    t = [("Home", "/"), ("Testimonials", path)]
-
+    path, url = "/reviews/", SITE + "/reviews/"
+    t = [("Home", "/"), ("Reviews", path)]
     graph = [org_node(), business_node(), website_node(),
              {"@type": ["CollectionPage", "WebPage"], "@id": f"{url}#webpage", "url": url,
-              "name": f"Customer Testimonials | {BIZ}",
+              "name": f"Customer Reviews | {BIZ}",
               "isPartOf": {"@id": f"{SITE}/#website"}, "about": {"@id": f"{SITE}/#business"},
               "inLanguage": "en-US", "breadcrumb": {"@id": f"{url}#breadcrumb"}},
              crumb_node(url, t)]
-    for i, (name, quote, context) in enumerate(TESTIMONIALS, 1):
+    # Review markup only: no aggregateRating on the business entity. Google treats
+    # self-published ratings on a LocalBusiness as self-serving; stars in the SERP
+    # come from the Google Business Profile, which is linked below.
+    for i, (name, quote, context, source) in enumerate(TESTIMONIALS, 1):
         graph.append({"@type": "Review", "@id": f"{url}#review-{i}",
                       "itemReviewed": {"@id": f"{SITE}/#business"},
                       "author": {"@type": "Person", "name": name},
                       "reviewBody": quote, "inLanguage": "en-US"})
-
     cards = "\n".join(
         f'''    <div class="testimonial-card">
       <p class="testimonial-quote">{e(quote)}</p>
       <div class="testimonial-footer">
         <p class="testimonial-name">{e(name)}</p>
-        <p class="testimonial-context">{e(context)}</p>
+        <p class="testimonial-context">{e(context)} &middot; {e(source)}</p>
       </div>
-    </div>''' for name, quote, context in TESTIMONIALS)
-
+    </div>''' for name, quote, context, source in TESTIMONIALS)
     body = f'''{crumbs_html(t)}
 <div class="page-head">
   <p class="section-eyebrow">Customer Reviews</p>
-  <h1 class="section-title">What Our<br>Customers Say</h1>
-  <p class="page-lede">Real feedback from vehicle owners who have brought their cars to us in Hartford.</p>
+  <h1 class="section-title">What Customers Say<br>After The Drive Home</h1>
+  <p class="page-lede">Every review here is a real customer, quoted as they wrote it, from Google or Facebook. We would rather show six real ones than a hundred we could not stand behind.</p>
 </div>
-<section aria-label="Customer testimonials">
+<section aria-label="Customer reviews">
   <div class="testimonial-grid fade-up">
 {cards}
   </div>
 </section>
-{cta_html("Ready For Results Like These?", f"Call or text {TEL} for a no-obligation quote and we will schedule your detail.")}
+<p class="callout-inline">Read them at the source, or leave one of your own: <a href="{SAME_AS[0]}" rel="noopener" target="_blank">Sudz Up Detailing on Google</a>.</p>
+{cta_html("Ready For Results Like These?", f"Call or text {TEL}. One vehicle at a time, at 2948 WI-83 in Hartford.")}
 {related_html("Our services", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
 '''
-    page(path, f"Customer Testimonials | {BIZ}",
-         "Read real customer testimonials for Sudz Up Detailing, Hartford WI's mobile and shop auto detailing service.",
+    page(path, f"Customer Reviews | {BIZ}",
+         "Real Google and Facebook reviews from customers who drove to Sudz Up Detailing in Hartford, WI, quoted as written. No aggregated stars, just the reviews.",
          graph, body, active=path)
     PAGES.append((path, "0.7", "monthly", ""))
 
