@@ -18,6 +18,7 @@ sys.path.insert(0, HERE)
 from cities import CITIES
 from services import SERVICES
 from guides import GUIDES
+from service_cities import SERVICE_CITIES
 
 # (slug, width, height, native_width, caption/alt, short label, category)
 GALLERY_PHOTOS = [
@@ -1513,6 +1514,51 @@ def build_static_pages():
 
 # ────────────────────────────────────────────────────────── crawl-layer files
 
+def build_service_cities():
+    """Service x city pages at /services/<service>/<city>/.
+
+    Each entry in SERVICE_CITIES is hand-written for that combination; nothing
+    here is generated from a template string. See _build/service_cities.py for
+    the rule governing what earns a page.
+    """
+    smap = {s["slug"]: s for s in SERVICES}
+    cmap = {c["slug"]: c for c in CITIES}
+    for sc in SERVICE_CITIES:
+        s, c = smap[sc["service"]], cmap[sc["city"]]
+        p = f'/services/{sc["service"]}/{sc["city"]}/'
+        url = SITE + p
+        t = [("Home", "/"), ("Services", "/services/"),
+             (s["name"], f'/services/{sc["service"]}/'), (sc["h1"], p)]
+        graph = [org_node(), business_node(), website_node(),
+                 {"@type": ["Service", "WebPage"], "@id": f"{url}#webpage", "url": url,
+                  "name": sc["title"], "headline": sc["h1"], "description": sc["meta"],
+                  "serviceType": s["name"],
+                  "provider": {"@id": f"{SITE}/#business"},
+                  "areaServed": {"@type": "City", "name": c["name"],
+                                 "addressRegion": "WI", "addressCountry": "US"},
+                  "isPartOf": {"@id": f"{SITE}/#website"}, "inLanguage": "en-US",
+                  "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+                 crumb_node(url, t),
+                 faq_node(url, sc["faq"])]
+        body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">{e(s["name"])} &middot; {e(c["name"])}, WI</p>
+  <h1 class="section-title">{e(sc["h1"])}</h1>
+  <p class="page-lede">{e(sc["lede"])}</p>
+</div>
+<div class="prose"><div class="prose-col">
+{glance_html(sc["glance"])}
+{prose_html(sc["body"])}
+</div></div>
+{faq_html(sc["faq"])}
+{cta_html("Book From " + c["name"], f"Call or text {TEL}. We will tell you honestly whether the drive is worth it for what you need.")}
+{related_html("More in " + c["name"], [(f'{smap[x["service"]]["name"]} in {c["name"]}', f'/services/{x["service"]}/{x["city"]}/') for x in SERVICE_CITIES if x["city"] == sc["city"] and x["service"] != sc["service"]] + [(f'Auto detailing in {c["name"]}', f'/auto-detailing/{sc["city"]}/')])}
+{related_html(s["name"] + " elsewhere", [(f'{cmap[x["city"]]["name"]}, WI', f'/services/{x["service"]}/{x["city"]}/') for x in SERVICE_CITIES if x["service"] == sc["service"] and x["city"] != sc["city"]] + [(f'{s["name"]} overview', f'/services/{sc["service"]}/')])}
+'''
+        page(p, sc["title"], sc["meta"], graph, body, active="/services/")
+        PAGES.append((p, "0.7", "monthly", ""))
+
+
 def build_sitemap():
     urls = []
     for path, prio, freq, extra in PAGES:
@@ -1860,6 +1906,7 @@ def main():
     build_gallery()
     build_testimonials()
     build_services()
+    build_service_cities()
     build_cities()
     build_guides()
     build_static_pages()
