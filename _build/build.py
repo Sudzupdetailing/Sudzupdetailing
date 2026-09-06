@@ -174,8 +174,8 @@ def business_node(full=False):
         "@type": ["LocalBusiness", "AutoWash"], "@id": f"{SITE}/#business", "name": BIZ,
         "parentOrganization": {"@id": f"{SITE}/#organization"},
         "description": ("Professional interior and exterior auto detailing in Hartford, Wisconsin. "
-                        "Detail packages for cars, trucks and SUVs serving Hartford and the "
-                        "surrounding Washington County area."),
+                        "A shop at 2948 WI-83 in Hartford. Customers drive in from across "
+                        "Washington, Waukesha, Ozaukee, Dodge, Fond du Lac and Milwaukee counties."),
         "url": SITE + "/", "telephone": TELE, "email": EMAIL,
         "image": {"@id": f"{SITE}/#logo"}, "logo": {"@id": f"{SITE}/#logo"},
         "address": {"@type": "PostalAddress", "streetAddress": ADDR, "addressLocality": CITY,
@@ -242,7 +242,7 @@ def service_area_links(service_slug):
     cmap = {c["slug"]: c for c in CITIES}
     links = [(cmap[x["city"]]["name"] + ", WI", f'/services/{service_slug}/{x["city"]}/')
              for x in SERVICE_CITIES if x["service"] == service_slug and x["city"] in cmap]
-    return links + [("All areas we serve", "/auto-detailing/")]
+    return links + [("All areas", "/auto-detailing/")]
 
 
 def nav_model():
@@ -264,7 +264,7 @@ def nav_model():
          [("By make", "/makes/"), ("By situation", "/situations/")]),
         ("Commercial", "/commercial/", "All commercial services",
          [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL]),
-        ("Service Area", "/auto-detailing/", "All areas we serve",
+        ("Areas", "/auto-detailing/", "All areas",
          [(cmap[k]["name"] + ", WI", "/auto-detailing/" + k + "/") for k in top_cities if k in cmap]),
         ("Guides", "/guides/", "All guides",
          [(gmap[k]["nav"], "/guides/" + k + "/") for k in featured_guides if k in gmap]),
@@ -674,7 +674,7 @@ def build_home():
         ("What is included in the VIP detail package?",
          "The Sudz Up VIP Clean includes an interior vacuum, vinyl/rubber/plastic treatment, spot stain removal, door jambs cleaned and windows cleaned, plus an exterior wash and polish, wheels cleaned and tires shined."),
         ("What areas does Sudz Up Detailing serve?",
-         "Sudz Up Detailing is based in Hartford, Wisconsin and serves Hartford, Slinger, Richfield, West Bend, Jackson, Allenton, Germantown, Kewaskum, Colgate and Erin in Washington County, plus Rubicon and Neosho in Dodge County."),
+         "Sudz Up Detailing is a shop at 2948 WI-83 in Hartford, Wisconsin. Customers drive in from Hartford, Slinger, Richfield, West Bend, Jackson, Allenton, Germantown, Kewaskum, Colgate and Erin in Washington County, plus Rubicon and Neosho in Dodge County."),
         ("How long does an auto detail take?",
          "The Sudz Quick Clean typically takes about one to two hours. The Sudz Up VIP Clean is a full interior and exterior service and generally takes longer depending on vehicle size and condition."),
         ("Do you detail trucks and SUVs?",
@@ -701,7 +701,7 @@ def build_home():
   <div class="hero-left">
     <p class="hero-eyebrow">Hartford, Wisconsin &middot; Auto Detailing</p>
     <h1 class="hero-headline">Your Ride.<br><span class="accent">Spotless.</span></h1>
-    <p class="hero-sub">Professional interior and exterior detailing that restores, protects and elevates every vehicle we touch. Hartford, WI and the surrounding Washington County area.</p>
+    <p class="hero-sub">Professional interior and exterior detailing that restores, protects and elevates every vehicle we touch. One shop on WI-83 in Hartford. Bring us the vehicle from anywhere in southeast Wisconsin.</p>
     <div class="hero-actions">
       <a href="/booking/" class="btn-primary">Book an Appointment</a>
       <a href="/pricing/" class="btn-ghost">View Pricing</a>
@@ -745,12 +745,12 @@ def build_home():
 <section id="areas" aria-labelledby="areas-title">
   <div class="gallery-header fade-up">
     <p class="section-eyebrow">Service Area</p>
-    <h2 class="section-title" id="areas-title">Detailing Across<br>Washington County</h2>
+    <h2 class="section-title" id="areas-title">Customers Drive In From<br>Washington County</h2>
   </div>
   <div class="areas-grid fade-up">
 {area_cells}
   </div>
-  <p class="areas-note fade-up">Based on WI-83 in Hartford, working throughout Washington County and neighbouring Dodge County. Just outside the list? Call or text {TEL} and we will tell you straight away whether we can reach you.</p>
+  <p class="areas-note fade-up">Everything happens at 2948 WI-83 in Hartford. These are the places our customers drive in from, and each page explains what that town does to a vehicle. Not on the list? If you can get the car to Hartford, we can take it. Call or text {TEL}.</p>
 </section>
 
 <section id="guides" aria-labelledby="guides-title">
@@ -776,7 +776,7 @@ def build_home():
 </div>
 '''
     page(path, f"Auto Detailing in Hartford, WI | {BIZ}",
-         "Professional interior & exterior auto detailing in Hartford, WI. Packages from $135 for cars, $150 SUVs/trucks. Serving Washington County. Call or text 414-286-1609.",
+         "Professional interior & exterior auto detailing in Hartford, WI. Packages from $135 for cars, $150 SUVs/trucks. One shop; customers drive in from six counties. Call or text 414-286-1609.",
          graph, body)
     PAGES.append(("/", "1.0", "monthly", home_media_xml(photos, vids)))
 
@@ -833,7 +833,7 @@ def build_gallery():
 <div class="page-head">
   <p class="section-eyebrow">Our Work</p>
   <h1 class="section-title">Full Photo<br>&amp; Video Gallery</h1>
-  <p class="page-lede">A closer look at real vehicles we have detailed in Hartford and across Washington County.</p>
+  <p class="page-lede">A closer look at real vehicles detailed at our shop in Hartford.</p>
 </div>
 <section id="full-gallery" aria-label="Photo gallery">
   <div class="gallery-photos fade-up">
@@ -884,7 +884,7 @@ def build_testimonials():
 <div class="page-head">
   <p class="section-eyebrow">Customer Reviews</p>
   <h1 class="section-title">What Our<br>Customers Say</h1>
-  <p class="page-lede">Real feedback from vehicle owners we have worked with in Hartford and across Washington County.</p>
+  <p class="page-lede">Real feedback from vehicle owners who have brought their cars to us in Hartford.</p>
 </div>
 <section aria-label="Customer testimonials">
   <div class="testimonial-grid fade-up">
@@ -1002,7 +1002,7 @@ def build_cities():
 {related_html("Our services", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
 '''
     page(hub, f"Auto Detailing Service Area | Washington County, WI | {BIZ}",
-         "Auto detailing across Washington and Dodge County, WI — Hartford, West Bend, Slinger, Germantown, Richfield, Jackson and more. Call or text 414-286-1609.",
+         "One detailing shop in Hartford, WI that customers drive to from Hartford, West Bend, Slinger, Germantown, Richfield, Jackson and more. Call or text 414-286-1609.",
          graph, body, active=hub)
     PAGES.append((hub, "0.9", "monthly", ""))
 
@@ -1041,7 +1041,7 @@ def build_cities():
 </div></div>
 <p class="callout-inline">Interior from $135, full interior and exterior from $200 &mdash; <a href="/pricing/">full pricing here</a>. We quote before starting, not at collection.</p>
 {faq_html(c["faq"])}
-{cta_html(f'Book a Detail in {c["name"]}', f"Call or text {TEL} for a no-obligation quote. We will give you a straight price and a realistic turnaround.")}
+{cta_html(f'Driving In From {c["name"]}?', f"Call or text {TEL} for a no-obligation quote. We will give you a straight price and a realistic turnaround.")}
 {related_html("Services we offer", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
 {related_html("Nearby areas", [(x["name"] + ", WI", f'/auto-detailing/{x["slug"]}/') for x in nearest_cities(c)] + [("All areas", "/auto-detailing/")])}
 '''
@@ -1205,7 +1205,7 @@ def build_static_pages():
 <div class="page-head">
   <p class="section-eyebrow">About Us</p>
   <h1 class="section-title">True Quality<br>Is In The Details</h1>
-  <p class="page-lede">Sudz Up Detailing LLC is an auto detailing business on WI-83 in Hartford, Wisconsin, serving Washington County and the neighbouring Dodge County communities.</p>
+  <p class="page-lede">Sudz Up Detailing LLC is a detailing shop on WI-83 in Hartford, Wisconsin. Customers drive in from across Washington, Waukesha, Ozaukee, Dodge, Fond du Lac and Milwaukee county communities.</p>
 </div>
 <div class="prose"><div class="prose-col">
 <h2>How we work</h2>
@@ -1224,13 +1224,13 @@ def build_static_pages():
 <p>Cars, trucks and SUVs. Work vehicles, family vehicles and weekend vehicles. A truck that is your workplace for fifty hours a week is exactly where a clean cabin makes a daily difference, and it is usually carrying the most abrasive material of anything we see.</p>
 
 <h2>Local to Hartford</h2>
-<p>We are based at {ADDR} in Hartford and we work across {", ".join(c["name"] for c in CITIES[:-1])} and {CITIES[-1]["name"]}. Everything on this site about road salt, brine, lake sand and gravel dust comes from working on vehicles in these conditions rather than from a template.</p>
+<p>We are one shop at {ADDR} in Hartford. Customers drive in from {", ".join(c["name"] for c in CITIES[:-1])} and {CITIES[-1]["name"]}, and the vehicle comes to us every time. Everything on this site about road salt, brine, lake sand and gravel dust comes from working on vehicles in these conditions rather than from a template.</p>
 </div></div>
 {cta_html("Get In Touch", f"Call or text {TEL} for a no-obligation quote. Tell us the vehicle and what is bothering you about it.")}
 {related_html("Where we work", [(x["name"] + ", WI", f'/auto-detailing/{x["slug"]}/') for x in nearest_cities(CITIES[[c["slug"] for c in CITIES].index("hartford-wi")], 8)] + [("All areas", "/auto-detailing/")])}
 '''
     page(p, f"About {BIZ} | Auto Detailing in Hartford, WI",
-         "About Sudz Up Detailing LLC, an auto detailing business on WI-83 in Hartford, Wisconsin serving Washington County. Two packages, straight pricing, honest limits.",
+         "About Sudz Up Detailing LLC, a detailing shop on WI-83 in Hartford, Wisconsin that customers drive to from six counties. Two packages, straight pricing, honest limits.",
          graph, body, active=p)
     PAGES.append((p, "0.6", "yearly", ""))
 
@@ -1650,7 +1650,7 @@ def build_commercial():
 <div class="page-head">
   <p class="section-eyebrow">For Businesses</p>
   <h1 class="section-title">Commercial &amp; Trade<br>Detailing</h1>
-  <p class="page-lede">Dealers, fleets and auto businesses in Washington County and the surrounding area. Not a lot wash &mdash; the work the lot wash cannot do.</p>
+  <p class="page-lede">Dealers, fleets and auto businesses that bring units to us in Hartford. Not a lot wash &mdash; the work the lot wash cannot do.</p>
 </div>
 <div class="cardgrid">
 {cards}
@@ -1804,7 +1804,7 @@ def build_llms():
     open(os.path.join(ROOT, "llms.txt"), "w", encoding="utf-8").write(f"""# {BIZ}
 
 > Professional interior and exterior auto detailing in Hartford, Wisconsin,
-> serving Washington County and neighbouring Dodge County communities.
+> one shop at 2948 WI-83 in Hartford; customers drive in from across southeast Wisconsin.
 
 ## Business
 - Name: {BIZ}

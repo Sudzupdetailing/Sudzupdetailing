@@ -316,7 +316,7 @@ SERVICES = [
  "nav": "Ceramic Coating",
  "price": "From $599",
  "title": "Ceramic Coating in Hartford, WI | Sudz Up Detailing",
- "meta": "Ceramic coating in Hartford, WI. Paint decontamination, prep and coating application from $599. Serving Washington County. Call or text 414-286-1609.",
+ "meta": "Ceramic coating in Hartford, WI. Paint decontamination, prep and coating application from $599. Drive in from anywhere in southeast Wisconsin. Call or text 414-286-1609.",
  "h1": "Ceramic Coating",
  "lede": "A ceramic coating is a semi-permanent layer bonded to your paint. It makes the car easier to wash, holds gloss for far longer than wax, and stands up to Wisconsin road salt in a way nothing you apply by hand every few months will.",
  "card": "Semi-permanent paint protection \u2014 decontamination, prep and coating application.",

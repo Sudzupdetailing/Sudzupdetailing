@@ -65,7 +65,7 @@ SERVICE_CITIES = [
  "title": "Interior Car Detailing in West Bend, WI | Sudz Up Detailing",
  "meta": "Interior detailing for West Bend, WI drivers. High-mileage commuter cars, river-valley damp and winter salt handled properly. About 20 minutes from our shop. Call 414-286-1609.",
  "h1": "Interior Detailing in West Bend, Wisconsin",
- "lede": "West Bend is the largest community we serve, and its vehicles arrive with the most consistent wear pattern of anywhere in the county.",
+ "lede": "West Bend is the largest community our customers come from, and its vehicles arrive with the most consistent wear pattern of anywhere in the county.",
  "glance": [("From our shop", "About 20 minutes"), ("Cars", "$135"), ("SUVs & trucks", "$150"), ("Common issue", "Driver's-quarter wear")],
  "body": [
    ("County-seat mileage concentrates the damage",
@@ -288,7 +288,7 @@ SERVICE_CITIES = [
  "title": "Interior Car Detailing in Germantown, WI | Sudz Up Detailing",
  "meta": "Interior car detailing for Germantown, WI. Family vehicles, car seats, school-run wear and commuter mileage handled properly. About 20 minutes. Call 414-286-1609.",
  "h1": "Interior Detailing in Germantown, Wisconsin",
- "lede": "Germantown sends us more family vehicles than anywhere else we serve, and family vehicles fail in a completely predictable pattern that most detailing skips.",
+ "lede": "Germantown sends us more family vehicles than anywhere else our customers come from, and family vehicles fail in a completely predictable pattern that most detailing skips.",
  "glance": [("From our shop", "About 20 minutes"), ("Cars", "$135"), ("SUVs & trucks", "$150"), ("Most common", "Family vehicles")],
  "body": [
    ("What a car seat does to the seat under it",
@@ -390,7 +390,7 @@ SERVICE_CITIES = [
      "Rural roads are treated less often in winter and later after a storm, which means more time spent driving on partially cleared surfaces throwing slush rather than on wet-and-clear pavement. That slush carries more suspended solids than road spray does, and it packs into wheel arches and behind mud flaps where it stays for weeks.",
      "In summer the same roads carry oil and tar that softens in heat and gets thrown onto lower panels and rocker sills. Tar is not removed by washing at any temperature or pressure \u2014 it needs a solvent stage, which is part of decontamination rather than part of a wash."]),
    ("Gravel and the chipping problem",
-    ["Broken shoulders and gravel drives throw stone, and Richfield vehicles carry more chipping on leading edges \u2014 bonnet, mirrors, front bumper, the leading edge of the roof \u2014 than vehicles from anywhere else we serve.",
+    ["Broken shoulders and gravel drives throw stone, and Richfield vehicles carry more chipping on leading edges \u2014 bonnet, mirrors, front bumper, the leading edge of the roof \u2014 than vehicles from anywhere else our customers come from.",
      "Decontamination will not fix a chip and we will not pretend otherwise. What it does do is stop the damage progressing, because a chip through the clear coat exposes the layers beneath, and contamination sitting in and around it accelerates what happens next.",
      "Cleaned and protected paint around a chip is meaningfully more stable than contaminated paint around one. If chipping is widespread on a vehicle you intend to keep, that is a conversation about <a href=\"/services/ceramic-coating/\">protection</a> or film rather than about cleaning."]),
    ("Farm season fallout",
@@ -506,7 +506,7 @@ SERVICE_CITIES = [
  "title": "Ceramic Coating for Sussex, WI | Sudz Up Detailing",
  "meta": "Ceramic coating for Sussex, WI. New cars in new-construction neighbourhoods take alkaline dust damage from day one. Protection first, not cleanup later. From $599. Call 414-286-1609.",
  "h1": "Ceramic Coating for Sussex, Wisconsin",
- "lede": "Sussex is the one place we serve where the case for coating a new car is strongest, and it is entirely because of what is in the air.",
+ "lede": "Sussex is the one place our customers come from where the case for coating a new car is strongest, and it is entirely because of what is in the air.",
  "glance": [("From our shop", "About 25 minutes"), ("From", "$599"), ("Prep", "Assessed per vehicle"), ("Best timing", "At purchase")],
  "body": [
    ("Alkaline dust and a brand new clear coat",
@@ -1482,7 +1482,7 @@ SERVICE_CITIES = [
      "Camera and optics bags bring in something else: the fine dust off the dikes, which is organic and pale and settles into seat stitching where it shows immediately on dark interiors."]),
    ("Mosquito season",
     ["A marsh in summer produces mosquitoes at a scale that changes how a cabin gets used. Windows stay closed, the fan runs, and the cabin intake pulls in the humid, organic-laden marsh air and pushes it through the filter and the ducts.",
-     "That loads the cabin filter faster than almost anywhere we serve, and a loaded filter pushes a marsh smell into the cabin on every fan setting. We check it on every Horicon vehicle and we will tell you if it needs changing \u2014 it is often the single largest improvement to how the cabin smells."]),
+     "That loads the cabin filter faster than almost anywhere our customers come from, and a loaded filter pushes a marsh smell into the cabin on every fan setting. We check it on every Horicon vehicle and we will tell you if it needs changing \u2014 it is often the single largest improvement to how the cabin smells."]),
  ],
  "faq": [
    ("My car smells faintly swampy and I cannot find why.",
@@ -1589,7 +1589,7 @@ SERVICE_CITIES = [
  "body": [
    ("Dwell time is the whole problem",
     ["Whatever lands on paint \u2014 fallout, pollen, harbour film, bird droppings \u2014 does most of its bonding while the surface is wet. Dry contamination sits loose and blows off; wet contamination dissolves partially, spreads, and dries back on chemically attached. So the damage a car takes is roughly proportional to how many hours a day its paint is damp.",
-     "A car parked near the Lake Michigan shore is damp far more of the time than one inland. Lake wind carries spray and fine moisture well up into the town, fog and lake-effect drizzle add days that inland towns never see, and dew forms earlier and lingers longer. Port Washington paint spends more hours wet than any other paint we serve, and it shows in how fast it dulls."]),
+     "A car parked near the Lake Michigan shore is damp far more of the time than one inland. Lake wind carries spray and fine moisture well up into the town, fog and lake-effect drizzle add days that inland towns never see, and dew forms earlier and lingers longer. Port Washington paint spends more hours wet than any other paint our customers come from, and it shows in how fast it dulls."]),
    ("What a coating does about dwell",
     ["A coated surface has very low surface energy, which means water does not spread on it as a film. It beads and sheets. Spray that would have sat on bare paint as a wet layer for an hour runs off a coating in minutes; dew forms as beads that roll off with the first movement of the car rather than lying flat until the sun takes them.",
      "So the paint is wet for a fraction of the time it would otherwise be, and whatever landed on it during the wet hours is sitting on the coating rather than bonding to the clear coat. That is not a small effect on a lakefront car. It is the difference between paint that needs decontamination every spring and paint that needs a rinse."]),
