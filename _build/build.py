@@ -206,7 +206,7 @@ def business_node(full=False):
                  "itemOffered": {"@type": "Service", "name": sv["name"], "serviceType": sv["name"],
                                  "url": f"{SITE}/services/{sv['slug']}/",
                                  "provider": {"@id": f"{SITE}/#business"}}}
-                for sv in SERVICES if not sv.get("hidden")]},
+                for sv in SERVICES if not sv.get("hidden") and not sv.get("disabled")]},
         "sameAs": SAME_AS}
 
 
@@ -258,12 +258,12 @@ def nav_model():
     gmap = {g["slug"]: g for g in GUIDES}
     return [
         ("Services", "/services/", "All services",
-         [(x["nav"], "/services/" + x["slug"] + "/") for x in SERVICES if not x.get("hidden")]),
+         [(x["nav"], "/services/" + x["slug"] + "/") for x in SERVICES if not x.get("hidden") and not x.get("disabled")]),
         ("Vehicles", "/vehicles/", "All vehicle types",
          [(x["nav"], "/vehicles/" + x["slug"] + "/") for x in VEHICLES] +
          [("By make", "/makes/"), ("By situation", "/situations/")]),
         ("Commercial", "/commercial/", "All commercial services",
-         [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL]),
+         [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL if not x.get("disabled")]),
         ("Areas", "/auto-detailing/", "All areas",
          [(cmap[k]["name"] + ", WI", "/auto-detailing/" + k + "/") for k in top_cities if k in cmap]),
         ("Guides", "/guides/", "All guides",
@@ -900,12 +900,16 @@ def build_testimonials():
     PAGES.append((path, "0.7", "monthly", ""))
 
 
+DISABLED_NOTICE = ("We are finalising our ceramic coating programme around the product lines we will carry, and we would rather "
+                   "not price or book it until that is done. If you want to be first to know when it is available, call or text {TEL} "
+                   "and we will take your details. In the meantime, the guides below explain what a coating does and does not do.")
+
 def build_services():
     hub_url = SITE + "/services/"
     trail = [("Home", "/"), ("Services", "/services/")]
     # Services flagged hidden keep their own page (still built, still in the
     # sitemap, still reachable via related links) but get no card here.
-    hub_services = [s for s in SERVICES if not s.get("hidden")]
+    hub_services = [s for s in SERVICES if not s.get("hidden") and not s.get("disabled")]
     cards = "\n".join(
         f'''  <a href="/services/{s["slug"]}/"><span class="card-eyebrow">{e(s["price"])}</span><h3>{e(s["name"])}</h3><p>{e(s["card"])}</p></a>'''
         for s in hub_services)
@@ -936,6 +940,21 @@ def build_services():
     PAGES.append(("/services/", "0.9", "monthly", ""))
 
     for s in SERVICES:
+        if s.get("disabled"):
+            p = f'/services/{s["slug"]}/'; url = SITE + p
+            tr = [("Home", "/"), ("Services", "/services/"), (s["name"], p)]
+            body = f'''{crumbs_html(tr)}
+<div class="page-head">
+  <p class="section-eyebrow">Not Currently Offered</p>
+  <h1 class="section-title">{e(s["name"])}</h1>
+  <p class="page-lede">{DISABLED_NOTICE.format(TEL=TEL)}</p>
+</div>
+{related_html("Read first", [("Coating vs wax vs sealant", "/guides/ceramic-coating-vs-wax-vs-sealant/"), ("What causes swirl marks", "/guides/what-causes-swirl-marks/"), ("Paint correction", "/services/paint-correction/"), ("Exterior detailing", "/services/exterior-detailing/")])}
+{cta_html("Want To Know When It Launches?", f"Call or text {TEL} and we will take your details.")}
+'''
+            graph = [org_node(), business_node(), website_node(), crumb_node(url, tr)]
+            page(p, f"{s['name']} \u2014 Not Currently Offered | {BIZ}", f"{s['name']} is not currently offered at Sudz Up Detailing while product lines are finalised. Call {TEL} to be notified.", graph, body, active="/services/", extra_head='  <meta name="robots" content="noindex,follow" />\n')
+            continue
         p = f'/services/{s["slug"]}/'
         url = SITE + p
         t = [("Home", "/"), ("Services", "/services/"), (s["name"], p)]
@@ -1178,6 +1197,14 @@ def build_static_pages():
 <div class="callout">
   <span class="callout-label">How we quote</span>
   <p>Describe the vehicle honestly when you call and you will get a real figure. If it turns out to be significantly rougher than described, we call you with a revised number <strong>before</strong> starting &mdash; not at collection. And if we do not think a detail will produce a result worth the money, we will tell you that instead of taking the booking.</p>
+</div>
+<div class="price-block">
+<h3>Add-Ons &amp; Specialty</h3>
+<ul>
+  <li><strong>Engine bay cleaning &mdash; $50</strong> with any detail. Degreased, safely rinsed with electronics covered, dressed matte. <a href="/services/engine-bay-cleaning/">Details</a>.</li>
+  <li><strong>Headlight restoration &mdash; from $135</strong> a pair. Wet-sanded, polished and UV-sealed so it lasts. <a href="/services/headlight-restoration/">Details</a>.</li>
+  <li><strong>Odor removal, paint correction, interior protection &mdash; assessed and quoted per vehicle.</strong> The range on each is wide and a number given without seeing the car would be a guess.</li>
+</ul>
 </div>
 
 <h2>What we do not offer</h2>
@@ -1599,6 +1626,7 @@ def build_service_cities():
     cmap = {c["slug"]: c for c in CITIES}
     for sc in SERVICE_CITIES:
         s, c = smap[sc["service"]], cmap[sc["city"]]
+        if s.get("disabled"): continue
         p = f'/services/{sc["service"]}/{sc["city"]}/'
         url = SITE + p
         t = [("Home", "/"), ("Services", "/services/"),
@@ -1626,7 +1654,7 @@ def build_service_cities():
 </div></div>
 {faq_html(sc["faq"])}
 {cta_html("Book From " + c["name"], f"Call or text {TEL}. We will tell you honestly whether the drive is worth it for what you need.")}
-{related_html("More in " + c["name"], [(f'{smap[x["service"]]["name"]} in {c["name"]}', f'/services/{x["service"]}/{x["city"]}/') for x in SERVICE_CITIES if x["city"] == sc["city"] and x["service"] != sc["service"]] + [(f'Auto detailing in {c["name"]}', f'/auto-detailing/{sc["city"]}/')])}
+{related_html("More in " + c["name"], [(f'{smap[x["service"]]["name"]} in {c["name"]}', f'/services/{x["service"]}/{x["city"]}/') for x in SERVICE_CITIES if x["city"] == sc["city"] and x["service"] != sc["service"] and not smap[x["service"]].get("disabled")] + [(f'Auto detailing in {c["name"]}', f'/auto-detailing/{sc["city"]}/')])}
 {related_html(s["name"] + " elsewhere", [(f'{cmap[x["city"]]["name"]}, WI', f'/services/{x["service"]}/{x["city"]}/') for x in SERVICE_CITIES if x["service"] == sc["service"] and x["city"] != sc["city"]] + [(f'{s["name"]} overview', f'/services/{sc["service"]}/')])}
 '''
         page(p, sc["title"], sc["meta"], graph, body, active="/services/")
@@ -1640,7 +1668,7 @@ def build_commercial():
     trail = [("Home", "/"), ("Commercial", hub)]
     cards = "\n".join(
         f'''  <a href="/commercial/{x["slug"]}/"><span class="card-eyebrow">Commercial</span><h3>{e(x["name"])}</h3><p>{e(x["lede"])}</p></a>'''
-        for x in COMMERCIAL)
+        for x in COMMERCIAL if not x.get("disabled"))
     graph = [org_node(), business_node(), website_node(),
              {"@type": "CollectionPage", "@id": f"{hub_url}#webpage", "url": hub_url,
               "name": f"Commercial & Trade Detailing | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
@@ -1663,6 +1691,8 @@ def build_commercial():
     PAGES.append((hub, "0.7", "monthly", ""))
 
     for x in COMMERCIAL:
+        if x.get("disabled"): continue
+        if x.get("disabled"): continue
         p = f'/commercial/{x["slug"]}/'
         url = SITE + p
         t = [("Home", "/"), ("Commercial", hub), (x["name"], p)]
@@ -1686,7 +1716,7 @@ def build_commercial():
 </div></div>
 {faq_html(x["faq"])}
 {cta_html("Start The Conversation", f"Call or text {TEL}. Tell us what you do and what you get asked for, and we will tell you honestly whether we fit.")}
-{related_html("Other commercial services", [(y["name"], f'/commercial/{y["slug"]}/') for y in COMMERCIAL if y["slug"] != x["slug"]])}
+{related_html("Other commercial services", [(y["name"], f'/commercial/{y["slug"]}/') for y in COMMERCIAL if y["slug"] != x["slug"] and not y.get("disabled")])}
 '''
         page(p, x["title"], x["meta"], graph, body, active=hub)
         PAGES.append((p, "0.7", "monthly", ""))

@@ -252,7 +252,7 @@ GUIDES = [
      "What not to do in either case: let it sit because you will wash the car at the weekend. The weekend is too late for a dropping in July."]),
    ("Once the damage is done",
     ["A dropping etch is a depression in the clear coat and the only fix is <a href=\"/services/paint-correction/\">correction</a> \u2014 polishing the surrounding surface down to the base of the mark. Light etching comes out with a single-stage correction; deep etching, where the acid got well into the clear, sometimes cannot be fully levelled without removing more clear coat than is safe.",
-     "Prevention is the honest answer for a car that parks under trees. A <a href=\"/services/ceramic-coating/\">ceramic coating</a> does not stop droppings landing, but it puts them on the coating rather than the clear coat, and the hours before you get to them do far less damage. Our <a href=\"/services/ceramic-coating/cedarburg-wi/\">Cedarburg page</a> is about exactly this problem."]),
+     "Prevention is the honest answer for a car that parks under trees. A <a href=\"/services/ceramic-coating/\">ceramic coating</a> does not stop droppings landing, but it puts them on the coating rather than the clear coat, and the hours before you get to them do far less damage. Our <a href=\"/services/ceramic-coating/\">Cedarburg page</a> is about exactly this problem."]),
  ],
  "faq": [
    ("How long before a bird dropping damages paint?", "Hours on a warm panel in sun. Longer on a cool, shaded panel. The heat is the multiplier, which is why a hot weekend under trees is the worst case."),

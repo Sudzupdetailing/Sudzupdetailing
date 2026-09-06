@@ -1764,7 +1764,7 @@ SERVICE_CITIES = [
      "We try the solvent first on every transfer mark. It comes off far more often than owners expect, and what is left is usually light marring that a single-stage correction levels."]),
    ("Structures and columns",
     ["Parking structures put concrete columns and walls within inches of doors, and a season of tight structure parking leaves vertical scuffing on door edges and lower panels that is unlike anything a suburban car collects. Concrete is abrasive and the marks it leaves are often deeper than a bumper transfer.",
-     "The corrective question is the same: does it catch a fingernail. If not, it levels. If it does, it is through the clear and the honest answer is improvement rather than removal. A street car that is going to keep living on the street is also a strong case for a <a href=\"/services/ceramic-coating/milwaukee-wi/\">coating</a> after correction, because the next contact then marks the coating."]),
+     "The corrective question is the same: does it catch a fingernail. If not, it levels. If it does, it is through the clear and the honest answer is improvement rather than removal. A street car that is going to keep living on the street is also a strong case for a <a href=\"/services/ceramic-coating/\">coating</a> after correction, because the next contact then marks the coating."]),
  ],
  "faq": [
    ("The corner of my bumper has a smear of another colour on it. Is it damaged?",

@@ -43,7 +43,7 @@ COMMERCIAL = [
    ("Protection products sold at the desk",
     ["A separate conversation from reconditioning: protection products sold during the deal.",
      "Ceramic coating is one of the more defensible back-end products a dealer can offer, because unlike a lot of F&I add-ons it is a real physical thing that does something. The problem is that it is often applied by whoever is available, over paint that was never properly prepared, which is how it earns a bad reputation.",
-     "We install coatings as the named applicator for the product you sell. The unit comes to us after the sale, gets decontaminated and corrected as needed, coated, and returned with the customer knowing who did the work and where to come for maintenance. That is worth more to your customer than a sticker and it is worth something to you when they come back for the next car. Details on the process are on the <a href=\"/commercial/dealer-ceramic-coating/\">dealer coating page</a>."]),
+     "We install coatings as the named applicator for the product you sell. The unit comes to us after the sale, gets decontaminated and corrected as needed, coated, and returned with the customer knowing who did the work and where to come for maintenance. That is worth more to your customer than a sticker and it is worth something to you when they come back for the next car. Details on the process are on the <a href=\"/commercial/car-dealers/\">dealer coating page</a>."]),
  ],
  "faq": [
    ("Do you do lot washes or mobile detailing at the dealership?",
@@ -59,6 +59,7 @@ COMMERCIAL = [
 
 {
  "slug": "dealer-ceramic-coating",
+ "disabled": True,  # ceramic paused by owner 2026-09-06
  "name": "Dealer Ceramic Coating Programs",
  "nav": "Dealer Coating Programs",
  "title": "Ceramic Coating Installer for Car Dealers | Washington County, WI | Sudz Up",
