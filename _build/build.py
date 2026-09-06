@@ -1847,7 +1847,7 @@ def build_llms():
     """llms.txt per the llmstxt.org spec: H1, blockquote summary, optional
     detail paragraphs, then H2 sections that are markdown link lists of the
     form '- [name](url): notes'. An 'Optional' section holds secondary URLs."""
-    hours = "; ".join(f"{h[0]}: {h[1]}" for h in HOURS)
+    hours = "; ".join(f"{h[0]} {h[2][:2].lstrip(chr(48))}am-{int(h[3][:2])-12}pm" if h[2] else f"{h[0]} closed" for h in HOURS)
     def L(name, path, note): return f"- [{name}]({SITE}{path}): {note}"
     svc = [L(s["name"], f"/services/{s['slug']}/", f"{s['price']}. {s['card']}") for s in SERVICES if not s.get("hidden")]
     veh = [L(x["name"], f"/vehicles/{x['slug']}/", x["card"] if "card" in x else x["lede"]) for x in VEHICLES]
