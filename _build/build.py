@@ -192,7 +192,7 @@ def business_node(full=False):
         "serviceArea": {"@type": "GeoCircle",
                         "geoMidpoint": {"@type": "GeoCoordinates", "latitude": LAT, "longitude": LNG},
                         "geoRadius": "40000"},
-        "priceRange": "$135-$599+", "currenciesAccepted": "USD",
+        "priceRange": "$135-$250+", "currenciesAccepted": "USD",
         "paymentAccepted": "Cash, Credit Card, Debit Card",
         "openingHoursSpecification": hours_schema(),
         "knowsAbout": ["auto detailing", "interior car detailing", "exterior wash and polish",
@@ -1144,7 +1144,7 @@ def build_static_pages():
         ("Is the price on the website the price I pay?", "For a vehicle in normal condition, yes. Where condition means more work, we tell you before starting rather than adjusting the figure at collection."),
         ("Why do SUVs and trucks cost more?", "More interior volume, extra footwells and rows, a larger cargo area, more glass and jambs, and more panel area outside. It reflects genuine additional time."),
         ("Do you charge extra for door jambs or interior glass?", "No. Both are included in every package. They are part of what makes a detail different from a car wash."),
-        ("Do you offer ceramic coating?", "Yes. Ceramic coating starts at $599 and includes decontamination and preparation assessed per vehicle. We do not offer paint protection film or window tinting."),
+        ("Do you offer ceramic coating?", "Yes. Ceramic coating starts at quoted per vehicle and includes decontamination and preparation assessed per vehicle. We do not offer paint protection film or window tinting."),
     ]
     graph = [org_node(), business_node(), website_node(),
              {"@type": "WebPage", "@id": f"{url}#webpage", "url": url, "name": f"Pricing | {BIZ}",

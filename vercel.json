@@ -22,56 +22,6 @@
       "source": "/services/stain-and-odor-removal",
       "destination": "/services/odor-removal/",
       "permanent": true
-    },
-    {
-      "source": "/services/ceramic-coating/germantown-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/sussex-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/milwaukee-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/cedarburg-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/oconomowoc-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/port-washington-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/chenequa-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/oconomowoc-lake-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/services/ceramic-coating/west-bend-wi",
-      "destination": "/services/ceramic-coating/",
-      "permanent": false
-    },
-    {
-      "source": "/commercial/dealer-ceramic-coating",
-      "destination": "/commercial/car-dealers/",
-      "permanent": false
     }
   ],
   "headers": [

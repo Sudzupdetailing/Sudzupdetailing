@@ -372,16 +372,15 @@ SERVICES = [
 },
 {
  "slug": "ceramic-coating",
- "disabled": True,  # Owner request 2026-09-06: not offered until product lines are set. Flip to re-enable.
  "name": "Ceramic Coating",
  "nav": "Ceramic Coating",
- "price": "From $599",
+ "price": "Quoted",
  "title": "Ceramic Coating in Hartford, WI | Sudz Up Detailing",
- "meta": "Ceramic coating in Hartford, WI. Paint decontamination, prep and coating application from $599. Drive in from anywhere in southeast Wisconsin. Call or text 414-286-1609.",
+ "meta": "Ceramic coating in Hartford, WI. Paint decontamination, prep and coating application, quoted per vehicle. Drive in from anywhere in southeast Wisconsin. Call or text 414-286-1609.",
  "h1": "Ceramic Coating",
  "lede": "A ceramic coating is a semi-permanent layer bonded to your paint. It makes the car easier to wash, holds gloss for far longer than wax, and stands up to Wisconsin road salt in a way nothing you apply by hand every few months will.",
  "card": "Semi-permanent paint protection \u2014 decontamination, prep and coating application.",
- "glance": [("Starting price", "$599"), ("Prep", "Assessed per vehicle"), ("Typical time", "Multi-day"), ("Best for", "Salt, gloss, easier washing")],
+ "glance": [("Price", "Quoted per vehicle"), ("Prep", "Assessed first"), ("Typical time", "Multi-day"), ("Best for", "Salt, gloss, easier washing")],
  "body": [
    ("What a ceramic coating actually does",
     ["A coating bonds to the clear coat and forms a hard, slick layer on top of it. Water beads and runs off instead of sitting, dirt has less to grip, and washing gets substantially faster because most of what lands on the car does not bond to it.",
@@ -401,7 +400,7 @@ SERVICES = [
      "Aftercare is straightforward but it is not nothing. Coated cars still need washing, just far less effort per wash. We will walk you through it when you collect."]),
  ],
  "faq": [
-   ("How much does ceramic coating cost?", "Pricing starts at $599 and depends on vehicle size and how much preparation the paint needs. We assess the paint and give you a firm figure before any work starts."),
+   ("How much does ceramic coating cost?", "Pricing is quoted per vehicle after we assess the paint, and depends on vehicle size and how much preparation the paint needs. We assess the paint and give you a firm figure before any work starts."),
    ("How long does a ceramic coating last?", "It depends on the product and on how the vehicle is washed and stored. We will tell you the expected life of the specific coating we recommend for your vehicle rather than quoting a headline number that may not apply."),
    ("Does my paint need correcting first?", "That depends on its condition. Some vehicles need very little, others carry years of swirls that would be sealed under the coating. We assess it and tell you honestly what it needs before quoting."),
    ("Can I run it through an automatic car wash afterwards?", "You can, but we would rather you did not. Brush washes are a leading cause of swirl marks, and a coating does not prevent that. Touchless or a proper hand wash gets far more out of the coating you paid for."),

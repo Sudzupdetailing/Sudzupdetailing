@@ -59,7 +59,6 @@ COMMERCIAL = [
 
 {
  "slug": "dealer-ceramic-coating",
- "disabled": True,  # ceramic paused by owner 2026-09-06
  "name": "Dealer Ceramic Coating Programs",
  "nav": "Dealer Coating Programs",
  "title": "Ceramic Coating Installer for Car Dealers | Washington County, WI | Sudz Up",

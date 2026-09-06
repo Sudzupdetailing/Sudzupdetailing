@@ -199,7 +199,7 @@ SITUATIONS = [
     ["A new car has been on a transporter, in a compound, through a dealer wash and a delivery clean. None of that is protection. The dealer wash is frequently a brush wash, and transport and prep marring on brand-new paint is common enough that we see it on most new vehicles we assess under inspection light.",
      "So a new car is not a blank surface. It is a nearly-blank surface with light marring and a coating of transport contamination on it, and the first job is to decontaminate and, where needed, correct that before anything protective goes on. Coating over transport marring locks it in."]),
    ("Why the first month is cheapest",
-    ["Protection bonds to whatever surface it meets. On a new car that surface needs decontamination only \u2014 there is nothing to correct beyond light transport marring \u2014 so a <a href=\"/services/ceramic-coating/\">coating</a> job is close to its starting price.",
+    ["Protection bonds to whatever surface it meets. On a new car that surface needs decontamination only \u2014 there is nothing to correct beyond light transport marring \u2014 so a <a href=\"/services/ceramic-coating/\">coating</a> job is at the lower end of the quote.",
      "After a year of Wisconsin exposure the same car has bonded fallout, brine film, and a season of wash marring. Now the coating needs correction first and the job is considerably larger. Same car, same product; the only variable is when.",
      "The interior is the same story. <a href=\"/services/interior-protection/\">Fabric and leather protection</a> on a new interior is prevention. On a two-year-old interior it is preservation of whatever damage has already happened."]),
    ("What protection actually buys",
