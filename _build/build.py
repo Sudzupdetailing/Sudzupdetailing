@@ -20,6 +20,7 @@ from services import SERVICES
 from guides import GUIDES
 from service_cities import SERVICE_CITIES
 from commercial import COMMERCIAL
+from vehicles import VEHICLES, SITUATIONS
 
 # (slug, width, height, native_width, caption/alt, short label, category)
 GALLERY_PHOTOS = [
@@ -240,6 +241,9 @@ def nav_model():
          [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES if not s.get("hidden")]),
         ("Commercial", "/commercial/", "All commercial services",
          [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL]),
+        ("Vehicles", "/vehicles/", "All vehicle types",
+         [(x["nav"], "/vehicles/" + x["slug"] + "/") for x in VEHICLES] +
+         [(x["nav"], "/situations/" + x["slug"] + "/") for x in SITUATIONS]),
         ("Gallery", "/gallery/", None, None),
         ("Testimonials", "/testimonials/", None, None),
         ("Service Area", "/auto-detailing/", "All areas we serve",
@@ -1618,6 +1622,73 @@ def build_commercial():
         PAGES.append((p, "0.7", "monthly", ""))
 
 
+def _build_section(hub, eyebrow, h1_html, lede, items, hub_title, hub_meta, crumb_label, related_label):
+    hub_url = SITE + hub
+    trail = [("Home", "/"), (crumb_label, hub)]
+    cards = "\n".join(
+        f'''  <a href="{hub}{x["slug"]}/"><span class="card-eyebrow">{e(eyebrow)}</span><h3>{e(x["name"])}</h3><p>{e(x["lede"])}</p></a>'''
+        for x in items)
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": "CollectionPage", "@id": f"{hub_url}#webpage", "url": hub_url,
+              "name": hub_title, "isPartOf": {"@id": f"{SITE}/#website"},
+              "inLanguage": "en-US", "breadcrumb": {"@id": f"{hub_url}#breadcrumb"}},
+             crumb_node(hub_url, trail)]
+    body = f'''{crumbs_html(trail)}
+<div class="page-head">
+  <p class="section-eyebrow">{e(eyebrow)}</p>
+  <h1 class="section-title">{h1_html}</h1>
+  <p class="page-lede">{e(lede)}</p>
+</div>
+<div class="cardgrid">
+{cards}
+</div>
+{cta_html("Not Sure Which Applies?", f"Call or text {TEL}. Tell us the vehicle and the situation and we will tell you what it actually needs.")}
+'''
+    page(hub, hub_title, hub_meta, graph, body, active=hub)
+    PAGES.append((hub, "0.7", "monthly", ""))
+    for x in items:
+        p = f'{hub}{x["slug"]}/'
+        url = SITE + p
+        t = [("Home", "/"), (crumb_label, hub), (x["name"], p)]
+        graph = [org_node(), business_node(), website_node(),
+                 {"@type": ["Service", "WebPage"], "@id": f"{url}#webpage", "url": url,
+                  "name": x["title"], "headline": x["h1"], "description": x["meta"],
+                  "serviceType": x["name"], "provider": {"@id": f"{SITE}/#business"},
+                  "isPartOf": {"@id": f"{SITE}/#website"}, "inLanguage": "en-US",
+                  "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+                 crumb_node(url, t), faq_node(url, x["faq"])]
+        body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">{e(eyebrow)}</p>
+  <h1 class="section-title">{e(x["h1"])}</h1>
+  <p class="page-lede">{e(x["lede"])}</p>
+</div>
+<div class="prose"><div class="prose-col">
+{glance_html(x["glance"])}
+{prose_html(x["body"])}
+</div></div>
+{faq_html(x["faq"])}
+{cta_html("Book It", f"Call or text {TEL} for a straight quote and a realistic turnaround.")}
+{related_html(related_label, [(y["name"], f'{hub}{y["slug"]}/') for y in items if y["slug"] != x["slug"]])}
+{related_html("Our services", [(sv["name"], f'/services/{sv["slug"]}/') for sv in SERVICES])}
+'''
+        page(p, x["title"], x["meta"], graph, body, active=hub)
+        PAGES.append((p, "0.7", "monthly", ""))
+
+
+def build_vehicles():
+    _build_section("/vehicles/", "By Vehicle", "Detailing By<br>Vehicle Type",
+                   "Trucks, SUVs, minivans and luxury interiors each get dirty in their own way and need their own approach.",
+                   VEHICLES, f"Detailing by Vehicle Type | {BIZ}",
+                   "Truck, SUV, minivan and luxury interior detailing in Hartford, WI. What each vehicle type actually needs.",
+                   "Vehicles", "Other vehicle types")
+    _build_section("/situations/", "By Situation", "Detailing For<br>The Moment",
+                   "Selling, just bought, brand new. Why you are booking changes what the job is.",
+                   SITUATIONS, f"Detailing for Selling, Buying and New Cars | {BIZ}",
+                   "Detailing before you sell, after buying used, or protecting a new car. Hartford, WI. What each situation actually calls for.",
+                   "Situations", "Other situations")
+
+
 def build_sitemap():
     urls = []
     for path, prio, freq, extra in PAGES:
@@ -1967,6 +2038,7 @@ def main():
     build_services()
     build_service_cities()
     build_commercial()
+    build_vehicles()
     build_cities()
     build_guides()
     build_static_pages()
