@@ -21,6 +21,7 @@ from guides import GUIDES
 from service_cities import SERVICE_CITIES
 from commercial import COMMERCIAL
 from vehicles import VEHICLES, SITUATIONS
+from makes import MAKES
 
 # (slug, width, height, native_width, caption/alt, short label, category)
 GALLERY_PHOTOS = [
@@ -243,7 +244,8 @@ def nav_model():
          [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL]),
         ("Vehicles", "/vehicles/", "All vehicle types",
          [(x["nav"], "/vehicles/" + x["slug"] + "/") for x in VEHICLES] +
-         [(x["nav"], "/situations/" + x["slug"] + "/") for x in SITUATIONS]),
+         [(x["nav"], "/situations/" + x["slug"] + "/") for x in SITUATIONS] +
+         [(x["nav"], "/makes/" + x["slug"] + "/") for x in MAKES]),
         ("Gallery", "/gallery/", None, None),
         ("Testimonials", "/testimonials/", None, None),
         ("Service Area", "/auto-detailing/", "All areas we serve",
@@ -1687,6 +1689,11 @@ def build_vehicles():
                    SITUATIONS, f"Detailing for Selling, Buying and New Cars | {BIZ}",
                    "Detailing before you sell, after buying used, or protecting a new car. Hartford, WI. What each situation actually calls for.",
                    "Situations", "Other situations")
+    _build_section("/makes/", "By Make", "Detailing By<br>Make",
+                   "Some cars are different enough that the work changes. These are the ones, and what changes.",
+                   MAKES, f"Detailing by Make \u2014 Tesla, Porsche, Range Rover, Jeep, F-150, Corvette, Subaru | {BIZ}",
+                   "Make-specific detailing in Hartford, WI. Paint hardness, body material, interior materials and design features that change the work, by make.",
+                   "Makes", "Other makes")
 
 
 def build_sitemap():
