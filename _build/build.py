@@ -19,6 +19,7 @@ from cities import CITIES
 from services import SERVICES
 from guides import GUIDES
 from service_cities import SERVICE_CITIES
+from commercial import COMMERCIAL
 
 # (slug, width, height, native_width, caption/alt, short label, category)
 GALLERY_PHOTOS = [
@@ -237,6 +238,8 @@ def nav_model():
     return [
         ("Services", "/services/", "All services",
          [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES if not s.get("hidden")]),
+        ("Commercial", "/commercial/", "All commercial services",
+         [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL]),
         ("Gallery", "/gallery/", None, None),
         ("Testimonials", "/testimonials/", None, None),
         ("Service Area", "/auto-detailing/", "All areas we serve",
@@ -1559,6 +1562,65 @@ def build_service_cities():
         PAGES.append((p, "0.7", "monthly", ""))
 
 
+def build_commercial():
+    """Trade / B2B pages at /commercial/ and /commercial/<slug>/."""
+    hub = "/commercial/"
+    hub_url = SITE + hub
+    trail = [("Home", "/"), ("Commercial", hub)]
+    cards = "\n".join(
+        f'''  <a href="/commercial/{x["slug"]}/"><span class="card-eyebrow">Commercial</span><h3>{e(x["name"])}</h3><p>{e(x["lede"])}</p></a>'''
+        for x in COMMERCIAL)
+    graph = [org_node(), business_node(), website_node(),
+             {"@type": "CollectionPage", "@id": f"{hub_url}#webpage", "url": hub_url,
+              "name": f"Commercial & Trade Detailing | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
+              "inLanguage": "en-US", "breadcrumb": {"@id": f"{hub_url}#breadcrumb"}},
+             crumb_node(hub_url, trail)]
+    body = f'''{crumbs_html(trail)}
+<div class="page-head">
+  <p class="section-eyebrow">For Businesses</p>
+  <h1 class="section-title">Commercial &amp; Trade<br>Detailing</h1>
+  <p class="page-lede">Dealers, fleets and auto businesses in Washington County and the surrounding area. Not a lot wash &mdash; the work the lot wash cannot do.</p>
+</div>
+<div class="cardgrid">
+{cards}
+</div>
+{cta_html("Talk To Us About Trade Work", f"Call or text {TEL}. We will tell you honestly whether we are a fit for the volume and the kind of work you have.")}
+'''
+    page(hub, f"Commercial & Trade Detailing for Dealers, Fleets & Auto Businesses | {BIZ}",
+         "Detailing and reconditioning for car dealers, fleet operators, body shops and auto businesses in Washington County, WI. Overflow, post-repair and protection installs.",
+         graph, body, active=hub)
+    PAGES.append((hub, "0.7", "monthly", ""))
+
+    for x in COMMERCIAL:
+        p = f'/commercial/{x["slug"]}/'
+        url = SITE + p
+        t = [("Home", "/"), ("Commercial", hub), (x["name"], p)]
+        graph = [org_node(), business_node(), website_node(),
+                 {"@type": ["Service", "WebPage"], "@id": f"{url}#webpage", "url": url,
+                  "name": x["title"], "headline": x["h1"], "description": x["meta"],
+                  "serviceType": x["name"], "audience": {"@type": "BusinessAudience", "name": x["name"]},
+                  "provider": {"@id": f"{SITE}/#business"},
+                  "isPartOf": {"@id": f"{SITE}/#website"}, "inLanguage": "en-US",
+                  "breadcrumb": {"@id": f"{url}#breadcrumb"}},
+                 crumb_node(url, t), faq_node(url, x["faq"])]
+        body = f'''{crumbs_html(t)}
+<div class="page-head">
+  <p class="section-eyebrow">Commercial</p>
+  <h1 class="section-title">{e(x["h1"])}</h1>
+  <p class="page-lede">{e(x["lede"])}</p>
+</div>
+<div class="prose"><div class="prose-col">
+{glance_html(x["glance"])}
+{prose_html(x["body"])}
+</div></div>
+{faq_html(x["faq"])}
+{cta_html("Start The Conversation", f"Call or text {TEL}. Tell us what you do and what you get asked for, and we will tell you honestly whether we fit.")}
+{related_html("Other commercial services", [(y["name"], f'/commercial/{y["slug"]}/') for y in COMMERCIAL if y["slug"] != x["slug"]])}
+'''
+        page(p, x["title"], x["meta"], graph, body, active=hub)
+        PAGES.append((p, "0.7", "monthly", ""))
+
+
 def build_sitemap():
     urls = []
     for path, prio, freq, extra in PAGES:
@@ -1907,6 +1969,7 @@ def main():
     build_testimonials()
     build_services()
     build_service_cities()
+    build_commercial()
     build_cities()
     build_guides()
     build_static_pages()
