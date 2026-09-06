@@ -1155,3 +1155,6 @@
 @media (max-width: 420px) {
   .glance { grid-template-columns: 1fr; }
 }
+
+/* Below-fold sections: skip layout/paint until near viewport. */
+.faq, section.related, footer { content-visibility: auto; contain-intrinsic-size: auto 600px; }

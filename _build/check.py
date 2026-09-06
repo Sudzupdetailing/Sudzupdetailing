@@ -5,7 +5,7 @@ import os, re, itertools, sys
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def bt(fp):
     h=open(fp,encoding='utf-8').read()
-    h=re.sub(r'(?s)<script.*?</script>|<nav.*?</nav>|<footer.*?</footer>|<section class="related".*?</section>',' ',h)
+    h=re.sub(r'(?s)<script.*?</script>|<style.*?</style>|<nav.*?</nav>|<footer.*?</footer>|<section class="related".*?</section>',' ',h)
     m=re.search(r'(?s)<div class="prose">.*?</div></div>',h)
     return re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',m.group(0) if m else h)).lower()
 def sh(t,n=6):
@@ -39,7 +39,7 @@ def depth(fp):
     h=open(fp,encoding='utf-8').read()
     if '<div class="page-head">' not in h: return None
     st=h.index('<div class="page-head">'); en=h.index('<section class="related">') if '<section class="related">' in h else len(h)
-    seg=re.sub(r'(?s)<script.*?</script>','',h[st:en]); return len(re.sub(r'<[^>]+>',' ',seg).split())
+    seg=re.sub(r'(?s)<script.*?</script>|<style.*?</style>','',h[st:en]); return len(re.sub(r'<[^>]+>',' ',seg).split())
 thin=[]
 for rel in pages:
     if rel in SKIP_DEPTH: continue

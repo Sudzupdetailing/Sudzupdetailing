@@ -169,7 +169,7 @@ def org_node():
             "image": {"@id": f"{SITE}/#logo"}, "sameAs": SAME_AS}
 
 
-def business_node():
+def business_node(full=False):
     return {
         "@type": ["LocalBusiness", "AutoWash"], "@id": f"{SITE}/#business", "name": BIZ,
         "parentOrganization": {"@id": f"{SITE}/#organization"},
@@ -182,37 +182,31 @@ def business_node():
                     "addressRegion": REGION, "postalCode": ZIP, "addressCountry": "US"},
         "geo": {"@type": "GeoCoordinates", "latitude": LAT, "longitude": LNG},
         "hasMap": GBP_URL,
-        "areaServed": [{"@type": "City", "name": c["name"],
-                        "containedInPlace": {"@type": "AdministrativeArea",
-                                             "name": f'{c["county"]}, Wisconsin'}} for c in CITIES],
+        "areaServed": ([{"@type": "City", "name": c["name"],
+                         "containedInPlace": {"@type": "AdministrativeArea",
+                                              "name": f'{c["county"]}, Wisconsin'}} for c in CITIES]
+                       if full else
+                       [{"@type": "AdministrativeArea", "name": n} for n in
+                        ("Washington County, Wisconsin", "Waukesha County, Wisconsin", "Ozaukee County, Wisconsin",
+                         "Dodge County, Wisconsin", "Fond du Lac County, Wisconsin", "Milwaukee County, Wisconsin")]),
         "serviceArea": {"@type": "GeoCircle",
                         "geoMidpoint": {"@type": "GeoCoordinates", "latitude": LAT, "longitude": LNG},
                         "geoRadius": "40000"},
-        "priceRange": "$135-$250", "currenciesAccepted": "USD",
+        "priceRange": "$135-$599+", "currenciesAccepted": "USD",
         "paymentAccepted": "Cash, Credit Card, Debit Card",
         "openingHoursSpecification": hours_schema(),
         "knowsAbout": ["auto detailing", "interior car detailing", "exterior wash and polish",
                        "stain removal", "odor removal", "road salt corrosion", "vehicle cleaning"],
         "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Auto Detailing Services",
             "itemListElement": [
-                {"@type": "Offer", "name": "Sudz Quick Clean", "priceCurrency": "USD", "price": "135",
+                {"@type": "Offer", "name": sv["name"],
+                 **({"priceCurrency": "USD", "price": re.sub(r"[^0-9]", "", sv["price"])}
+                    if re.search(r"\d", sv["price"]) else {}),
                  "availability": "https://schema.org/InStock",
-                 "itemOffered": {"@type": "Service", "name": "Sudz Quick Clean",
-                                 "serviceType": "Interior Auto Detailing",
-                                 "url": f"{SITE}/services/interior-car-detailing/",
-                                 "provider": {"@id": f"{SITE}/#business"},
-                                 "description": ("Interior vacuum, vinyl/rubber/plastic treatment, spot stain "
-                                                 "removal, door jambs cleaned and windows cleaned. $135 for cars, "
-                                                 "$150 for SUVs and trucks.")}},
-                {"@type": "Offer", "name": "Sudz Up VIP Clean", "priceCurrency": "USD", "price": "200",
-                 "availability": "https://schema.org/InStock",
-                 "itemOffered": {"@type": "Service", "name": "Sudz Up VIP Clean",
-                                 "serviceType": "Full Interior and Exterior Auto Detailing",
-                                 "url": f"{SITE}/services/full-interior-exterior-detail/",
-                                 "provider": {"@id": f"{SITE}/#business"},
-                                 "description": ("Complete interior detail plus exterior wash and polish, wheels "
-                                                 "cleaned and tires shined. $200 for cars, $250 for SUVs and "
-                                                 "trucks.")}}]},
+                 "itemOffered": {"@type": "Service", "name": sv["name"], "serviceType": sv["name"],
+                                 "url": f"{SITE}/services/{sv['slug']}/",
+                                 "provider": {"@id": f"{SITE}/#business"}}}
+                for sv in SERVICES if not sv.get("hidden")]},
         "sameAs": SAME_AS}
 
 
@@ -580,6 +574,11 @@ def norm_meta(m):
     return out if len(out) >= 80 else m[:META_MAX].rsplit(" ", 1)[0]
 
 
+with open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8") as _f:
+    SITE_CSS = re.sub(r"/\*.*?\*/", "", _f.read(), flags=re.S)
+    SITE_CSS = re.sub(r"\s+", " ", SITE_CSS).replace("; }", "}").replace(": ", ":").replace(" {", "{").replace("{ ", "{").replace("; ", ";").strip()
+    SITE_CSS = SITE_CSS.replace("{{", "{{{{").replace("}}", "}}}}")  # guard f-string braces
+
 def page(path, title, meta, graph, body, active="", extra_head=""):
     """Write a page to <path>/index.html (or root index.html when path == '/')."""
     url = SITE + path
@@ -620,7 +619,7 @@ def page(path, title, meta, graph, body, active="", extra_head=""):
   <link rel="preload" href="/img/opt/logo-400.webp" as="image" type="image/webp" fetchpriority="high" />
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/barlow-condensed-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="/assets/site.css" />
+  <style>{SITE_CSS}</style>
 {extra_head}  <script type="application/ld+json">
 {json.dumps({"@context": "https://schema.org", "@graph": graph}, indent=2, ensure_ascii=False)}
   </script>
@@ -639,6 +638,7 @@ def page(path, title, meta, graph, body, active="", extra_head=""):
 # ────────────────────────────────────────────────────────────────────── builds
 
 def build_home():
+    _bn = business_node(full=True)
     path = "/"
     url = SITE + "/"
     vids = GALLERY_VIDEOS
@@ -647,7 +647,7 @@ def build_home():
     home_teaser_slugs = ("interior-dash", "interior-seats-front", "interior-seats-rear", "interior-rear-angle")
     photos = [p for p in GALLERY_PHOTOS if p[0] in home_teaser_slugs]
 
-    graph = [org_node(), business_node(), website_node(),
+    graph = [org_node(), business_node(full=True), website_node(),
              {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
               "name": f"Auto Detailing in Hartford, WI | {BIZ}",
               "isPartOf": {"@id": f"{SITE}/#website"}, "about": {"@id": f"{SITE}/#business"},
@@ -980,7 +980,7 @@ def build_cities():
     cards = "\n".join(
         f'''  <a href="/auto-detailing/{c["slug"]}/"><span class="card-eyebrow">{e(c["county"])}</span><h3>{e(c["name"])}, WI</h3><p>{e(c["lede"])}</p></a>'''
         for c in CITIES)
-    graph = [org_node(), business_node(), website_node(),
+    graph = [org_node(), business_node(full=True), website_node(),
              {"@type": "CollectionPage", "@id": f"{hub_url}#webpage", "url": hub_url,
               "name": f"Service Area | {BIZ}", "isPartOf": {"@id": f"{SITE}/#website"},
               "about": {"@id": f"{SITE}/#business"}, "inLanguage": "en-US",
