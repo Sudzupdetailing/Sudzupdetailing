@@ -158,37 +158,49 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://sudzupdetail.com/services/interior-car-detailing/</loc>
+    <loc>https://sudzupdetail.com/services/full-detail/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sudzupdetail.com/services/exterior-wash-and-polish/</loc>
+    <loc>https://sudzupdetail.com/services/interior-detailing/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sudzupdetail.com/services/full-interior-exterior-detail/</loc>
+    <loc>https://sudzupdetail.com/services/exterior-detailing/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sudzupdetail.com/services/stain-and-odor-removal/</loc>
+    <loc>https://sudzupdetail.com/services/odor-removal/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sudzupdetail.com/services/truck-and-suv-detailing/</loc>
+    <loc>https://sudzupdetail.com/services/paint-correction/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sudzupdetail.com/services/interior-protection/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sudzupdetail.com/services/ceramic-coating/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sudzupdetail.com/services/truck-and-suv-detailing/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
