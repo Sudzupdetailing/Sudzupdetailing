@@ -881,7 +881,7 @@ CITIES = [
  "zip": "53027",
  "drive": "Home base",
  "lat": 43.3219, "lng": -88.3762,
- "title": "Auto Detailing in Hartford, WI | Sudz Up Detailing",
+ "title": "Auto Detailing in Hartford, Wisconsin \u2014 Our Home Base | Sudz Up",
  "meta": "Auto detailing in Hartford, WI from the shop on WI-83. Interior details from $135, full interior + exterior from $200. Call or text 414-286-1609.",
  "h1": "Auto Detailing in Hartford, Wisconsin",
  "lede": "We are based on WI-83 in Hartford. This is the town we work in every day, and it is the one place where we can usually fit a vehicle in on short notice.",

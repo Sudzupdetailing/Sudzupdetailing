@@ -9,7 +9,7 @@ editing content in _build/*.py, then commit the result.
 
     python3 _build/build.py
 """
-import os, sys, json, html, datetime, shutil
+import os, sys, json, html, datetime, shutil, re, math
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -235,25 +235,47 @@ def faq_node(url, pairs):
 
 # ────────────────────────────────────────────────────────────── html fragments
 
+def _km(a, b):
+    la1, lo1, la2, lo2 = map(math.radians, (a["lat"], a["lng"], b["lat"], b["lng"]))
+    h = math.sin((la2-la1)/2)**2 + math.cos(la1)*math.cos(la2)*math.sin((lo2-lo1)/2)**2
+    return 6371 * 2 * math.asin(math.sqrt(h))
+
+def nearest_cities(c, n=6):
+    return sorted((x for x in CITIES if x["slug"] != c["slug"]), key=lambda x: _km(c, x))[:n]
+
+def service_area_links(service_slug):
+    """For a service page: link the cities that have a dedicated page for this service, plus the hub."""
+    cmap = {c["slug"]: c for c in CITIES}
+    links = [(cmap[x["city"]]["name"] + ", WI", f'/services/{service_slug}/{x["city"]}/')
+             for x in SERVICE_CITIES if x["service"] == service_slug and x["city"] in cmap]
+    return links + [("All areas we serve", "/auto-detailing/")]
+
+
 def nav_model():
-    """Top-level nav: (label, hub, all-link label, children or None)."""
+    """Top-level nav: (label, hub, all-link label, children or None).
+    Deliberately short. Deep linking happens in-content and in per-section
+    related blocks, not in a sitewide mega-menu."""
+    top_cities = ["hartford-wi", "west-bend-wi", "slinger-wi", "germantown-wi",
+                  "richfield-wi", "jackson-wi", "menomonee-falls-wi", "oconomowoc-wi"]
+    cmap = {c["slug"]: c for c in CITIES}
+    featured_guides = ["wisconsin-car-care-by-month", "road-salt-and-your-car-wisconsin",
+                       "cigarette-smoke-smell-removal", "what-causes-swirl-marks",
+                       "ceramic-coating-vs-wax-vs-sealant", "why-a-cheap-detail-costs-more"]
+    gmap = {g["slug"]: g for g in GUIDES}
     return [
         ("Services", "/services/", "All services",
-         [(s["nav"], "/services/" + s["slug"] + "/") for s in SERVICES if not s.get("hidden")]),
-        ("Commercial", "/commercial/", "All commercial services",
-         [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL]),
+         [(x["nav"], "/services/" + x["slug"] + "/") for x in SERVICES if not x.get("hidden")]),
         ("Vehicles", "/vehicles/", "All vehicle types",
          [(x["nav"], "/vehicles/" + x["slug"] + "/") for x in VEHICLES] +
-         [(x["nav"], "/situations/" + x["slug"] + "/") for x in SITUATIONS] +
-         [(x["nav"], "/makes/" + x["slug"] + "/") for x in MAKES]),
-        ("Gallery", "/gallery/", None, None),
-        ("Testimonials", "/testimonials/", None, None),
+         [("By make", "/makes/"), ("By situation", "/situations/")]),
+        ("Commercial", "/commercial/", "All commercial services",
+         [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL]),
         ("Service Area", "/auto-detailing/", "All areas we serve",
-         [(c["name"] + ", WI", "/auto-detailing/" + c["slug"] + "/") for c in CITIES]),
+         [(cmap[k]["name"] + ", WI", "/auto-detailing/" + k + "/") for k in top_cities if k in cmap]),
         ("Guides", "/guides/", "All guides",
-         [(g["nav"], "/guides/" + g["slug"] + "/") for g in GUIDES]),
+         [(gmap[k]["nav"], "/guides/" + k + "/") for k in featured_guides if k in gmap]),
         ("Pricing", "/pricing/", None, None),
-        ("About", "/about/", None, None),
+        ("Gallery", "/gallery/", None, None),
         ("Contact", "/contact/", None, None),
     ]
 
@@ -516,9 +538,53 @@ FOOTER = f'''<footer>
 '''
 
 
+SUFFIX = " | Sudz Up"
+TITLE_MAX = 60
+META_MAX = 155
+
+def norm_title(t):
+    """Enforce SERP-safe title length without losing the primary keyword.
+    Strategy: shorten the brand suffix; then drop a trailing subtitle after
+    an em dash or colon; then drop a trailing ', WI' qualifier."""
+    t = re.sub(r"\s*\|\s*Sudz Up Detailing( LLC)?\s*$", "", t).strip()
+    t = re.sub(r"\s*\|\s*Sudz Up\s*$", "", t).strip()
+    def fits(x): return len(x) + len(SUFFIX) <= TITLE_MAX
+    if not fits(t):
+        for sep in (" \u2014 ", ": "):
+            if sep in t:
+                head = t.split(sep, 1)[0].strip()
+                if len(head) >= 20: t = head
+                if fits(t): break
+    if not fits(t):
+        t2 = re.sub(r",?\s*WI\b", "", t).strip()
+        if len(t2) >= 20: t = t2
+    if not fits(t):
+        t2 = t.replace("Interior Car Detailing", "Interior Detailing").replace("Auto Detailing for", "Detailing for").replace("Auto Detailing in", "Detailing in")
+        t = t2
+    if not fits(t):
+        t = t.replace(" & ", " and ").replace(" in Hartford, WI", "").replace(" in Hartford", "").strip()
+    if not fits(t):
+        limit = TITLE_MAX - len(SUFFIX)
+        t = t[:limit].rsplit(" ", 1)[0].rstrip(",:;-\u2014 ")
+    return t + SUFFIX
+
+def norm_meta(m):
+    """Trim on sentence boundaries to stay under META_MAX; never mid-sentence."""
+    if len(m) <= META_MAX: return m
+    parts = re.split(r"(?<=[.!?])\s+", m.strip())
+    out = ""
+    for part in parts:
+        cand = (out + " " + part).strip()
+        if len(cand) > META_MAX: break
+        out = cand
+    return out if len(out) >= 80 else m[:META_MAX].rsplit(" ", 1)[0]
+
+
 def page(path, title, meta, graph, body, active="", extra_head=""):
     """Write a page to <path>/index.html (or root index.html when path == '/')."""
     url = SITE + path
+    title = norm_title(title)
+    meta = norm_meta(meta)
     doc = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -901,7 +967,7 @@ def build_services():
 {faq_html(s["faq"])}
 {cta_html("Book This Service", f"Call or text {TEL} for a straight quote. No obligation, and we will tell you if you need less than you think.")}
 {related_html("Related services", rel)}
-{related_html("Where we work", [(c["name"] + ", WI", f'/auto-detailing/{c["slug"]}/') for c in CITIES])}
+{related_html("Where we do this work", service_area_links(s["slug"]))}
 '''
         page(p, s["title"], s["meta"], graph, body, active="/services/")
         PAGES.append((p, "0.8", "monthly", ""))
@@ -977,7 +1043,7 @@ def build_cities():
 {faq_html(c["faq"])}
 {cta_html(f'Book a Detail in {c["name"]}', f"Call or text {TEL} for a no-obligation quote. We will give you a straight price and a realistic turnaround.")}
 {related_html("Services we offer", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
-{related_html("Other areas we serve", others)}
+{related_html("Nearby areas", [(x["name"] + ", WI", f'/auto-detailing/{x["slug"]}/') for x in nearest_cities(c)] + [("All areas", "/auto-detailing/")])}
 '''
         page(p, c["title"], c["meta"], graph, body, active=hub)
         PAGES.append((p, "0.8", "monthly", ""))
@@ -1030,7 +1096,9 @@ def build_guides():
                   "breadcrumb": {"@id": f"{url}#breadcrumb"}},
                  crumb_node(url, t),
                  faq_node(url, g["faq"])]
-        others = [(x["h1"], f'/guides/{x["slug"]}/') for x in GUIDES if x["slug"] != g["slug"]]
+        _i = [x["slug"] for x in GUIDES].index(g["slug"])
+        _ring = [GUIDES[(_i + k) % len(GUIDES)] for k in (1, 2, 3, -1, -2)]
+        others = [(x["h1"], f'/guides/{x["slug"]}/') for x in _ring] + [("All guides", "/guides/")]
         body = f'''{crumbs_html(t)}
 <div class="page-head">
   <p class="section-eyebrow">Owner Guide</p>
@@ -1159,7 +1227,7 @@ def build_static_pages():
 <p>We are based at {ADDR} in Hartford and we work across {", ".join(c["name"] for c in CITIES[:-1])} and {CITIES[-1]["name"]}. Everything on this site about road salt, brine, lake sand and gravel dust comes from working on vehicles in these conditions rather than from a template.</p>
 </div></div>
 {cta_html("Get In Touch", f"Call or text {TEL} for a no-obligation quote. Tell us the vehicle and what is bothering you about it.")}
-{related_html("Where we work", [(c["name"] + ", WI", f'/auto-detailing/{c["slug"]}/') for c in CITIES])}
+{related_html("Where we work", [(x["name"] + ", WI", f'/auto-detailing/{x["slug"]}/') for x in nearest_cities(CITIES[[c["slug"] for c in CITIES].index("hartford-wi")], 8)] + [("All areas", "/auto-detailing/")])}
 '''
     page(p, f"About {BIZ} | Auto Detailing in Hartford, WI",
          "About Sudz Up Detailing LLC, an auto detailing business on WI-83 in Hartford, Wisconsin serving Washington County. Two packages, straight pricing, honest limits.",

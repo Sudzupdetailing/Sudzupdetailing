@@ -223,7 +223,7 @@ SERVICE_CITIES = [
 {
  "service": "interior-detailing",
  "city": "hartford-wi",
- "title": "Interior Car Detailing in Hartford, WI | Sudz Up Detailing",
+ "title": "Interior Detailing in Hartford, Wisconsin | Sudz Up",
  "meta": "Interior car detailing in Hartford, WI from the shop on WI-83. Pike Lake sand, downtown short-trip damp and salt handled properly. $135 cars, $150 SUVs. Call 414-286-1609.",
  "h1": "Interior Detailing in Hartford, Wisconsin",
  "lede": "This is the town we work in every day, and after a few years of it we can usually guess which part of Hartford a vehicle comes from before the owner tells us.",
