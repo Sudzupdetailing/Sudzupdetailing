@@ -30,9 +30,26 @@ for a,b in itertools.combinations(sorted(pages),2):
     if A and B: w.append((len(A&B)/min(len(A),len(B)),a,b))
 w.sort(reverse=True)
 EXEMPT={('.','guides'),('sms-privacy-policy','sms-terms')}
+# Content depth floor: hand-written prose + FAQ per content page. Reported every build;
+# becomes a hard FAIL once the backlog is cleared (set DEPTH_FAIL=True).
+DEPTH_FLOOR=1200; DEPTH_FAIL=False
+SKIP_DEPTH={'.','terms','sms-terms','sms-privacy-policy','contact','booking','gallery','testimonials','pricing','about',
+            'services','guides','auto-detailing','makes','vehicles','situations','commercial'}
+def depth(fp):
+    h=open(fp,encoding='utf-8').read()
+    if '<div class="page-head">' not in h: return None
+    st=h.index('<div class="page-head">'); en=h.index('<section class="related">') if '<section class="related">' in h else len(h)
+    seg=re.sub(r'(?s)<script.*?</script>','',h[st:en]); return len(re.sub(r'<[^>]+>',' ',seg).split())
+thin=[]
+for rel in pages:
+    if rel in SKIP_DEPTH: continue
+    d=depth(os.path.join(ROOT,rel,'index.html'))
+    if d is not None and d<DEPTH_FLOOR: thin.append((d,rel))
+thin.sort()
 flag=[x for x in w if x[0]>0.15 and (x[1],x[2]) not in EXEMPT]
 print(f"pages {len(pages)} | pairs {len(w)} | >10% {len([x for x in w if x[0]>0.10])} | >5% {len([x for x in w if x[0]>0.05])} | broken links {bad}")
+print(f"depth: {len(thin)} content pages under {DEPTH_FLOOR} words (shortest {thin[0][0] if thin else '-'})")
 for j,a,b in w[:5]: print(f"  {j*100:5.1f}%  {a} <-> {b}")
-if flag or bad:
+if flag or bad or (DEPTH_FAIL and thin):
     print("FAIL"); sys.exit(1)
 print("PASS")
