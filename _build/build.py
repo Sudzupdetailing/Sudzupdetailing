@@ -1287,7 +1287,7 @@ def build_static_pages():
 <p>Call or text before heading over so we can confirm we are on site and ready for your vehicle.</p>
 </div></div>
 {faq_html(contact_faq)}
-{related_html("Areas we serve", [(c["name"] + ", WI", f'/auto-detailing/{c["slug"]}/') for c in CITIES])}
+{related_html("Where customers drive in from", [(c["name"] + ", WI", f'/auto-detailing/{c["slug"]}/') for c in CITIES])}
 '''
     page(p, f"Contact {BIZ} | Book Auto Detailing in Hartford, WI",
          "Book auto detailing in Hartford, WI. Call or text 414-286-1609 for a no-obligation quote. Shop at 2948 WI-83, Hartford, WI 53027.",
