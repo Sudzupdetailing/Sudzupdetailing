@@ -1317,6 +1317,7 @@ CITIES = [
    ("My paint is clean but spotted after I wash it at home.", "Hard well water dried on the paint. The minerals bond in rings as the water flashes off. Drying the car after rinsing prevents it; an acid stage removes what is there."),
    ("How far is Richfield from the shop?", "About fifteen minutes north on Highway 175 to 2948 WI-83 in Hartford. Local vehicles are easy to fit in."),
    ("We tow a boat and carry ATVs. What does that do to the vehicle?", "Ramp grit and lake minerals on the rear panels, trailer grease on the hitch area, trail mud in the arches, and the outdoor profile in the cabin. End of the season, before the first salt, is the visit that pulls it all out and gets protection on."),
+   ("Is the outdoor retailer's lot bad for my car?", "Like any large lot: sealant transfer on the rockers and long stationary hours in sun. It is the interchange next to it that matters more \u2014 I-41 is treated hardest, and at speed brine mist reaches the whole vehicle."),
  ],
 },
 {
@@ -1361,6 +1362,7 @@ CITIES = [
    ("We just moved into a new subdivision in Jackson with a new car.", "Coat it in the first month and protect the interior at the same time. Construction dust and corridor brine start bonding on day one, and the job is smallest before they have."),
    ("Do you handle company vans from the industrial park?", "Yes, on a scheduled rotation with a defined scope per vehicle and a monthly invoice. Problem vehicles get flagged and quoted separately."),
    ("Does Cedar Creek affect my car?", "The low ground along it holds humidity into the mornings, which extends the time paint stays damp and keeps a cabin damp longer in winter. If the car sat in a low lot during a rise, lift the carpet and check the padding within a few days."),
+   ("I work shifts in the Jackson park. When should the car come in?", "January for the cabin while the slush is in the carpet and the smell is establishing, April for the paint once 60 and 45 stop being treated. The driver's quarter gets its own time budget on a shift vehicle, and we schedule around rotas."),
  ],
 },
 {
@@ -1405,6 +1407,7 @@ CITIES = [
    ("I work shifts in Kewaskum. When should the car come in?", "January for the cabin, while the slush is in the carpet, and April for the paint once Highway 45 stops being treated. We schedule around rotas."),
    ("Why does the bottom of my car get so much worse than the top?", "Farm-road material on the lower panels from the county roads, brine on the upper panels from 45. They come off in two different stages of the same job."),
    ("Does the Eisenbahn Trail affect my car?", "Bike racks rub bumpers and leave drip lines on the roof, trail grit and chain lube land on the rear, and in winter it is snowmobile and ski gear in the cabin. Rack marks are correction; wet gear is extraction and fabric protection."),
+   ("My car was parked near the river during a spring rise.", "Lift the carpet and check the padding within a few days. The surface dries in a day; the padding holds water for weeks and mould establishes in one or two. Extraction now is a short job."),
  ],
 },
 {
