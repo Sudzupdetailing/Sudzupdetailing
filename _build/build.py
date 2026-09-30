@@ -434,9 +434,15 @@ def booking_cta_html():
 
 <div class="book-panel">
   <p class="book-panel-eyebrow">Or Book A Slot Directly</p>
-  <p class="book-panel-body">Prefer to pick a time yourself? Choose a service and slot on our online booking page.</p>
-  <a href="{BOOKING_URL}" class="book-panel-btn" rel="noopener">Open Booking Page</a>
-  <p class="book-panel-alt">Or <a href="tel:+14142861609">call {TEL}</a> / <a href="sms:+14142861609">send a text</a>.</p>
+  <p class="book-panel-body">Prefer to pick a time yourself? Choose a service and a slot below.</p>
+
+  <!-- StrataCRM booking widget. The noscript/fallback link below is what shows
+       if the script is blocked or fails, so this never becomes a dead end. -->
+  <div data-strata-embed="{BOOKING_URL}"></div>
+  <p class="book-panel-alt" id="book-fallback">
+    Widget not loading? <a href="{BOOKING_URL}" rel="noopener">Open the booking page directly</a>,
+    or <a href="tel:+14142861609">call {TEL}</a> / <a href="sms:+14142861609">send a text</a>.
+  </p>
 </div>
 
 
@@ -1389,7 +1395,10 @@ def build_static_pages():
 '''
     page(p, f"Book Auto Detailing in Hartford, WI | {BIZ}",
          "Book auto detailing in Hartford, WI. Request a no-obligation quote for interior and exterior detailing, or call or text 414-286-1609.",
-         graph, body, active=p)
+         graph, body, active=p,
+         # Booking widget script. Loaded only on this page rather than site-wide,
+         # and deferred so it never blocks the critical path.
+         extra_head='  <script src="https://stratacrm.app/embed.js" defer></script>\n')
     PAGES.append((p, "0.9", "monthly", ""))
 
     # ── TERMS AND CONDITIONS ───────────────────────────────────
