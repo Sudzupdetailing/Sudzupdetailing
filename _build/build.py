@@ -247,7 +247,7 @@ def business_node(full=False):
         "serviceArea": {"@type": "GeoCircle",
                         "geoMidpoint": {"@type": "GeoCoordinates", "latitude": LAT, "longitude": LNG},
                         "geoRadius": "40000"},
-        "priceRange": "$135-$250+", "currenciesAccepted": "USD",
+        "priceRange": "$135-$325+", "currenciesAccepted": "USD",
         "paymentAccepted": "Cash, Credit Card, Debit Card",
         "openingHoursSpecification": hours_schema(),
         "knowsAbout": ["auto detailing", "interior car detailing", "exterior wash and polish",
@@ -809,7 +809,7 @@ def build_home():
                       "contentLocation": {"@type": "Place", "name": "Hartford, Wisconsin"}})
     home_faq = [
         ("How much does auto detailing cost in Hartford, WI?",
-         "The Sudz Quick Clean is $135 for cars and $150 for SUVs and trucks. The Sudz Up VIP Clean is $200 for cars and $250 for SUVs and trucks. Final pricing depends on vehicle size and condition. Call or text 414-286-1609 for a no-obligation quote."),
+         "Both packages are priced by vehicle size. The Sudz Quick Clean, interior only, starts at $135 for sedans and coupes, $175 for small SUVs and mid-size trucks, and $225 for full-size trucks and three-row SUVs. The Sudz Up VIP Clean, interior and exterior, starts at $250, $285 and $325 across those same three sizes. Those are starting prices \u2014 condition can change them, and we quote before we start rather than at collection. Call or text 414-286-1609 for a no-obligation quote."),
         ("What is included in the VIP detail package?",
          "The Sudz Up VIP Clean includes an interior vacuum, vinyl/rubber/plastic treatment, spot stain removal, door jambs cleaned and windows cleaned, plus an exterior hand wash, wheels and tires cleaned, outside windows cleaned and a spray sealant applied. It does not include clay bar or iron removal, which are quoted separately."),
         ("What areas does Sudz Up Detailing serve?",
@@ -817,7 +817,7 @@ def build_home():
         ("How long does an auto detail take?",
          "The Sudz Quick Clean typically takes about one to two hours. The Sudz Up VIP Clean is a full interior and exterior service and generally takes longer depending on vehicle size and condition."),
         ("Do you detail trucks and SUVs?",
-         "Yes. Sudz Up Detailing details cars, trucks and SUVs. Pricing for SUVs and trucks is $150 for the Sudz Quick Clean and $250 for the Sudz Up VIP Clean."),
+         "Yes. Sudz Up Detailing details cars, trucks and SUVs, priced by size. Small SUVs and mid-size trucks start at $175 for the Sudz Quick Clean and $285 for the Sudz Up VIP Clean. Full-size trucks and three-row SUVs start at $225 and $325."),
         ("How do I book an auto detail with Sudz Up Detailing?",
          "Call or text 414-286-1609, or email gio@sudzupdetail.com to schedule your appointment and get a no-obligation quote."),
     ]
@@ -905,7 +905,7 @@ def build_home():
 </div>
 '''
     page(path, f"Auto Detailing in Hartford, WI | {BIZ}",
-         "Professional interior & exterior auto detailing in Hartford, WI. Packages from $135 for cars, $150 SUVs/trucks. One shop; customers drive in from six counties. Call or text 414-286-1609.",
+         "Professional interior & exterior auto detailing in Hartford, WI. Interior from $135, full interior and exterior from $250, priced by vehicle size. One shop; customers drive in from six counties. Call or text 414-286-1609.",
          graph, body)
     PAGES.append(("/", "1.0", "monthly", home_media_xml(photos, vids)))
 
@@ -1213,7 +1213,7 @@ def build_cities():
 {glance_html(c["glance"])}
 {prose_html(c["body"])}
 </div></div>
-<p class="callout-inline">Interior from $135, full interior and exterior from $200 &mdash; <a href="/pricing/">full pricing here</a>. We quote before starting, not at collection.</p>
+<p class="callout-inline">Interior from $135, full interior and exterior from $250, priced by vehicle size &mdash; <a href="/pricing/">full pricing here</a>. We quote before starting, not at collection.</p>
 {faq_html(c["faq"])}
 {cta_html(f'Driving In From {c["name"]}?', f"Call or text {TEL} for a no-obligation quote. We will give you a straight price and a realistic turnaround.")}
 {related_html("Services we offer", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
@@ -1310,19 +1310,20 @@ def build_static_pages():
 <div class="page-head">
   <p class="section-eyebrow">Pricing</p>
   <h1 class="section-title">Straight Pricing,<br>No Upsell Ladder</h1>
-  <p class="page-lede">Two packages. Both prices below are what a vehicle in normal condition costs. Where condition means more work, we say so before we start.</p>
+  <p class="page-lede">Two packages, priced by vehicle size. Every price below is the starting price for a vehicle in normal condition. Where condition means more work, we say so before we start, not at collection.</p>
 </div>
 <div class="prose"><div class="prose-col">
 <table class="spec">
-  <thead><tr><th>Package</th><th>Cars</th><th>SUVs &amp; Trucks</th></tr></thead>
+  <thead><tr><th>Package</th><th>Sedan&nbsp;/<br>Coupe</th><th>Small&nbsp;SUV&nbsp;/<br>Mid-size&nbsp;Truck</th><th>Full-size&nbsp;Truck&nbsp;/<br>3-row&nbsp;SUV</th></tr></thead>
   <tbody>
-    <tr><td>Sudz Quick Clean<br><span style="color:var(--text);font-weight:400;font-size:.85rem;">Interior only</span></td><td>$135</td><td>$150</td></tr>
-    <tr><td>Sudz Up VIP Clean<br><span style="color:var(--text);font-weight:400;font-size:.85rem;">Interior + exterior</span></td><td>$200</td><td>$250</td></tr>
+    <tr><td>Sudz Quick Clean<br><span style="color:var(--text);font-weight:400;font-size:.85rem;">Interior only</span></td><td>$135</td><td>$175</td><td>$225</td></tr>
+    <tr><td>Sudz Up VIP Clean<br><span style="color:var(--text);font-weight:400;font-size:.85rem;">Interior + exterior</span></td><td>$250</td><td>$285</td><td>$325</td></tr>
   </tbody>
 </table>
 
 <h2>What is in each package</h2>
-<h3>Sudz Quick Clean &mdash; $135 / $150</h3>
+<h3>Sudz Quick Clean &mdash; from $135</h3>
+<p>$135 sedans and coupes &middot; $175 small SUVs and mid-size trucks &middot; $225 full-size trucks and three-row SUVs.</p>
 <ul>
   <li>Complete interior vacuum, including under seats, along rails and beneath floor mats</li>
   <li>Vinyl, rubber and plastic treatment across hard surfaces</li>
@@ -1330,7 +1331,8 @@ def build_static_pages():
   <li>Door jambs cleaned</li>
   <li>Windows cleaned inside and out</li>
 </ul>
-<h3>Sudz Up VIP Clean &mdash; $200 / $250</h3>
+<h3>Sudz Up VIP Clean &mdash; from $250</h3>
+<p>$250 sedans and coupes &middot; $285 small SUVs and mid-size trucks &middot; $325 full-size trucks and three-row SUVs.</p>
 <ul>
   <li>Everything in the Sudz Quick Clean</li>
   <li>Exterior hand wash</li>
@@ -1370,7 +1372,7 @@ def build_static_pages():
 {related_html("Our services", [(s["name"], f'/services/{s["slug"]}/') for s in SERVICES])}
 '''
     page(p, f"Auto Detailing Prices in Hartford, WI | {BIZ}",
-         "Auto detailing prices in Hartford, WI. Interior $135 cars / $150 SUVs and trucks. Full interior and exterior $200 / $250. No upsell ladder. Call 414-286-1609.",
+         "Auto detailing prices in Hartford, WI, by vehicle size. Interior from $135. Full interior and exterior from $250. No upsell ladder. Call 414-286-1609.",
          graph, body, active=p)
     PAGES.append((p, "0.9", "monthly", ""))
 
@@ -2003,7 +2005,7 @@ def build_llms():
 
 > One auto detailing shop at {ADDR}. Customers drive in from across Washington, Waukesha, Ozaukee, Dodge, Fond du Lac and Milwaukee counties. One vehicle at a time; interior, exterior and full details, odor removal, paint correction, ceramic coating, interior protection, engine bays and headlight restoration.
 
-Shop-based, not mobile: every vehicle is brought to the shop in Hartford, Wisconsin. Phone and text {TEL}. Email gio@sudzupdetail.com. Hours: {hours}. Owner: Gio. Pricing: Sudz Quick Clean interior $135 cars / $150 SUVs and trucks; Sudz Up VIP Clean full interior plus exterior hand wash, wheels and tires, outside windows and spray sealant $200 / $250 (no clay bar or iron removal in the packages); engine bay $50 add-on; headlight restoration from $135; odor removal, paint correction, ceramic coating and interior protection assessed and quoted per vehicle. Quotes are given before work starts, never at collection.
+Shop-based, not mobile: every vehicle is brought to the shop in Hartford, Wisconsin. Phone and text {TEL}. Email gio@sudzupdetail.com. Hours: {hours}. Owner: Gio. Pricing is by vehicle size, in three tiers: sedan/coupe, small SUV or mid-size truck, and full-size truck or three-row SUV. Sudz Quick Clean, interior only: $135 / $175 / $225. Sudz Up VIP Clean, full interior plus exterior hand wash, wheels and tires, outside windows and spray sealant: $250 / $285 / $325 (no clay bar or iron removal in the packages). All are starting prices for a vehicle in normal condition. Add-ons \u2014 engine bay $50 add-on; headlight restoration from $135; odor removal, paint correction, ceramic coating and interior protection assessed and quoted per vehicle. Quotes are given before work starts, never at collection.
 
 ## Core pages
 

@@ -297,7 +297,7 @@ GUIDES = [
 {
  "slug": "why-a-cheap-detail-costs-more",
  "nav": "Why Cheap Details Cost More",
- "title": "Why a $99 Detail Costs More Than a $200 One | Sudz Up Detailing, Hartford WI",
+ "title": "Why a $99 Detail Costs More Than a $250 One | Sudz Up Detailing, Hartford WI",
  "meta": "What gets cut when a detail is priced at $99, what that costs you later, and how to tell a real detail from an expensive wash. Written by a shop that charges more, so read it with that in mind.",
  "h1": "Why a Cheap Detail Costs More",
  "date": "2026-09-06",
@@ -843,8 +843,8 @@ GUIDES = [
  "card": "A straight comparison, including when the cheaper package is genuinely the right call.",
  "body": [
    ("The short version",
-    ["The Sudz Quick Clean is interior only: vacuum, vinyl, rubber and plastic treatment, spot stain removal, door jambs and glass. It is $135 for cars and $150 for SUVs and trucks.",
-     "The Sudz Up VIP Clean is all of that plus the exterior: hand wash, wheels and tires cleaned, outside windows cleaned and a spray sealant applied. It is $200 for cars and $250 for SUVs and trucks. Clay bar and iron removal are not part of the packages and are quoted separately.",
+    ["The Sudz Quick Clean is interior only: vacuum, vinyl, rubber and plastic treatment, spot stain removal, door jambs and glass. It starts at $135 for a sedan or coupe, $175 for a small SUV or mid-size truck, and $225 for a full-size truck or three-row SUV.",
+     "The Sudz Up VIP Clean is all of that plus the exterior: hand wash, wheels and tires cleaned, outside windows cleaned and a spray sealant applied. It starts at $250, $285 and $325 across those same three vehicle sizes. Clay bar and iron removal are not part of the packages and are quoted separately.",
      "The $65 to $100 difference buys the entire exterior treatment. Whether that is worth it depends almost entirely on the condition of your paint, not on the condition of your interior."]),
    ("Book the interior-only service when...",
     ["The paint is genuinely in good shape and you wash the car regularly yourself. If you hand wash every couple of weeks, the polish step is not doing much for you.",
@@ -867,7 +867,7 @@ GUIDES = [
      "A useful test you can do yourself: wash the car, let it dry, then look down the side of a panel at a shallow angle in direct sunlight. If the reflection is sharp, the paint is fine and you want the interior service. If the reflection is hazy and soft, the polish will do real work and the full detail is worth it."]),
  ],
  "faq": [
-   ("What is the difference between the two packages?", "The Sudz Quick Clean is interior only at $135 for cars and $150 for SUVs and trucks. The Sudz Up VIP Clean adds the exterior — hand wash, wheels and tires, outside windows and a spray sealant — at $200 and $250."),
+   ("What is the difference between the two packages?", "The Sudz Quick Clean is interior only, from $135. The Sudz Up VIP Clean adds the exterior — hand wash, wheels and tires, outside windows and a spray sealant — from $250. Both are priced in three vehicle sizes: $135 / $175 / $225 for the Quick Clean and $250 / $285 / $325 for the VIP."),
    ("Is the full detail worth the extra money?", "It depends on your paint, not your interior. If you wash regularly and the paint is under two years old, probably not. If it has been over a year, or you are selling, or you are coming out of winter, then yes."),
    ("How can I tell if my paint needs polishing?", "Wash the car, let it dry, and look down the side of a panel at a shallow angle in direct sun. A sharp reflection means the paint is fine. A hazy, soft reflection means polish will do real work."),
    ("Will you tell me if I only need the cheaper package?", "Yes. We would rather talk you into the interior service and have you come back than sell you the full detail once."),
@@ -884,8 +884,8 @@ GUIDES = [
  "card": "What drives the price, and how to spot a quote that will change at collection.",
  "body": [
    ("Our pricing, stated plainly",
-    ["Sudz Quick Clean — interior only. $135 for cars, $150 for SUVs and trucks.",
-     "Sudz Up VIP Clean — full interior and exterior. $200 for cars, $250 for SUVs and trucks.",
+    ["Sudz Quick Clean — interior only. $135 sedan or coupe, $175 small SUV or mid-size truck, $225 full-size truck or three-row SUV.",
+     "Sudz Up VIP Clean — full interior and exterior. $250, $285 and $325 across those same three sizes.",
      "That is the whole price list. There is no ladder of five packages designed to make the middle one look reasonable, and no menu of add-ons quoted separately once your car is already on the lot.",
      "Prices may vary based on vehicle condition and service requirements. Where that applies we tell you before starting, not at collection."]),
    ("What actually drives detailing prices",
@@ -908,7 +908,7 @@ GUIDES = [
      "You will get a real figure. If the vehicle turns out to be significantly rougher than described, we will call you with a revised number before starting rather than presenting it at collection. And if we do not think a detail will produce a result worth the money on a particular vehicle, we will tell you that too."]),
  ],
  "faq": [
-   ("How much does car detailing cost in Hartford, WI?", "At Sudz Up Detailing, $135 for a car interior and $150 for an SUV or truck interior. Full interior and exterior is $200 for cars and $250 for SUVs and trucks."),
+   ("How much does car detailing cost in Hartford, WI?", "At Sudz Up Detailing, interiors start at $135 for a sedan or coupe, $175 for a small SUV or mid-size truck, and $225 for a full-size truck or three-row SUV. Full interior and exterior starts at $250, $285 and $325 across those same three sizes."),
    ("Why do detailing prices vary so much?", "Mostly because 'detail' describes everything from a thorough vacuum to multi-day paint correction. Beyond that, price tracks time: vehicle size, current condition, and specific problems like pet hair or mildew."),
    ("Are door jambs and interior glass extra?", "Not with us. They are included, and they are part of what distinguishes a detail from a car wash."),
    ("Does detailing pay for itself?", "On a private sale, routinely. A full detail before listing photographs typically returns several times its cost. Salt removal also prevents corrosion repairs that cost far more later."),
@@ -1026,7 +1026,7 @@ GUIDES = [
      "Photograph the same day or the next morning, ideally in overcast daylight or the hour after sunrise. Harsh midday sun creates hard shadows and blows out highlights.",
      "Then list. And keep it clean during the viewing period — a car that was detailed three weeks and four trips ago no longer looks like its photographs, which quietly undermines buyer confidence."]),
    ("The economics",
-    ["On a vehicle in the $8,000 to $25,000 range, a $200 to $250 full detail routinely influences the final price by considerably more than it costs, and it usually shortens time on market.",
+    ["On a vehicle in the $8,000 to $25,000 range, a $250 to $325 full detail routinely influences the final price by considerably more than it costs, and it usually shortens time on market.",
      "The mechanism is not that buyers pay a premium for clean. It is that a clean vehicle removes the buyer's justification for negotiating downward. A dirty interior hands them an argument. A clean one takes it away.",
      "It also changes who turns up. Better photographs attract more enquiries, and more enquiries means you are not negotiating against the only person who called."]),
  ],

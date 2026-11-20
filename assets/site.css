@@ -1030,6 +1030,18 @@
 .spec td { color: var(--text); vertical-align: top; }
 .spec td:first-child { color: var(--warm); font-weight: 600; }
 
+/* The pricing table carries four columns (package + three vehicle sizes), and
+   the size headings are long. On a phone the default padding and letter
+   spacing squeeze each column until the headings wrap a word per line, so
+   both are pulled in and the price cells are kept on one line. */
+@media (max-width: 620px) {
+  .spec { font-size: .82rem; }
+  .spec th, .spec td { padding: .7rem .45rem; }
+  .spec th:first-child, .spec td:first-child { padding-left: .85rem; }
+  .spec th { font-size: .6rem; letter-spacing: .04em; }
+  .spec td + td { white-space: nowrap; }
+}
+
 /* CONSENT CALLOUT */
 .consent-callout { background: #111; border: 1px solid var(--gold); border-radius: 4px;
   padding: 1.5rem 1.6rem; margin: 2.5rem 0 1.5rem; }
