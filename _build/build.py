@@ -47,6 +47,23 @@ GALLERY_PHOTOS = [
     ("sedan-rear-seats", 1125, 1500, 1125, "Rear leather seating cleaned and conditioned on an older sedan, Hartford WI auto detailing", "Rear Seats", "after"),
     ("sedan-seats-folded", 1125, 1500, 1125, "Seats and cabin of an aged luxury sedan detailed by Sudz Up Detailing, Hartford WI", "Cabin Detail", "after"),
     ("sedan-rear-floor", 1125, 1500, 1125, "Rear floor carpet shampooed and extracted during a Hartford, WI interior detail", "Rear Floor", "after"),
+    ("f250-driver-floor-before", 1125, 844, 1125, "Driver footwell of a Ford F-250 before detailing, debris across the floor mat, Hartford WI", "Driver Floor", "before"),
+    ("f250-rear-floor-before", 1125, 1500, 1125, "Rear floor of a Ford F-250 before detailing, dirt and grit on the liner, Hartford WI", "Rear Floor", "before"),
+    ("f250-driver-area", 1125, 1500, 1125, "Driver footwell of a Ford F-250 after a full interior detail in Hartford, WI", "Driver Area", "after"),
+    ("f250-rear-cab", 1125, 1500, 1125, "Rear cab floor of a Ford F-250 cleaned and extracted, Hartford WI auto detailing", "Rear Cab", "after"),
+    ("f250-rear-door", 1125, 844, 1125, "Rear door panel and cab of a Ford F-250 detailed by Sudz Up Detailing, Hartford WI", "Rear Door", "after"),
+    ("f250-front-seats", 1125, 844, 1125, "Front seats of a Ford F-250 cleaned during a Hartford, WI interior detail", "Front Seats", "after"),
+    ("f250-passenger-side", 1125, 844, 1125, "Passenger seat and sill of a Ford F-250 after detailing in Hartford, WI", "Passenger Side", "after"),
+    ("f250-driver-door", 1125, 844, 1125, "Driver door panel of a Ford F-250 cleaned and conditioned, Hartford WI", "Driver Door", "after"),
+    ("f250-passenger-interior", 1125, 1500, 1125, "Passenger side interior of a Ford F-250 after a full detail in Hartford, WI", "Front Cab", "after"),
+    ("f250-dash", 1125, 844, 1125, "Dashboard and console of a Ford F-250 Super Duty detailed in Hartford, WI", "Dash & Console", "after"),
+    ("f250-side-profile", 1125, 844, 1125, "Ford F-250 Super Duty washed and polished by Sudz Up Detailing, Hartford WI", "Side Profile", "after"),
+    ("f250-side-passenger", 1125, 844, 1125, "Passenger side of a detailed Ford F-250 Super Duty in Hartford, WI", "Passenger View", "after"),
+    ("f250-front", 1125, 844, 1125, "Front grille and chrome bumper of a Ford F-250 after an exterior detail, Hartford WI", "Front End", "after"),
+    ("f250-front-angle", 1125, 844, 1125, "Front three-quarter view of a detailed Ford F-250 Super Duty, Hartford WI", "Front Angle", "after"),
+    ("f250-rear-angle", 1125, 844, 1125, "Rear three-quarter view of a Ford F-250 FX4 after a full detail in Hartford, WI", "Rear Angle", "after"),
+    ("f250-rear", 1125, 844, 1125, "Rear of a Ford F-250 Super Duty washed and polished, Hartford WI", "Rear End", "after"),
+    ("f250-shop", 1125, 844, 1125, "Detailed Ford F-250 outside the Sudz Up Detailing shop in Hartford, WI", "At The Shop", "after"),
 ]
 
 # (name, quote, short context label)
@@ -77,6 +94,14 @@ TESTIMONIALS = [
     ("Facebook customer",
      "Work done very well and at a respectable time, would definitely recommend if you want your car looking nice.",
      "Detail", "Facebook"),
+]
+
+# (before slug, after slug, what the pair shows). Rendered as side-by-side
+# comparisons above the gallery grid; both halves are then kept out of the
+# grid so no photo appears twice on the page.
+GALLERY_PAIRS = [
+    ("f250-driver-floor-before", "f250-driver-area", "Driver footwell — Ford F-250"),
+    ("f250-rear-floor-before", "f250-rear-cab", "Rear floor — Ford F-250"),
 ]
 
 # (id, name, description, iso8601 duration, width, height, short label)
@@ -330,6 +355,39 @@ def crumbs_html(trail):
                    else f'<li><a href="{p}">{e(n)}</a></li>')
     out.append('</ol></nav></div>')
     return "".join(out)
+
+
+def gallery_pairs_html():
+    """Side-by-side before/after comparisons, shown above the main grid."""
+    by_slug = {p[0]: p for p in GALLERY_PHOTOS}
+    out = []
+    for before, after, title in GALLERY_PAIRS:
+        if before not in by_slug or after not in by_slug:
+            continue
+        halves = []
+        for slug, tag in ((before, "Before"), (after, "After")):
+            s, w, h, nat, cap, lbl, _cat = by_slug[slug]
+            low = tag.lower()
+            halves.append(
+                '      <button type="button" class="ba-half" onclick="openLightbox('
+                + "'/img/opt/" + s + "-" + str(nat) + ".jpg','" + e(cap) + "'"
+                + ')" aria-label="Enlarge ' + low + ' photo: ' + e(title) + '">\n'
+                '        <picture>\n'
+                '          <source type="image/webp" sizes="(max-width:768px) 44vw, 30vw" srcset="'
+                + f'/img/opt/{s}-480.webp 480w, /img/opt/{s}-800.webp 800w, /img/opt/{s}-{nat}.webp {nat}w' + '" />\n'
+                '          <img src="' + f'/img/opt/{s}-800.jpg' + '" sizes="(max-width:768px) 44vw, 30vw" srcset="'
+                + f'/img/opt/{s}-480.jpg 480w, /img/opt/{s}-800.jpg 800w, /img/opt/{s}-{nat}.jpg {nat}w'
+                + '" alt="' + e(cap) + '" width="' + str(w) + '" height="' + str(h) + '" loading="lazy" decoding="async" />\n'
+                '        </picture>\n'
+                '        <span class="ba-tag ba-tag-' + low + '">' + tag + '</span>\n'
+                '      </button>')
+        out.append('    <figure class="ba-pair">\n' + "\n".join(halves)
+                   + '\n      <figcaption class="ba-caption">' + e(title) + '</figcaption>\n    </figure>')
+    if not out:
+        return ""
+    return ('<section id="before-after" aria-labelledby="ba-title">\n'
+            '  <h2 id="ba-title" class="ba-title">Before &amp; After</h2>\n'
+            '  <div class="ba-grid fade-up">\n' + "\n".join(out) + '\n  </div>\n</section>')
 
 
 def gallery_photo_html(photos):
@@ -856,7 +914,10 @@ def home_media_xml(photos, vids):
 def build_gallery():
     path, url = "/gallery/", SITE + "/gallery/"
     t = [("Home", "/"), ("Gallery", path)]
-    photos = [p for p in GALLERY_PHOTOS if p[6] == "after"]
+    # Paired photos render in the comparison block above, so keep them out
+    # of the grid; every other "after" fills the grid as before.
+    paired = {s for pair in GALLERY_PAIRS for s in pair[:2]}
+    photos = [p for p in GALLERY_PHOTOS if p[6] == "after" and p[0] not in paired]
     vids = GALLERY_VIDEOS
 
     graph = [org_node(), business_node(), website_node(),
@@ -889,6 +950,7 @@ def build_gallery():
   <h1 class="section-title">Full Photo<br>&amp; Video Gallery</h1>
   <p class="page-lede">A closer look at real vehicles detailed at our shop in Hartford.</p>
 </div>
+{gallery_pairs_html()}
 <section id="full-gallery" aria-label="Photo gallery">
   <div class="gallery-photos fade-up">
 {photo_html}
@@ -906,7 +968,11 @@ def build_gallery():
     page(path, f"Photo & Video Gallery | {BIZ}",
          "See real before-and-after auto detailing photos and videos from Sudz Up Detailing in Hartford, WI. Interior details, stain removal and exterior finishes.",
          graph, body, active=path)
-    PAGES.append((path, "0.8", "monthly", home_media_xml(photos, [])))
+    # The image sitemap lists every photo actually on the page, so the
+    # before/after halves are included alongside the grid.
+    by_slug = {p[0]: p for p in GALLERY_PHOTOS}
+    pair_photos = [by_slug[s] for pr in GALLERY_PAIRS for s in pr[:2] if s in by_slug]
+    PAGES.append((path, "0.8", "monthly", home_media_xml(pair_photos + photos, [])))
 
 
 def build_testimonials():

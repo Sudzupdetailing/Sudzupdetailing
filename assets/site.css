@@ -556,6 +556,71 @@
       margin: 0 auto 2.25rem;
     }
 
+    /* BEFORE / AFTER PAIRS */
+    .ba-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+      line-height: 1;
+      text-align: center;
+      margin: 0 0 1.75rem;
+    }
+    .ba-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 1.75rem 1.25rem;
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+    }
+    .ba-pair {
+      margin: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+    .ba-half {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 2px;
+      background: var(--panel);
+      cursor: pointer;
+      padding: 0;
+      border: none;
+    }
+    .ba-half img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .ba-half:hover img { transform: scale(1.05); }
+    .ba-tag {
+      position: absolute;
+      top: 0.5rem; left: 0.5rem;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 700;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      border-radius: 2px;
+    }
+    .ba-tag-before { background: rgba(10,10,10,0.82); color: var(--chrome); }
+    .ba-tag-after  { background: var(--gold); color: #000; }
+    .ba-caption {
+      grid-column: 1 / -1;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-align: center;
+      padding-top: 0.6rem;
+    }
+
     .gallery-photos {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
