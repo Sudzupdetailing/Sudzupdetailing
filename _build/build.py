@@ -64,6 +64,12 @@ GALLERY_PHOTOS = [
     ("f250-rear-angle", 1125, 844, 1125, "Rear three-quarter view of a Ford F-250 FX4 after a full detail in Hartford, WI", "Rear Angle", "after"),
     ("f250-rear", 1125, 844, 1125, "Rear of a Ford F-250 Super Duty washed and polished, Hartford WI", "Rear End", "after"),
     ("f250-shop", 1125, 844, 1125, "Detailed Ford F-250 outside the Sudz Up Detailing shop in Hartford, WI", "At The Shop", "after"),
+    ("sprinter-front-angle-before", 1125, 844, 1125, "Mercedes Sprinter before an exterior detail, road film and water spotting on the white paint, Hartford WI", "Front Angle", "before"),
+    ("sprinter-rear-angle-before", 1125, 844, 1125, "Rear of a Mercedes Sprinter camper van before an exterior wash in Hartford, WI", "Rear Angle", "before"),
+    ("sprinter-side-rear-before", 1125, 844, 1125, "Passenger side of a Mercedes Sprinter before detailing by Sudz Up Detailing, Hartford WI", "Passenger Side", "before"),
+    ("sprinter-front-angle", 1125, 844, 1125, "Mercedes Sprinter camper van after a full exterior detail by Sudz Up Detailing in Hartford, WI", "Front Angle", "after"),
+    ("sprinter-rear-angle", 1125, 844, 1125, "Rear of a Mercedes Sprinter washed and polished by Sudz Up Detailing, Hartford WI", "Rear Angle", "after"),
+    ("sprinter-side-rear", 1125, 844, 1125, "Passenger side of a Mercedes Sprinter camper van after an exterior detail in Hartford, WI", "Passenger Side", "after"),
 ]
 
 # (name, quote, short context label)
@@ -102,6 +108,9 @@ TESTIMONIALS = [
 GALLERY_PAIRS = [
     ("f250-driver-floor-before", "f250-driver-area", "Driver footwell — Ford F-250"),
     ("f250-rear-floor-before", "f250-rear-cab", "Rear floor — Ford F-250"),
+    ("sprinter-front-angle-before", "sprinter-front-angle", "Front — Mercedes Sprinter"),
+    ("sprinter-rear-angle-before", "sprinter-rear-angle", "Rear — Mercedes Sprinter"),
+    ("sprinter-side-rear-before", "sprinter-side-rear", "Passenger side — Mercedes Sprinter"),
 ]
 
 # (id, name, description, iso8601 duration, width, height, short label)
