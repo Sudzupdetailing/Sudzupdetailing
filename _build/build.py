@@ -115,6 +115,12 @@ GALLERY_VIDEOS = [
     ("04", "Exterior Wash and Polish Finish — Sudz Up Detailing",
      "Exterior wash, polish and tire shine finish on a vehicle detailed by Sudz Up Detailing in Hartford, WI.",
      "PT10S", 1280, 720, "Exterior wash and polish finish"),
+    ("05", "Ford F-250 Super Duty Walkaround — Hartford, WI",
+     "A walkaround of a Ford F-250 Super Duty after a full detail by Sudz Up Detailing in Hartford, Wisconsin, showing the washed and polished exterior.",
+     "PT33S", 540, 960, "F-250 walkaround"),
+    ("06", "Interior and Exterior Detail on a Ford F-250 — Hartford, WI",
+     "A Ford F-250 Super Duty being detailed by Sudz Up Detailing: the cleaned interior, then hand washing the exterior with a wash mitt.",
+     "PT1M8S", 540, 960, "F-250 interior and wash"),
 ]
 
 SITE  = "https://sudzupdetail.com"
@@ -763,7 +769,9 @@ def build_home():
     _bn = business_node(full=True)
     path = "/"
     url = SITE + "/"
-    vids = GALLERY_VIDEOS
+    # Videos are a teaser here too, same as the photos below: the full set
+    # plays on /gallery/, so adding a clip does not grow the homepage.
+    vids = GALLERY_VIDEOS[:3]
     # Homepage teaser stays a small curated set; the "Before" shot and the
     # rest of the after photos live on the dedicated /gallery/ page.
     home_teaser_slugs = ("interior-dash", "interior-seats-front", "interior-seats-rear", "interior-rear-angle")
@@ -893,6 +901,23 @@ def build_home():
     PAGES.append(("/", "1.0", "monthly", home_media_xml(photos, vids)))
 
 
+def iso_seconds(dur):
+    """Seconds from an ISO-8601 duration like PT33S, PT1M8S or PT1H2M3S.
+
+    The video sitemap wants a plain integer. Durations over a minute are
+    normal, so this parses hours/minutes/seconds rather than assuming the
+    seconds-only form.
+    """
+    m = re.fullmatch(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", dur.strip())
+    if not m:
+        raise ValueError(f"unrecognised ISO-8601 duration: {dur!r}")
+    h, mi, s = (int(x) if x else 0 for x in m.groups())
+    total = h * 3600 + mi * 60 + s
+    if total <= 0:
+        raise ValueError(f"duration resolves to {total}s: {dur!r}")
+    return total
+
+
 def home_media_xml(photos, vids):
     img = "\n".join(f"""    <image:image>
       <image:loc>{SITE}/img/opt/{s}-{nat}.jpg</image:loc>
@@ -903,7 +928,7 @@ def home_media_xml(photos, vids):
       <video:title>{e(name)}</video:title>
       <video:description>{e(desc)}</video:description>
       <video:content_loc>{SITE}/video/detail-{v}.mp4</video:content_loc>
-      <video:duration>{int(dur[2:-1])}</video:duration>
+      <video:duration>{iso_seconds(dur)}</video:duration>
       <video:family_friendly>yes</video:family_friendly>
       <video:live>no</video:live>
       <video:publication_date>{MEDIA_UPLOAD}</video:publication_date>
