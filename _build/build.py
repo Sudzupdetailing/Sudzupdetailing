@@ -271,18 +271,17 @@ def nav_model():
                        "cigarette-smoke-smell-removal", "what-causes-swirl-marks",
                        "ceramic-coating-vs-wax-vs-sealant", "why-a-cheap-detail-costs-more"]
     gmap = {g["slug"]: g for g in GUIDES}
+    featured_services = ["full-detail", "interior-detailing", "exterior-detailing",
+                         "ceramic-coating", "odor-removal", "truck-and-suv-detailing"]
+    smap = {x["slug"]: x for x in SERVICES
+            if not x.get("hidden") and not x.get("disabled")}
+    # Vehicles, Commercial and Guides moved to the footer: they are landing
+    # points for search traffic, not things a visitor navigates to.
     return [
         ("Services", "/services/", "All services",
-         [(x["nav"], "/services/" + x["slug"] + "/") for x in SERVICES if not x.get("hidden") and not x.get("disabled")]),
-        ("Vehicles", "/vehicles/", "All vehicle types",
-         [(x["nav"], "/vehicles/" + x["slug"] + "/") for x in VEHICLES] +
-         [("By make", "/makes/"), ("By situation", "/situations/")]),
-        ("Commercial", "/commercial/", "All commercial services",
-         [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL if not x.get("disabled")]),
+         [(smap[k]["nav"], "/services/" + k + "/") for k in featured_services if k in smap]),
         ("Areas", "/auto-detailing/", "All areas",
-         [(cmap[k]["name"] + ", WI", "/auto-detailing/" + k + "/") for k in top_cities if k in cmap]),
-        ("Guides", "/guides/", "All guides",
-         [(gmap[k]["nav"], "/guides/" + k + "/") for k in featured_guides if k in gmap]),
+         [(cmap[k]["name"] + ", WI", "/auto-detailing/" + k + "/") for k in top_cities[:6] if k in cmap]),
         ("Pricing", "/pricing/", None, None),
         ("Gallery", "/gallery/", None, None),
         ("Contact", "/contact/", None, None),
@@ -491,6 +490,47 @@ def related_html(heading, links):
     return f'<section class="related"><h2>{e(heading)}</h2><ul>{lis}</ul></section>'
 
 
+def _footer_nav():
+    """Link columns for everything taken out of the top nav.
+
+    This keeps every hub one click from any page, so removing the
+    mega-menu costs no internal linking.
+    """
+    cmap = {c["slug"]: c for c in CITIES}
+    # All eight cities that used to sit in the nav stay listed here. They are
+    # local-search landing pages, and the footer is what keeps them linked
+    # from every page once they are out of the top nav.
+    city_keys = ["hartford-wi", "west-bend-wi", "slinger-wi", "germantown-wi",
+                 "richfield-wi", "jackson-wi", "menomonee-falls-wi", "oconomowoc-wi"]
+    cols = [
+        ("Services",
+         [(x["nav"], "/services/" + x["slug"] + "/") for x in SERVICES
+          if not x.get("hidden") and not x.get("disabled")][:7]
+         + [("All services", "/services/")]),
+        ("Areas we serve",
+         [(cmap[k]["name"] + ", WI", "/auto-detailing/" + k + "/")
+          for k in city_keys if k in cmap]
+         + [("All areas", "/auto-detailing/")]),
+        # Dealer and fleet work is high-value B2B, so these keep site-wide links.
+        ("Commercial",
+         [(x["nav"], "/commercial/" + x["slug"] + "/") for x in COMMERCIAL
+          if not x.get("disabled")]
+         + [("All commercial", "/commercial/")]),
+        ("More",
+         [("Vehicle types", "/vehicles/"),
+          ("By make", "/makes/"),
+          ("By situation", "/situations/"),
+          ("Care guides", "/guides/"),
+          ("Reviews", "/reviews/"),
+          ("About us", "/about/")]),
+    ]
+    out = []
+    for heading, links in cols:
+        items = "".join(f'<li><a href="{u}">{e(t)}</a></li>' for t, u in links)
+        out.append(f'<div class="footer-col"><h3>{e(heading)}</h3><ul>{items}</ul></div>')
+    return '<nav class="footer-nav" aria-label="More pages">' + "".join(out) + '</nav>'
+
+
 FOOTER = f'''<footer>
   <div class="footer-inner">
     <div>
@@ -516,6 +556,7 @@ FOOTER = f'''<footer>
       </div>
     </div>
   </div>
+  {_footer_nav()}
   <div class="footer-copy">&copy; 2026 {e(BIZ)} &middot; Hartford, WI &middot; All rights reserved. &middot; <a href="/terms/">Terms &amp; Conditions</a> &middot; <a href="/sms-terms/">SMS Terms</a> &middot; <a href="/sms-privacy-policy/">SMS Privacy Policy</a></div>
 </footer>
 <script src="/assets/site.js" defer></script>
@@ -776,16 +817,6 @@ def build_home():
   <p class="areas-note fade-up">Everything happens at 2948 WI-83 in Hartford. These are the places our customers drive in from, and each page explains what that town does to a vehicle. Not on the list? If you can get the car to Hartford, we can take it. Call or text {TEL}.</p>
 </section>
 
-<section id="guides" aria-labelledby="guides-title">
-  <div class="gallery-header fade-up">
-    <p class="section-eyebrow">Owner Guides</p>
-    <h2 class="section-title" id="guides-title">Worth Knowing<br>Before You Book</h2>
-  </div>
-  <div class="cardgrid fade-up">
-{guide_cards}
-  </div>
-  <p class="areas-note fade-up"><a href="/guides/" style="color:var(--gold);text-decoration:none;">See all owner guides &rarr;</a></p>
-</section>
 
 {faq_html(home_faq)}
 
