@@ -844,7 +844,7 @@ GUIDES = [
  "body": [
    ("The short version",
     ["The Sudz Quick Clean is interior only: vacuum, vinyl, rubber and plastic treatment, spot stain removal, door jambs and glass. It is $135 for cars and $150 for SUVs and trucks.",
-     "The Sudz Up VIP Clean is all of that plus the exterior: hand wash, polish, wheels cleaned and tires shined. It is $200 for cars and $250 for SUVs and trucks.",
+     "The Sudz Up VIP Clean is all of that plus the exterior: hand wash, wheels and tires cleaned, outside windows cleaned and a spray sealant applied. It is $200 for cars and $250 for SUVs and trucks. Clay bar and iron removal are not part of the packages and are quoted separately.",
      "The $65 to $100 difference buys the entire exterior treatment. Whether that is worth it depends almost entirely on the condition of your paint, not on the condition of your interior."]),
    ("Book the interior-only service when...",
     ["The paint is genuinely in good shape and you wash the car regularly yourself. If you hand wash every couple of weeks, the polish step is not doing much for you.",
@@ -867,7 +867,7 @@ GUIDES = [
      "A useful test you can do yourself: wash the car, let it dry, then look down the side of a panel at a shallow angle in direct sunlight. If the reflection is sharp, the paint is fine and you want the interior service. If the reflection is hazy and soft, the polish will do real work and the full detail is worth it."]),
  ],
  "faq": [
-   ("What is the difference between the two packages?", "The Sudz Quick Clean is interior only at $135 for cars and $150 for SUVs and trucks. The Sudz Up VIP Clean adds the full exterior — hand wash, polish, wheels and tires — at $200 and $250."),
+   ("What is the difference between the two packages?", "The Sudz Quick Clean is interior only at $135 for cars and $150 for SUVs and trucks. The Sudz Up VIP Clean adds the exterior — hand wash, wheels and tires, outside windows and a spray sealant — at $200 and $250."),
    ("Is the full detail worth the extra money?", "It depends on your paint, not your interior. If you wash regularly and the paint is under two years old, probably not. If it has been over a year, or you are selling, or you are coming out of winter, then yes."),
    ("How can I tell if my paint needs polishing?", "Wash the car, let it dry, and look down the side of a panel at a shallow angle in direct sun. A sharp reflection means the paint is fine. A hazy, soft reflection means polish will do real work."),
    ("Will you tell me if I only need the cheaper package?", "Yes. We would rather talk you into the interior service and have you come back than sell you the full detail once."),

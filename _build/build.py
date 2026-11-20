@@ -116,7 +116,7 @@ GALLERY_PAIRS = [
 # (id, name, description, iso8601 duration, width, height, short label)
 GALLERY_VIDEOS = [
     ("02", "Full VIP Detail Walkthrough — Washington County, WI",
-     "A walkthrough of the Sudz Up VIP Clean: complete interior detail plus exterior wash, polish, wheel cleaning and tire shine.",
+     "A walkthrough of the Sudz Up VIP Clean: complete interior detail plus an exterior hand wash, wheels and tires cleaned and a spray sealant applied.",
      "PT38S", 540, 960, "Full VIP detail walkthrough"),
     ("03", "Seat and Carpet Stain Removal — Hartford Auto Detailing",
      "Close-up of spot stain removal and carpet extraction during a Sudz Up Detailing interior service.",
@@ -811,7 +811,7 @@ def build_home():
         ("How much does auto detailing cost in Hartford, WI?",
          "The Sudz Quick Clean is $135 for cars and $150 for SUVs and trucks. The Sudz Up VIP Clean is $200 for cars and $250 for SUVs and trucks. Final pricing depends on vehicle size and condition. Call or text 414-286-1609 for a no-obligation quote."),
         ("What is included in the VIP detail package?",
-         "The Sudz Up VIP Clean includes an interior vacuum, vinyl/rubber/plastic treatment, spot stain removal, door jambs cleaned and windows cleaned, plus an exterior wash and polish, wheels cleaned and tires shined."),
+         "The Sudz Up VIP Clean includes an interior vacuum, vinyl/rubber/plastic treatment, spot stain removal, door jambs cleaned and windows cleaned, plus an exterior hand wash, wheels and tires cleaned, outside windows cleaned and a spray sealant applied. It does not include clay bar or iron removal, which are quoted separately."),
         ("What areas does Sudz Up Detailing serve?",
          "Sudz Up Detailing is a shop at 2948 WI-83 in Hartford, Wisconsin. Customers drive in from Hartford, Slinger, Richfield, West Bend, Jackson, Allenton, Germantown, Kewaskum, Colgate and Erin in Washington County, plus Rubicon and Neosho in Dodge County."),
         ("How long does an auto detail take?",
@@ -1334,9 +1334,9 @@ def build_static_pages():
 <ul>
   <li>Everything in the Sudz Quick Clean</li>
   <li>Exterior hand wash</li>
-  <li>Polish for a uniform, protected finish</li>
-  <li>Wheels cleaned</li>
-  <li>Tires shined</li>
+  <li>Wheels and tires cleaned</li>
+  <li>Outside windows cleaned</li>
+  <li>Spray sealant applied</li>
 </ul>
 
 <h2>What can change the price</h2>
@@ -2003,7 +2003,7 @@ def build_llms():
 
 > One auto detailing shop at {ADDR}. Customers drive in from across Washington, Waukesha, Ozaukee, Dodge, Fond du Lac and Milwaukee counties. One vehicle at a time; interior, exterior and full details, odor removal, paint correction, ceramic coating, interior protection, engine bays and headlight restoration.
 
-Shop-based, not mobile: every vehicle is brought to the shop in Hartford, Wisconsin. Phone and text {TEL}. Email gio@sudzupdetail.com. Hours: {hours}. Owner: Gio. Pricing: Sudz Quick Clean interior $135 cars / $150 SUVs and trucks; Sudz Up VIP Clean full interior and exterior $200 / $250; engine bay $50 add-on; headlight restoration from $135; odor removal, paint correction, ceramic coating and interior protection assessed and quoted per vehicle. Quotes are given before work starts, never at collection.
+Shop-based, not mobile: every vehicle is brought to the shop in Hartford, Wisconsin. Phone and text {TEL}. Email gio@sudzupdetail.com. Hours: {hours}. Owner: Gio. Pricing: Sudz Quick Clean interior $135 cars / $150 SUVs and trucks; Sudz Up VIP Clean full interior plus exterior hand wash, wheels and tires, outside windows and spray sealant $200 / $250 (no clay bar or iron removal in the packages); engine bay $50 add-on; headlight restoration from $135; odor removal, paint correction, ceramic coating and interior protection assessed and quoted per vehicle. Quotes are given before work starts, never at collection.
 
 ## Core pages
 
